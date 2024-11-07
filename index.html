@@ -116,7 +116,8 @@
             word-break: break-all;
             text-wrap: unrestricted; */
             /* https://stackoverflow.com/questions/424192/html-textarea-horizontal-scroll */
-            white-space: nowrap;  /* normal | nowrap */
+            word-weap: normal;
+            white-space: pre;  /* normal | nowrap */
             outline: none;  /* the border when focused */
         }
         
@@ -1190,11 +1191,11 @@ Best for debugging , feature implementing , educational purpose , etc.</pre>
         
         if (textWrapSwitch.checked) {
             // need text wrap
-            textarea.style.whiteSpace = "normal";
+            textarea.style.whiteSpace = "none";  // normal
             
         } else {
             // no need text wrap
-            textarea.style.whiteSpace = "nowrap";
+            textarea.style.whiteSpace = "pre";  // nowrap
         }
     }
     
