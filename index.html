@@ -2,6 +2,1084 @@
 
 <html>
 <head>
+    <title>HTML Code Debugger</title>
+    <!-- https://www.w3schools.com/tags/tag_meta.asp -->
+    <meta charset="UTF-8">
+    <meta name="description" content="HTML CSS JavaScript Debugger">
+    <meta name="autor" content="Paul Lam Siu Ping">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <style>
+        :root {
+            /* COLOR */
+            --transparent: #00000000;
+            
+            /* Primary Color */
+            --text-color-light-mode: #222222;
+            --background-color-light-mode: #DDDDDD;
+            --text-color-dark-mode: #EDEDED;
+            --background-color-dark-mode: #222831;
+            
+            /* Secondary Color */
+            --text-color-light-mode-secondary: #;
+            --background-color-light-mode-secondary: #;
+            --text-color-dark-mode-secondary: #;
+            --background-color-dark-mode-secondary: #;
+            
+            /* Tertiary Color */
+            --text-color-light-mode-tertiary: #;
+            --background-color-light-mode-tertiary: #;
+            --text-color-dark-mode-tertiary: #;
+            --background-color-dark-mode-tertiary: #;
+            
+            
+            /* FONT */
+        }
+        
+        html {
+            scroll-behavior: smooth;  /* enable smooth scrolling */
+        }
+        
+        body {
+            margin: 0 0;
+            color: var(--text-color-dark-mode);
+            background-color: var(--background-color-dark-mode);
+            -webkit-transition: 0.5s;
+            transition: 0.5s;
+        }
+        
+        /* class light mode */
+        .light_mode {
+            color: var(--text-color-light-mode);
+            background-color: var(--background-color-light-mode);
+        }
+        
+        .light_mode textarea {
+            color: var(--text-color-light-mode);
+        }
+        
+        .light_mode label {
+            color: var(--text-color-light-mode);
+            background-color: var(--transparent);
+        }
+        
+        .light_mode input {
+            color: var(--text-color-light-mode);
+            background-color: var(--transparent);
+        }
+        
+        .light_mode select {
+            color: var(--text-color-light-mode);
+            background-color: var(--transparent);
+        }
+        
+        .light_mode #lineNumberDisplay span.Highlighted {
+            background-color: #BCBCBC;
+        }
+
+        .light_mode footer {
+            background-color: #BCBCBC;
+        }
+        
+        .light_mode .link {
+            color: blue;
+        }
+        
+        h1, h2 {
+            text-align: center;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+        
+        pre, label, button {
+            margin-left: 15px;
+        }
+        
+        div {
+            text-align: center;
+        }
+        
+        iframe {
+            background-color: var(--transparent);
+            resize: both;
+        }
+        
+        textarea {
+            font-size: 15px;
+            color: var(--text-color-dark-mode);
+            background-color: var(--transparent);
+            line-height: 1.3;
+            margin: auto 0;
+            /* https://stackoverflow.com/questions/47817/most-elegant-way-to-force-a-textarea-element-to-line-wrap-regardless-of-white */
+            /* word-wrap: break-word;
+            word-break: break-all;
+            text-wrap: unrestricted; */
+            /* https://stackoverflow.com/questions/424192/html-textarea-horizontal-scroll */
+            white-space: nowrap;  /* normal | nowrap */
+            outline: none;  /* the border when focused */
+        }
+        
+        /* https://stackoverflow.com/questions/13126917/can-i-style-the-resize-grabber-of-textarea
+        ::-webkit-resizer{
+            /* 
+            border-width: 10px;
+            border-style: solid;
+            border-color: transparent yellow yellow transparent;
+            
+            /* 
+            border: 9px solid rgba(0, 0, 0, 0.1);
+            border-bottom-color: rgba(0, 0, 0, 0.5);
+            border-right-color: rgba(0, 0, 0, 0.5);
+            outline: 1px solid rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.1)
+        }
+        */
+        
+        label {
+            color: var(--text-color-dark-mode);
+        }
+        
+        input {
+            color: var(--text-color-dark-mode);
+            background-color: #393E46;
+        }
+        
+        select {
+            color: var(--text-color-dark-mode);
+            background-color: #393E46;
+        }
+        
+        
+        
+        /* the console log of iframe */
+        #log {
+            display: none;  /* inline-block | none */
+            width: 80%;
+            margin: auto;  /* horizontal center align */
+            height: 150px;
+            overflow: scroll;
+        }
+        
+        #log button {
+            display: inline-block;
+            width: 80%;
+            min-height: 50px;  /* for minimum height of button , not vertical center the text */
+            /* height: scroll-height; */
+            line-height: 20px;
+            margin: 5px;  /* space between elements */
+            border: 0;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        
+        
+        /* display line number for textarea */
+        #lineNumberDisplay {
+            font-size: 15px;
+            text-align: right;
+            min-width: 25px;
+            margin-right: 5px;  /* preserve some space from textarea*/
+            overflow-y: hidden;  /* disable scroll manually from client */
+            /* hide the scroll bar ( for IE, Edge and Firefox ) */
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* FireFox */
+        }
+        
+        /* hide the scroll bar when overflow ( for Chrome, Safari and Opera ) */
+        /* https://www.w3schools.com/howto/howto_css_hide_scrollbars.asp */
+        #lineNumberDisplay::-webkit-scrollbar {
+            display: none;
+        }
+        
+        #lineNumberDisplay span {
+            display: block;
+            counter-increment: linenumber;
+        }
+        
+        #lineNumberDisplay span::before {
+            display: block;
+            content: counter(linenumber);
+        }
+        
+        #lineNumberDisplay span.Highlighted {
+            background-color: #393E46;  /* #555555 */
+        }
+        
+        
+        
+        /* class switch ( box around the slider ) */
+        .switch {
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+            position: relative;
+            vertical-align: middle;
+        }
+        
+        /* hide default HTML checkbox */
+        .switch input {
+            width: 0;
+            height: 0;
+            opacity: 0;
+        }
+        
+        /* the actual slider inside the switch */
+        .switchSlider {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #CCCCCC;
+            cursor: pointer;
+            -webkit-transition: 0.5s;
+            transition: 0.5s;
+        }
+        
+        /* the slide "button" */
+        .switchSlider:before {
+            position: absolute;
+/* https://stackoverflow.com/questions/58332799/how-can-i-add-an-svg-to-a-toggle-button */
+/* content: url("data:image/svg+xml; utf8, <svg xmlns='http://www.w3.org/2000/svg' viewBox='-85 -85 680 680'><path d='M256 159.1c-53.02 0-95.1 42.98-95.1 95.1S202.1 351.1 256 351.1s95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347L446.1 255.1l63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7l-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89L164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6L12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256l-63.15 91.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7l19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109l109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69 0-127.1-57.31-127.1-127.1c0-70.69 57.31-127.1 127.1-127.1s127.1 57.3 127.1 127.1C383.1 326.7 326.7 383.1 256 383.1z'/></svg>"); */
+            content: "";
+            width: 26px;
+            height: 26px;
+margin: auto;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            /* background-image: ""; */
+align-items: center;
+justify-items: center;
+            -webkit-transition: 0.5s;
+            transition: 0.5s;
+        }
+        
+        /* CSS when the slider is FOCUS */
+        input:focus + .switchSlider {
+            box-shadow: 0 0 1px white;  /* #2196F3 */
+        }
+        
+        /* CSS when the slider CHECKED */
+        input:checked + .switchSlider {
+            background-color: #04AA6D;
+        }
+        
+        input:checked + .switchSlider:before {
+            /* the image to display inside the slide "button" when checked */
+/* content: url("data:image/svg+xml; utf8, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z'/></svg>"); */
+            content: "";
+            
+            /* how far to slide when checked */
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+        
+        /* Rounded sliders */
+        .switchSlider.round {
+            border-radius: 25px;
+        }
+        
+        .switchSlider.round:before {
+            border-radius: 50%;
+        }
+        
+        
+        
+        /* toggle dark mode switch */
+        #darkModeSwitch:not(:checked) + .switchSlider:before {
+            content: url("data:image/svg+xml; utf8, <svg xmlns='http://www.w3.org/2000/svg' viewBox='-85 -85 680 680'><path d='M256 159.1c-53.02 0-95.1 42.98-95.1 95.1S202.1 351.1 256 351.1s95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347L446.1 255.1l63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7l-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89L164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6L12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256l-63.15 91.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7l19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109l109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69 0-127.1-57.31-127.1-127.1c0-70.69 57.31-127.1 127.1-127.1s127.1 57.3 127.1 127.1C383.1 326.7 326.7 383.1 256 383.1z'/></svg>");
+        }
+        
+        #darkModeSwitch:checked + .switchSlider:before {
+            content: url("data:image/svg+xml; utf8, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z'/></svg>");
+        }
+        
+        
+        
+        /* class button */
+        .button {
+            display: inline-block;
+            font-size: 15px;  /* Increase font size */
+            font-weight: bold;  /* bold text ; normal / bold / bolder / lighter ; value ranging from 100 to 900 ; 400 = normal , 700 = bold */
+            text-align: center;
+            color: white;  /* Text color */
+            text-decoration: none;
+            background-color: #04AA6D;  /* Set a background color */
+            padding: 15px 20px;
+            border: none;  /* Remove borders */
+            border-radius: 10px;  /* Rounded corners */
+            outline: none;  /* Remove outline */
+            box-shadow: 0px 7px 15px 0px rgba(0, 0, 0, 0.3);  /* x y density shadow-size shadow-color */
+            cursor: pointer;  /* Add a mouse pointer on hover */
+            /* z-index: 999;  /* Make sure it does not overlap */
+        }
+        
+        .button:hover {
+            background-color: #04996D;
+        }
+        
+        .button:active {
+            background-color: #04BB6D;
+            box-shadow: 0 5px #777;
+            transform: translateY(4px);
+        }
+        
+        #buttonResetTextarea:hover {
+            background-color: #EE3333; /* #04996D */
+        }
+        
+        #buttonResetTextarea:active {
+            background-color: #CC3333; /* #04BB6D */
+        }
+        
+        
+        
+        footer {
+            display: flex;
+            margin-top: 50px;
+            background-color: #393E46;
+            height: 325px;
+            justify-content: space-evenly;
+            align-items: stretch;
+        }
+        
+        footer div {
+            width: 25%;  /* value varies with the number of columns */
+            margin: 0 auto;
+        }
+        
+        /* class footerHeading */
+        .footerHeading {
+            margin: 35px auto;
+            width: 100%;
+            font-weight: bold;
+        }
+        
+        /* class footerContent */
+        .footerContent {
+            width: 90%;
+        }
+        
+        
+        
+        /* class link */
+        .link {
+            color: #00DDFF;
+        }
+    </style>
+
+    
+</head>
+
+
+<body>
+    <h1>HTML Code Debugger</h1>
+    <h2>Having Trouble Finding Errors in Your HTML Code ?<br>
+        We've Got a Solution for You !</h2>
+    <pre>Get an instant look of your HTML code by pasting / writing the code in the text box below.
+Best for debugging , feature implementing , educational purpose , etc.</pre>
+    <br>
+    
+    <div style="width: 100%;">
+        <iframe id="outputIframe" scr="" srcdoc="" title="Test HTML iFrame" width="1056" height="594" frameborder="1" scrolling="yes" allowtransparency="false"></iframe>
+        
+        <br><br>
+        
+        <!-- code editor -->
+        <div style="display: flex; width: 100%; align-items: top; justify-content: center;">  <!-- flex-direction: column; align-items: top; justify-content: center; --> <!-- https://stackoverflow.com/questions/19026884/flexbox-center-horizontally-and-vertically -->
+            <!-- line number -->
+            <div id="lineNumberDisplay"></div>
+            
+            <!-- HTML code editing -->
+            <textarea id="inputTextarea" rows="30" cols="150" placeholder="Write or paste HTML code here and the result will be displayed on the above iFrame. Any errors or logs will be displayed in the console below." oninput="updateIframe(); updateLineNumber();" onscroll="updateLineNumberScrollPosition();" autofocus><!DOCTYPE html>
+
+<html>
+<head>
+    <title>Page Title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                
+    <!-- CSS Style -->
+    <style>
+        
+    </style>
+    
+</head>
+
+
+<!-- HTML Page Body / Content -->
+<body>
+    
+</body>
+
+
+<!-- Javascript -->
+<script>
+    
+</script>
+
+
+</html>
+</textarea>
+        </div>
+        
+        <br><br>
+        
+        <div id="log"></div>
+    </div>
+    
+    <br><br>
+    
+    <!-- GOTO -->
+    <table style="text-align: center; width: 100%; margin: auto;">
+        <tr>
+            <th colspan="4">Go To<th>
+        </tr>
+        <tr>
+            <td><button type="button" class="button" onclick="textareaGoto(this.innerHTML)">Head</button></td>
+            <td><button type="button" class="button" onclick="textareaGoto(this.innerHTML)">Style</button></td>
+            <td><button type="button" class="button" onclick="textareaGoto(this.innerHTML)">Body</button></td>
+            <td><button type="button" class="button" onclick="textareaGoto(this.innerHTML)">Script</button></td>
+        </tr>
+    </table>
+    
+    <br><br>
+
+    <!-- iFrame Size / Resolution -->
+    <label for="inputIframeWidth">iFrame Size :</label>
+    <input type="number" id="inputIframeWidth" value="1056" min="100" max="3000" step="1" onfocus="select()" onchange="updateIframeSize(this.value, document.getElementById('inputIframeHeight').value)"> X
+    <input type="number" id="inputIframeHeight" value="594" min="100" max="3000" step="1" onfocus="select()" onchange="updateIframeSize(document.getElementById('inputIframeWidth').value, this.value)">
+    
+    <br><br>
+    
+    <!-- input field for changing font size -->
+    <label for="inputTextareaFontSize">Font Size :</label>
+    <input type="number" id="inputTextareaFontSize" value="15" min="1" max="50" step="1" onfocus="select()" onchange="updateTextareaFontSize(this.value)">
+    
+    <br><br>
+    
+    <!-- input field for changing tab size -->
+    <label for="inputTextareaTabSize">Tab ( Indent ) Size :</label>
+    <input type="number" id="inputTextareaTabSize" value="4" min="2" max="10" step="1" onfocus="select()" onchange="">
+    
+    <br><br>
+    
+    <!-- input field for changing font family -->
+    <label for="inputTextareaFontFamily">Font Family :</label>
+    <select id="inputTextareaFontFamily" onchange="updateTextareaFontFamily(this.value)">
+        <!-- fonts that might unable to apply :
+        BioRhyme
+        Brush Script MT
+        Consolas
+        Didot
+        Eczar
+        Futura Bold
+        Futura Demibold
+        Helvetica
+        JetBrains Mono
+        Monoid
+        Myriad Pro
+        Product Sans
+        San Serif
+        Segoe UI
+        Serif
+        Slab Serif
+        Source Code Pro
+        Space Mono
+        Terminus -->
+        <option value="Arial">Arial</option>
+        <option value="Arial Narrow">Arial Narrow</option>
+        <option value="Cambria">Cambria</option>
+        <option value="Garamond">Garamond</option>
+        <option value="Georgia">Georgia</option>
+        <option value="Monospace" selected="selected">Monospace</option>
+        <option value="Times New Roman">Times New Roman</option>
+        <option value="Verdana">Verdana</option>
+        <!-- 
+        <option value="BioRhyme">BioRhyme</option>
+        <option value="Brush Script MT">Brush Script MT</option>
+        <option value="Consolas">Consolas</option>
+        <option value="Didot">Didot</option>
+        <option value="Eczar">Eczar</option>
+        <option value="Futura Bold">Futura Bold</option>
+        <option value="Futura Demibold">Futura Demibold</option>
+        <option value="Helvetica">Helvetica</option>
+        <option value="JetBrains Mono">JetBrains Mono</option>
+        <option value="Monoid">Monoid</option>
+        <option value="Myriad Pro">Myriad Pro</option>
+        <option value="Product Sans">Product Sans</option>
+        <option value="San Serif">San Serif</option>
+        <option value="Segoe UI">Segoe UI</option>
+        <option value="Serif">Serif</option>
+        <option value="Slab Serif">Slab Serif</option>
+        <option value="Source Code Pro">Source Code Pro</option>
+        <option value="Space Mono">Space Mono</option>
+        <option value="Terminus">Terminus</option>
+        <option value="???">???</option>
+        -->
+    </select>
+    
+    <br><br>
+    
+    <!-- input field for changing line spacing -->
+    <label for="inputTextareaLineSpacing">Line Spacing :</label>
+    <input type="number" id="inputTextareaLineSpacing" value="1.3" min="1" max="10" step="0.1" onfocus="select()" onchange="updateTextareaLineHeight(this.value)">
+    
+    <br><br>
+    
+    <!-- toggle allow text wrap -->
+    <div style="display: inline-block;
+                vertical-align: middle;
+                padding: 7px 8px;">
+        <label for="textWrapSwitch">Text Wrap</label>
+        <label class="switch">
+            <input type="checkbox" id="textWrapSwitch" onclick="toggleTextWrap()">
+            <span class="switchSlider round"></span>
+        </label>
+    </div>
+    
+    <br>
+    
+    <!-- toogle dark mode switch -->
+    <div style="display: inline-block;
+                vertical-align: middle;
+                padding: 7px 8px;">
+        <label for="darkModeSwitch">Dark Mode</label>
+        <label class="switch">
+            <input type="checkbox" id="darkModeSwitch" checked="true" onclick="toggleDarkMode()">
+            <span class="switchSlider round"></span>
+        </label>
+    </div>
+    
+    <br><br>
+    
+    <!-- button to reset textarea content to default value -->
+    <button type="button" id="buttonResetTextarea" class="button" onclick="resetTextareaContent()">Reset HTML Content</button>
+    
+    <br><br>
+    
+    <!-- Notes to Open Web Inspector -->
+    <pre>Note : To open website inspector ( development tools ) , use CTRL + SHIFT + i</pre>
+    
+    <br><br>
+    
+    <!-- Footer -->
+    <!-- https://www.w3schools.com/tags/tag_footer.asp -->
+    <!-- Justify text in div
+         https://stackoverflow.com/questions/11736870/html-automatic-line-break-doesnt-work -->
+    <!--
+        authorship information
+        copyright information
+        contact information
+        sitemap
+        back to top links
+        related documents
+    -->
+    <footer>
+        <div>
+            <!-- About -->
+            <div class="footerHeading">
+                ABOUT
+            </div>
+            <div class="footerContent">
+                <p style="word-wrap: break-word; text-align: justify; text-justify: inter-word;">
+                    The HTML Code Debugger was written to foster the process of debugging and finding errors in HTML code.
+                    This idea was raised when I was trying to figure out where the errors in my HTML code were without any hints.
+                    Accordingly, this tool was born to clearly indicate where and what the errors are.
+                    Just simply write or paste the HTML code in the code editor and all the errors hidden in the code (if any) will show up in just a matter of time !
+                </p>
+            </div>
+        </div>
+        <div>
+            <!-- Credit -->
+            <div class="footerHeading">
+                CREDIT
+            </div>
+            <div class="footerContent">
+                CSS validated by<br>
+                <a class="link" href="https://jigsaw.w3.org/css-validator/" target="_blank">Jigsaw W3C CSS Validation Service</a><br>
+                <br>
+                HTML (body) validated by<br>
+                <a class="link" href="https://validator.w3.org/nu" target="_blank">W3 Nu HTML Checker</a>
+            </div>
+        </div>
+        <div>
+            <!-- Useful Links -->
+            <div class="footerHeading">
+                USEFUL LINKS
+            </div>
+            <div>
+                <a class="link" href="https://caniuse.com/" target="_blank">caniuse.com</a>
+            </div>
+        </div>
+        <div>
+            <!-- Contact Information -->
+            <div class="footerHeading">
+                CONTACT
+            </div>
+            <div class="footerContent">
+                <address>
+                    Site created by : Paul Lam<br>
+                    Instagram : <a class="link" href="https://www.instagram.com/paul_lam_0907?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">paul_lam_0907</a>
+                </address>
+            </div>
+        </div>
+    </footer>
+    
+</body>
+
+
+<script>
+    var iframe = document.getElementById("outputIframe");
+    // var iframeWindow = (iframe.contentWindow || iframe.contentDocument);
+    var textarea = document.getElementById("inputTextarea");
+    var lineNumberDisplay = document.getElementById("lineNumberDisplay");
+    var textWrapSwitch = document.getElementById("textWrapSwitch");
+    var log = document.getElementById("log");
+    
+    // display error message(s) to the div
+    // https://www.w3schools.com/html/html5_webworkers.asp
+    window.addEventListener("message", function(event) {  // Add event listener to receive messages from the iframe
+        // when message(s) is received ( from the iframe )
+        
+        // delete all previous log(s)
+        /* moved to function updateIframe() --> clear previous logs first , then rebuild/reconstruct everything again instead , such that all current logs can be captured
+        for (var i = 0; i < log.children.length; ++i) {
+            log.removeChild(log.childNodes[i]);
+        }
+        */
+        
+        // show the div ( log )
+        log.style.display = "inline-block";
+        
+        // function to display the log message
+        function _displayLogMessage(_message, _color, _background_color) {
+            var _button = document.createElement("button");
+            
+            _button.innerHTML = "<b>" + _message + "</b>";
+            if (_color) { _button.style.color = _color; }
+            _button.style.backgroundColor = _background_color;
+            _button.onclick = function() { log.removeChild(_button) };
+            log.appendChild(_button);
+        }
+        
+        // console log from the iframe
+        if (event.data.type == "console") {
+            // the message(s) is from the console ( of the iframe )
+            const _offset_line = 29;  // an extra "- _offset_line" for the hidden script in the iframe srcdoc when deploy
+            
+            for (var i = 0; i < event.data.messages.length; ++i) {
+                
+                if (event.data.messages[i].type == "error") {
+                    // the message type is a error message
+                    /*
+                    event.data.messages[i].message
+                    event.data.messages[i].url
+                    event.data.messages[i].line
+                    */
+                    var _error_message = event.data.messages[i].message + " at line " + (event.data.messages[i].line - _offset_line);
+                    _displayLogMessage(_error_message, undefined, "red");
+                    
+                } if (event.data.messages[i].type == "css error") {
+                    // the message type is a CSS error message
+                    /*
+                    event.data.messages[i].message
+                    event.data.messages[i].url
+                    event.data.messages[i].line
+                    event.data.messages[i].errortype
+                    event.data.messages[i].element
+                    */
+                    var _css_error_message = "[ CSS ERROR ] " + event.data.messages[i].errortype + " : " + event.data.messages[i].message + " < " + event.data.messages[i].element + " > at line " + event.data.messages[i].line;
+                    _displayLogMessage(_css_error_message, undefined, "red");
+                    
+                } if (event.data.messages[i].type == "html error") {
+                    // the message type is a HTML error message
+                    /*
+                    event.data.messages[i].message
+                    event.data.messages[i].lastline
+                    event.data.messages[i].firstcolumn
+                    event.data.messages[i].lastcolumn
+                    */
+                    var _html_error_message = "[ HTML WARNING ] " + event.data.messages[i].message + " at line " + event.data.messages[i].lastline + " column " + event.data.messages[i].firstcolumn + "-" + event.data.messages[i].lastcolumn;
+                    _displayLogMessage(_html_error_message, undefined, "yellow");
+                    
+                } if (event.data.messages[i].type == "warning") {
+                    // the message type is a warning message
+                    /*
+                    event.data.messages[i].message
+                    event.data.messages[i].url
+                    event.data.messages[i].line
+                    */
+                    var _warning_message = event.data.messages[i].message + " at line " + (event.data.messages[i].line - _offset_line);
+                    _displayLogMessage(_warning_message, "#EEEEEE", "yellow");
+                    
+                } if (event.data.messages[i].type == "unhandledrejection") {
+                    // the message type is a unhandled rejection
+                    /*
+                    event.data.messages[i].message
+                    */
+                    var _rejection_message = event.data.messages[i].message;
+                    _displayLogMessage(_rejection_message, undefined, "");
+                
+                } if (event.data.messages[i].type == "log") {
+                    // the message type is a log
+                    var _log = event.data.messages[i].message;
+                    _displayLogMessage("[ LOG ] " + _log, "#222222" , "lightgrey");
+                    
+                } if (event.data.messages[i].type == "debug") {
+                    // the message type is a debug
+                    var _debug = event.data.messages[i].message;
+                    _displayLogMessage("[ DEBUG ] " + _debug, "#222222", "lightgrey");
+                }
+            }
+        }
+        
+        // update div ( log ) height
+        // log.style.maxHeight = log.scrollHeight + "px";
+        
+        // scroll div ( log ) to bottom ( due to the order of logs )
+        log.scrollTop = log.scrollHeight;
+    });
+    
+    function updateIframe() {
+        // this function is being called everytime when the content of textarea change
+        
+        // update the iframe when the content of textarea change
+        // alongside with the debug code that helps get error and warning messages and send it to the parent HTML for further processing
+        // # ChatGPT
+        
+        // Get all keys in JSON : https://stackoverflow.com/questions/8430336/get-keys-of-json-object-in-javascript
+        // Parse JSON into JavaScript object : https://www.w3schools.com/js/js_json_parse.asp
+        // Read JSON : https://stackoverflow.com/questions/14519041/how-to-read-a-json-object-in-js
+        // CSS Parsing : https://sitechecker.pro/what-is-parse-error-in-css/
+        // get all keys of JSON --> Object.keys( <JSON> )
+        iframe.srcdoc =
+`<script>
+    var log = window.parent.document.getElementById("log");
+    log.innerHTML = "";  // delete all previous log(s)
+    
+    // Add event listener to receive messages from the iframe
+    window.addEventListener("error", function(event) {
+        // Send console message to the parent window
+        window.parent.postMessage({ type: "console", messages: [{ type: "error", message: event.message, url: event.filename, line: event.lineno }] }, "*");
+    });
+    
+    window.addEventListener("unhandledrejection", function(event) {
+        // Send console message to the parent window
+        window.parent.postMessage({ type: "console", messages: [{ type: "unhandledrejection", message: event.reason }] }, "*");
+    });
+    
+    window.console.warn = function() {
+        var args = Array.prototype.slice.call(arguments);
+        window.parent.postMessage({ type: "console", messages: [{ type: "warning", message: args.join(" ") }] }, "*");
+    };
+    
+    window.console.log = function() {
+        var args = Array.prototype.slice.call(arguments);
+        window.parent.postMessage({ type: "console", messages: [{ type: "log", message: args.join(" ") }] }, "*");
+    };
+    
+    window.console.debug = function() {
+        var args = Array.prototype.slice.call(arguments);
+        window.parent.postMessage({ type: "console", messages: [{ type: "debug", message: args.join(" ") }] }, "*");
+    };
+<\/script>`
+            + textarea.value + 
+`<script>
+    // Get all internal CSS style sheets
+    const style_sheets = document.styleSheets;
+    var css = [];
+    
+    for (var i = 0; i < style_sheets.length; ++i) {
+        const _style_sheet = style_sheets[i];
+        
+        if (_style_sheet.ownerNode.tagName === "STYLE") {
+            // the style sheet is internal
+            const _css = _style_sheet.ownerNode.textContent;  // get the CSS as text
+            css.push(_css);  // append the CSS code
+        }
+    }
+    
+    // Check CSS error using CSS Validator API
+    // https://jigsaw.w3.org/css-validator/#validate_by_input
+    // https://www.cssportal.com/css-validator/
+    function validateCSS(css) {
+        /*
+        css: list of CSS style sheets
+        */
+        const validator_url = "https://jigsaw.w3.org/css-validator/validator";
+        
+        for (var i = 0; i < css.length; ++i) {
+            const form_data = new FormData();
+            form_data.append("text", css[i]);
+            form_data.append("output", "json");
+            
+            fetch(validator_url, {
+                method: "POST",
+                body: form_data })
+            .then(response => response.json())
+            .then(data => {
+                
+                if (!data.cssvalidation.validity) {
+                    // there have errors in CSS code
+                    var _line = data.cssvalidation.errors[0].line;
+                    var _element = data.cssvalidation.errors[0].context;
+                    var _type = data.cssvalidation.errors[0].type;
+                    var _message = data.cssvalidation.errors[0].message;
+                    var _source = data.cssvalidation.errors[0].source;
+                    
+                    window.parent.postMessage(
+                        {
+                            type: "console",
+                            messages: [{ type: "css error", errortype: _type, message: _message, url: _source, line: _line, element: _element }]
+                        },
+                        "*"
+                    );
+                }
+                
+            }).catch(error => {
+                // window.parent.postMessage({ type: "console", messages: [{ type: "warning", message: error }] }, "*");
+            });
+        }
+    }
+    
+    // Get HTML content
+    // https://stackoverflow.com/questions/817218/how-to-get-the-entire-document-html-as-a-string
+    // https://stackoverflow.com/questions/7027799/access-elements-of-parent-window-from-iframe
+    const html = window.parent.document.getElementById("inputTextarea").value;
+    // "<!DOCTYPE html>" + document.documentElement.outerHTML;
+    
+    // Check HTML error using HTML Validator API
+    // https://validator.w3.org/nu
+    // https://www.freeformatter.com/html-validator.html
+    function validateHTML(html) {
+        /*
+        html: content inside the HTML tag
+        */
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "https://validator.w3.org/nu/?out=json", true);
+        xhr.setRequestHeader("Content-Type", "text/html; charset=utf-8");
+        xhr.onreadystatechange = function() {
+            
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var _response = JSON.parse(xhr.responseText);
+                
+                if (_response.messages.length != 0) {
+                    // HTML code have error
+                    var _error = _response.messages;
+                    
+                    for (var i = 0; i < _error.length; ++i) {
+                        
+                        // var _type = _error[i]["type"];
+                        var _last_line = _error[i]["lastLine"];
+                        var _last_column = _error[i]["lastColumn"];
+                        var _first_column = _error[i]["firstColumn"];
+                        var _message = _error[i]["message"];
+                        // var _extract = _error[i]["extract"];
+                        // var _highlight_start = _error[i]["hiliteStart"];
+                        // var _highlight_length = _error[i]["hiliteLength"];
+                        
+                        window.parent.postMessage(
+                            {
+                                type: "console",
+                                messages: [{ type: "html error", message: _message, lastline: _last_line, firstcolumn: _first_column, lastcolumn: _last_column }]
+                            },
+                            "*"
+                        );
+                    }
+                }
+            }
+        };
+        
+        // validate HTML
+        xhr.send(html);
+    }
+    
+    // time delay to show our respect to the open source public service
+    setTimeout(function() { validateCSS(css); validateHTML(html); }, 1000);
+<\/script>`;
+    }
+    
+    function updateIframeSize(_width, _height) {
+        // change the size of the iframe according to the value of the number input field
+        iframe.width = _width;
+        iframe.height = _height;
+    }
+
+    var textarea_line_number = 1;
+    function updateLineNumber() {
+        // this function is being called everytime when the content of textarea change
+        // https://stackoverflow.com/questions/1995370/adding-line-numbers-to-html-textarea
+        
+        var _lines = textarea.value.split("\n").length;  // get line number
+
+        if (_lines != textarea_line_number) {
+            // there is change in line number
+            
+            // update line number
+            textarea_line_number = _lines;
+            
+            // add line number elements
+            lineNumberDisplay.innerHTML = Array(_lines).fill("<span></span>").join("");
+            
+            // update the height & line-height of div containing line number for textarea
+            lineNumberDisplay.style.height = textarea.offsetHeight + "px";
+            lineNumberDisplay.style.lineHeight = window.getComputedStyle(textarea).getPropertyValue("line-height");
+            // update the minimum width
+            lineNumberDisplay.style.minWidth = lineNumberDisplay.childNodes[lineNumberDisplay.childNodes.length - 1].scrollWidth + "px";
+        }
+    }
+    updateLineNumber();
+    
+    // allow line number scroll with textarea
+    /* Procedure / Approach :
+        detect textarea scroll event
+        get textarea scroll distance
+        force div to scroll in equivalent distance programmatically
+    */
+    var previous_scrollY = textarea.scrollTop;
+    function updateLineNumberScrollPosition() {
+        // this function is being called when the textarea scroll
+        var current_scrollY = textarea.scrollTop;
+        var scroll_distance = current_scrollY - previous_scrollY;
+        
+        lineNumberDisplay.scrollTop += scroll_distance;
+        
+        /* previous_scrollY > current_scrollY
+            --> scrolling to top
+           previous_scrollY < current_scrollY
+            --> scrolling to bottom
+        */
+        
+        previous_scrollY = current_scrollY;
+    }
+
+    function highlightLineNumber() {
+        // highlight the line number according to the cursor position in textareas
+        var cursor_position_line = textarea.value.substr(0, textarea.selectionStart).split("\n").length;
+        
+        // disable all highlights
+        for (var i = 0; i < lineNumberDisplay.childNodes.length; ++i) {
+            // lineNumberDisplay.childNodes[i].style.backgroundColor = "#00000000";  // transparent
+            lineNumberDisplay.childNodes[i].className = "";
+        }
+        
+        // highlight
+        // lineNumberDisplay.childNodes[cursor_position_line - 1].style.backgroundColor = "#888888";
+        lineNumberDisplay.childNodes[cursor_position_line - 1].className = "Highlighted";
+    }
+    highlightLineNumber();
+    
+    // auto indent when an Enter key is pressed
+    // size of indentation depends on the previous line
+    /* Reference :
+        https://stackoverflow.com/questions/7745867/how-do-you-get-the-cursor-position-in-a-textarea
+        https://stackoverflow.com/questions/11076975/how-to-insert-text-into-the-textarea-at-the-current-cursor-position
+    */
+    /* Procedure / Approach :
+        1) detect on enter event
+        2) get previous line content relative to cursor position
+        3) get the size of indentation ( at previous line )
+        4) force insert spaces / tabs at cursor position
+    */
+    function getTabSize() {
+        var tab_size = document.getElementById("inputTextareaTabSize").value;
+        var tab_str = "";
+        
+        for (var i = 0; i < tab_size; ++i) {
+            tab_str += " ";
+        }
+
+        return tab_str;
+    }
+    
+    textarea.addEventListener("keyup", function(event) {
+        
+        if (event.key == "Enter") {
+            // enter key is pressed in textarea
+            
+            // get previous line content relative to cursor position
+            var line = this.value.substring(0, this.selectionStart).split("\n");
+            line = line[line.length - 2];  // string
+            
+            // getting the indentation
+            var content_to_remove = line.trimStart();  // string
+            var indentation = line.replace(content_to_remove, "");
+
+            // indent if previously typed is open bracket
+            if (["{", "(", "["].includes(content_to_remove[content_to_remove.length - 1])) {
+                indentation += getTabSize();
+            }
+            
+            // insert indentation
+            this.setRangeText(indentation, this.selectionStart, this.selectionEnd, "end");
+        }
+
+        // highligh the line number according to the cursor position in textarea
+        highlightLineNumber();
+    });
+    
+    // use Tab key to indent
+    /* Reference :
+        https://stackoverflow.com/questions/6637341/use-tab-to-indent-in-textarea
+        https://stackoverflow.com/questions/5203407/how-to-detect-if-multiple-keys-are-pressed-at-once-using-javascript
+    */
+    /* Procedure / Approach :
+        1) disable default Tab action ( switching between elements )
+        2) detect Tab key press in textarea
+        3) force insert tab ( indent ) at current cursor position according to specified tab size
+    */
+    textarea.addEventListener("keydown", function(event) {
+        
+        if (event.key == "Tab") {
+            // Tab key is pressed in textarea
+            
+            if (event.ctrlKey || event.altKey || event.shiftKey) {
+                // ignore everything if one of the CTRL ALT SHIFT keys is pressed
+                return
+                
+            } else {
+                // disable the default action for the Tab key
+                event.preventDefault();
+            }
+            
+            // getting tab size
+            var _tab_str = getTabSize();
+            
+            // insert indentation according to specified tab size
+            this.setRangeText(_tab_str, this.selectionStart, this.selectionEnd, "end");
+        }
+
+        // highligh the line number according to the cursor position in textarea
+        highlightLineNumber();
+    });
+    
+    textarea.addEventListener("click", function(event) {
+        // when click inside the textarea
+        
+        // highligh the line number according to the cursor position in textarea
+        highlightLineNumber();
+    });
+    
+    function onTextareaResize() {
+        // when the textarea is being resized manually from client
+        // https://stackoverflow.com/questions/5570390/resize-event-for-textarea
+        
+        // update the height of div containing line number for textarea when textarea resizes manually from client
+        lineNumberDisplay.style.height = textarea.offsetHeight + "px";
+    }
+    new MutationObserver(onTextareaResize).observe(textarea, { attributes: true });
+    
+    function resetTextareaContent() {
+        // reset the content of the textarea to default value
+        defaultText = `<!DOCTYPE html>
+
+<html>
+<head>
     <title>Page Title</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,14 +1094,140 @@
 
 <!-- HTML Page Body / Content -->
 <body>
-    hi testing
+    
 </body>
 
 
 <!-- Javascript -->
 <script>
     
+<\/script>
+
+
+</html>
+`;
+        
+        if (confirm("Reset All HTML Content ?")) {
+            textarea.value = defaultText;
+            updateIframe();
+            updateLineNumber();
+        }
+    }
+    
+    var count = { };
+    var index = { };
+    function textareaGoto(_tag) {
+        // go to the specified HTML tag in textarea
+        // https://stackoverflow.com/questions/6825492/javascript-str-search-multiple-instances
+        
+        // make both the text and search text to lower case for easier manipulation
+        var _text = textarea.value.toLowerCase();
+        _tag = _tag.toLowerCase() + ">";
+        
+        // getting the total number of matches
+        var _total_count = _text.split(_tag).length - 1;
+        
+        // initialize the initial value
+        if (count[_tag] == undefined) { count[_tag] = 0; }
+        if (index[_tag] == undefined) { index[_tag] = -1; }
+        
+        // getting the index/indices
+        if (count[_tag] < _total_count) {
+            // the final count is NOT reached
+            count[_tag] += 1;
+            index[_tag] = _text.indexOf(_tag, index[_tag] + 1);
+            
+        } else {
+            // the final count is reached
+            // go back to the first match result
+            count[_tag] = 1;
+            index[_tag] = _text.indexOf(_tag);
+        }
+        /*
+        if (_text.indexOf(_tag, index + 1) > -1) {
+            index = _text.indexOf(_tag, index + 1);
+            
+        } else {
+            index = _text.indexOf(_tag);
+        }
+        */
+        
+        // force the mouse cursor to the index of matched result(s)
+        textarea.selectionStart = textarea.selectionEnd = index[_tag];
+        
+        // focus the textarea to show visual feedback
+        textarea.focus();
+        
+        // highligh the line number according to the cursor position in textarea
+        highlightLineNumber();
+    }
+    
+    function updateTextareaFontSize(_font_size) {
+        // change the font size of the textarea according to the value of the number input field
+        textarea.style.fontSize = _font_size + "px";
+        lineNumberDisplay.style.fontSize = _font_size + "px";
+        
+        updateLineNumber();
+    }
+    
+    function updateTextareaFontFamily(_font_family) {
+        // change the font family of the textarea according to the value of the dropdown list ( select tag )
+        textarea.style.fontFamily = _font_family;
+        lineNumberDisplay.style.fontFamily = _font_family;
+        
+        updateLineNumber();
+    }
+    
+    function updateTextareaLineHeight(_line_height) {
+        // change the line height of the textarea according to the value of the number input field
+        textarea.style.lineHeight = _line_height;
+        
+        updateLineNumber();
+    }
+    
+    function toggleTextWrap() {
+        // toggle text wrap in textarea
+        
+        if (textWrapSwitch.checked) {
+            // need text wrap
+            textarea.style.whiteSpace = "normal";
+            
+        } else {
+            // no need text wrap
+            textarea.style.whiteSpace = "nowrap";
+        }
+    }
+    
+    function toggleDarkMode() {
+        // toggle dark mode
+        
+        // body
+        document.body.classList.toggle("light_mode");
+    }
 </script>
 
 
 </html>
+
+<!-- 
+Other Unused References :
+
+Stackoverflow Question : How can I vertically align elements in a div?
+https://stackoverflow.com/questions/79461/how-can-i-vertically-align-elements-in-a-div
+
+Stackoverflow Question : Javascript: Detect when an iframe is added with src not retrievable
+https://stackoverflow.com/questions/57940799/javascript-detect-when-an-iframe-is-added-with-src-not-retrievable
+
+Stackoverflow Question : can I catch exception of Iframe in parent window of Iframe
+https://stackoverflow.com/questions/6327128/can-i-catch-exception-of-iframe-in-parent-window-of-iframe
+
+Stackoverflow Question : How to read from Chrome's console in JavaScript
+https://stackoverflow.com/questions/19846078/how-to-read-from-chromes-console-in-javascript
+
+Stackoverflow Question : Is there a way to print the console log from JavaScript, into HTML?
+https://stackoverflow.com/questions/34243850/is-there-a-way-to-print-the-console-log-from-javascript-into-html
+
+Stackoverflow Question : Showing console errors and alerts in a div inside the page
+https://stackoverflow.com/questions/6604192/showing-console-errors-and-alerts-in-a-div-inside-the-page
+
+-->
