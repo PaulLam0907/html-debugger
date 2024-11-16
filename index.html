@@ -77,7 +77,12 @@
         .light_mode #lineNumberDisplay span.Highlighted {
             background-color: #BCBCBC;
         }
-
+        
+        .light_mode .sidebar {
+            background-color: var(--background-color-light-mode);
+            box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
+        }
+        
         .light_mode footer {
             background-color: #BCBCBC;
         }
@@ -341,6 +346,39 @@ justify-items: center;
         
         
         
+        /* class sidebar */
+        .sidebar {
+            /* https://youtu.be/neb7WcDixoY */
+            /* https://www.w3schools.com/cssref/css_units.php */
+            /* display: flex; */
+            /* flex: 1 1 0; 
+            /* margin-width: 300px; */
+            position: fixed;
+            padding: 2rem 1rem;  /* vertical horizontal ( space around ) */
+            /* width: 100vw; */
+            top: 0;
+            left: -150vw;
+            height: 100vh;
+            background-color: var(--background-color-dark-mode);
+            /* https://stackoverflow.com/questions/68732189/how-to-partially-color-an-html-elements-background-from-bottom-to-top-using-css */
+            -webkit-transition: 0.5s;  /* linear */
+            transition: 0.5s;
+        }
+        
+        .sidebar.active {
+            left: 0;
+        }
+        
+        .sidebar .settings > * {
+            /* display: block;
+            padding: 1rem; */
+            text-decoration: none;
+            -webkit-transition: 0.5s;
+            transition: 0.5s;
+        }
+        
+        
+        
         footer {
             display: flex;
             margin-top: 50px;
@@ -451,117 +489,126 @@ Best for debugging , feature implementing , educational purpose , etc.</pre>
     </table>
     
     <br><br>
-
-    <!-- iFrame Size / Resolution -->
-    <label for="inputIframeWidth">iFrame Size :</label>
-    <input type="number" id="inputIframeWidth" value="1056" min="100" max="3000" step="1" onfocus="select()" onchange="updateIframeSize(this.value, document.getElementById('inputIframeHeight').value)"> X
-    <input type="number" id="inputIframeHeight" value="594" min="100" max="3000" step="1" onfocus="select()" onchange="updateIframeSize(document.getElementById('inputIframeWidth').value, this.value)">
     
-    <br><br>
-    
-    <!-- input field for changing font size -->
-    <label for="inputTextareaFontSize">Font Size :</label>
-    <input type="number" id="inputTextareaFontSize" value="15" min="1" max="50" step="1" onfocus="select()" onchange="updateTextareaFontSize(this.value)">
-    
-    <br><br>
-    
-    <!-- input field for changing tab size -->
-    <label for="inputTextareaTabSize">Tab ( Indent ) Size :</label>
-    <input type="number" id="inputTextareaTabSize" value="4" min="2" max="10" step="1" onfocus="select()" onchange="">
-    
-    <br><br>
-    
-    <!-- input field for changing font family -->
-    <label for="inputTextareaFontFamily">Font Family :</label>
-    <select id="inputTextareaFontFamily" onchange="updateTextareaFontFamily(this.value)">
-        <!-- fonts that might unable to apply :
-        BioRhyme
-        Brush Script MT
-        Consolas
-        Didot
-        Eczar
-        Futura Bold
-        Futura Demibold
-        Helvetica
-        JetBrains Mono
-        Monoid
-        Myriad Pro
-        Product Sans
-        San Serif
-        Segoe UI
-        Serif
-        Slab Serif
-        Source Code Pro
-        Space Mono
-        Terminus -->
-        <option value="Arial">Arial</option>
-        <option value="Arial Narrow">Arial Narrow</option>
-        <option value="Cambria">Cambria</option>
-        <option value="Garamond">Garamond</option>
-        <option value="Georgia">Georgia</option>
-        <option value="Monospace" selected="selected">Monospace</option>
-        <option value="Times New Roman">Times New Roman</option>
-        <option value="Verdana">Verdana</option>
-        <!-- 
-        <option value="BioRhyme">BioRhyme</option>
-        <option value="Brush Script MT">Brush Script MT</option>
-        <option value="Consolas">Consolas</option>
-        <option value="Didot">Didot</option>
-        <option value="Eczar">Eczar</option>
-        <option value="Futura Bold">Futura Bold</option>
-        <option value="Futura Demibold">Futura Demibold</option>
-        <option value="Helvetica">Helvetica</option>
-        <option value="JetBrains Mono">JetBrains Mono</option>
-        <option value="Monoid">Monoid</option>
-        <option value="Myriad Pro">Myriad Pro</option>
-        <option value="Product Sans">Product Sans</option>
-        <option value="San Serif">San Serif</option>
-        <option value="Segoe UI">Segoe UI</option>
-        <option value="Serif">Serif</option>
-        <option value="Slab Serif">Slab Serif</option>
-        <option value="Source Code Pro">Source Code Pro</option>
-        <option value="Space Mono">Space Mono</option>
-        <option value="Terminus">Terminus</option>
-        <option value="???">???</option>
-        -->
-    </select>
-    
-    <br><br>
-    
-    <!-- input field for changing line spacing -->
-    <label for="inputTextareaLineSpacing">Line Spacing :</label>
-    <input type="number" id="inputTextareaLineSpacing" value="1.3" min="1" max="10" step="0.1" onfocus="select()" onchange="updateTextareaLineHeight(this.value)">
-    
-    <br><br>
-    
-    <!-- toggle allow text wrap -->
-    <div style="display: inline-block;
-                vertical-align: middle;
-                padding: 7px 8px;">
-        <label for="textWrapSwitch">Text Wrap</label>
-        <label class="switch">
-            <input type="checkbox" id="textWrapSwitch" onclick="toggleTextWrap()">
-            <span class="switchSlider round"></span>
-        </label>
-    </div>
-    
-    <br>
-    
-    <!-- toogle dark mode switch -->
-    <div style="display: inline-block;
-                vertical-align: middle;
-                padding: 7px 8px;">
-        <label for="darkModeSwitch">Dark Mode</label>
-        <label class="switch">
-            <input type="checkbox" id="darkModeSwitch" checked="true" onclick="toggleDarkMode()">
-            <span class="switchSlider round"></span>
-        </label>
-    </div>
-    
-    <br><br>
-    
-    <!-- button to reset textarea content to default value -->
-    <button type="button" id="buttonResetTextarea" class="button" onclick="resetTextareaContent()">Reset HTML Content</button>
+    <!-- SideBar -->
+    <button type="button" id="" class="button" onclick="toggleSettingsMenu()">Settings</button>
+    <aside class="sidebar">
+        <h3>Settings</h3>
+        <nav class="settings">
+            
+            <!-- iFrame Size / Resolution -->
+            <label for="inputIframeWidth">iFrame Size :</label>
+            <input type="number" id="inputIframeWidth" value="1056" min="100" max="3000" step="1" onfocus="select()" onchange="updateIframeSize(this.value, document.getElementById('inputIframeHeight').value)"> X
+            <input type="number" id="inputIframeHeight" value="594" min="100" max="3000" step="1" onfocus="select()" onchange="updateIframeSize(document.getElementById('inputIframeWidth').value, this.value)">
+            
+            <br><br>
+            
+            <!-- input field for changing font size -->
+            <label for="inputTextareaFontSize">Font Size :</label>
+            <input type="number" id="inputTextareaFontSize" value="15" min="1" max="50" step="1" onfocus="select()" onchange="updateTextareaFontSize(this.value)">
+            
+            <br><br>
+            
+            <!-- input field for changing tab size -->
+            <label for="inputTextareaTabSize">Tab ( Indent ) Size :</label>
+            <input type="number" id="inputTextareaTabSize" value="4" min="2" max="10" step="1" onfocus="select()" onchange="">
+            
+            <br><br>
+            
+            <!-- input field for changing font family -->
+            <label for="inputTextareaFontFamily">Font Family :</label>
+            <select id="inputTextareaFontFamily" onchange="updateTextareaFontFamily(this.value)">
+                <!-- fonts that might unable to apply :
+                BioRhyme
+                Brush Script MT
+                Consolas
+                Didot
+                Eczar
+                Futura Bold
+                Futura Demibold
+                Helvetica
+                JetBrains Mono
+                Monoid
+                Myriad Pro
+                Product Sans
+                San Serif
+                Segoe UI
+                Serif
+                Slab Serif
+                Source Code Pro
+                Space Mono
+                Terminus -->
+                <option value="Arial">Arial</option>
+                <option value="Arial Narrow">Arial Narrow</option>
+                <option value="Cambria">Cambria</option>
+                <option value="Garamond">Garamond</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Monospace" selected="selected">Monospace</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Verdana">Verdana</option>
+                <!-- 
+                <option value="BioRhyme">BioRhyme</option>
+                <option value="Brush Script MT">Brush Script MT</option>
+                <option value="Consolas">Consolas</option>
+                <option value="Didot">Didot</option>
+                <option value="Eczar">Eczar</option>
+                <option value="Futura Bold">Futura Bold</option>
+                <option value="Futura Demibold">Futura Demibold</option>
+                <option value="Helvetica">Helvetica</option>
+                <option value="JetBrains Mono">JetBrains Mono</option>
+                <option value="Monoid">Monoid</option>
+                <option value="Myriad Pro">Myriad Pro</option>
+                <option value="Product Sans">Product Sans</option>
+                <option value="San Serif">San Serif</option>
+                <option value="Segoe UI">Segoe UI</option>
+                <option value="Serif">Serif</option>
+                <option value="Slab Serif">Slab Serif</option>
+                <option value="Source Code Pro">Source Code Pro</option>
+                <option value="Space Mono">Space Mono</option>
+                <option value="Terminus">Terminus</option>
+                <option value="???">???</option>
+                -->
+            </select>
+            
+            <br><br>
+            
+            <!-- input field for changing line spacing -->
+            <label for="inputTextareaLineSpacing">Line Spacing :</label>
+            <input type="number" id="inputTextareaLineSpacing" value="1.3" min="1" max="10" step="0.1" onfocus="select()" onchange="updateTextareaLineHeight(this.value)">
+            
+            <br><br>
+            
+            <!-- toggle allow text wrap -->
+            <div style="display: inline-block;
+                        vertical-align: middle;
+                        padding: 7px 8px;">
+                <label for="textWrapSwitch">Text Wrap</label>
+                <label class="switch">
+                    <input type="checkbox" id="textWrapSwitch" onclick="toggleTextWrap()">
+                    <span class="switchSlider round"></span>
+                </label>
+            </div>
+            
+            <br>
+            
+            <!-- toogle dark mode switch -->
+            <div style="display: inline-block;
+                        vertical-align: middle;
+                        padding: 7px 8px;">
+                <label for="darkModeSwitch">Dark Mode</label>
+                <label class="switch">
+                    <input type="checkbox" id="darkModeSwitch" checked="true" onclick="toggleDarkMode()">
+                    <span class="switchSlider round"></span>
+                </label>
+            </div>
+            
+            <br><br>
+            
+            <!-- button to reset textarea content to default value -->
+            <button type="button" id="buttonResetTextarea" class="button" onclick="resetTextareaContent()">Reset HTML Content</button>
+            
+        </nav>
+    </aside>
     
     <br><br>
     
@@ -1206,6 +1253,19 @@ Best for debugging , feature implementing , educational purpose , etc.</pre>
         
         // body
         document.body.classList.toggle("light_mode");
+    }
+    
+    const sidebar = document.getElementsByClassName("sidebar")[0];
+    sidebar.addEventListener("click", function(e) {
+        // https://stackoverflow.com/questions/20025685/detect-click-on-empty-area
+        if ((e.target == document.body.getElementsByTagName("nav")[0]) || (e.target == sidebar)) {
+            sidebar.classList.remove("active");
+        }
+    });
+
+    function toggleSettingsMenu() {
+        // toggle settings menu
+        sidebar.classList.toggle("active");
     }
 </script>
 
