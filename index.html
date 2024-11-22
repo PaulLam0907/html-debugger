@@ -1067,7 +1067,7 @@ Best for debugging , feature implementing , educational purpose , etc.</pre>
             var indentation = line.replace(content_to_remove, "");
 
             // indent if previously typed is open bracket or close of HTML tag
-            if (["{", "(", "[", ">"].includes(content_to_remove[content_to_remove.length - 1])) {
+            if (["{", "(", "["].includes(content_to_remove[content_to_remove.length - 1])) {
                 indentation += getTabSize();
             }
             
