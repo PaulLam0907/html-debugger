@@ -35,6 +35,9 @@
             
             
             /* FONT */
+            
+            /* SIDEBAR */
+            --sidebar-width: 350px;
         }
         
         html {
@@ -81,6 +84,8 @@
         .light_mode .sidebar {
             background-color: var(--background-color-light-mode);
             box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
+            
+            background: linear-gradient(to right, var(--background-color-light-mode) 0%, var(--background-color-light-mode) var(--sidebar-width), #FFFFFF00 var(--sidebar-width), #FFFFFF00 100%);
         }
         
         .light_mode footer {
@@ -355,12 +360,13 @@ justify-items: center;
             /* margin-width: 300px; */
             position: fixed;
             padding: 2rem 1rem;  /* vertical horizontal ( space around ) */
-            /* width: 100vw; */
             top: 0;
             left: -150vw;
+            width: 100vw;
             height: 100vh;
-            background-color: var(--background-color-dark-mode);
+            /* background-color: var(--background-color-dark-mode); */
             /* https://stackoverflow.com/questions/68732189/how-to-partially-color-an-html-elements-background-from-bottom-to-top-using-css */
+            background: linear-gradient(to right, var(--background-color-dark-mode) 0%, var(--background-color-dark-mode) var(--sidebar-width), #FFFFFF00 var(--sidebar-width), #FFFFFF00 100%);
             -webkit-transition: 0.5s;  /* linear */
             transition: 0.5s;
         }
@@ -1060,15 +1066,15 @@ Best for debugging , feature implementing , educational purpose , etc.</pre>
             var content_to_remove = line.trimStart();  // string
             var indentation = line.replace(content_to_remove, "");
 
-            // indent if previously typed is open bracket
-            if (["{", "(", "["].includes(content_to_remove[content_to_remove.length - 1])) {
+            // indent if previously typed is open bracket or close of HTML tag
+            if (["{", "(", "[", ">"].includes(content_to_remove[content_to_remove.length - 1])) {
                 indentation += getTabSize();
             }
             
             // insert indentation
             this.setRangeText(indentation, this.selectionStart, this.selectionEnd, "end");
         }
-
+        
         // highligh the line number according to the cursor position in textarea
         highlightLineNumber();
     });
@@ -1103,7 +1109,34 @@ Best for debugging , feature implementing , educational purpose , etc.</pre>
             // insert indentation according to specified tab size
             this.setRangeText(_tab_str, this.selectionStart, this.selectionEnd, "end");
         }
-
+        
+        if (event.key == "Backspace") {
+            // backspace key is pressed in textarea
+            
+            // get current line content relative to cursor position
+            var line = this.value.substring(0, this.selectionStart).split("\n");
+            line = line[line.length - 1];  // string
+            
+            // check if the content-to-delete equals to 1 indent
+            var _is_outdent = true;
+            for (var i = 1; i <= getTabSize().length; ++i) {
+                
+                if (line[line.length - i] != " ") {
+                    // not equals to 1 indent
+                    _is_outdent = false;
+                    break;
+                }
+            }
+            
+            // auto remove indentation
+            if (_is_outdent) {
+                // need to outdent
+                
+                // remove indentation
+                this.setRangeText("", this.selectionStart - getTabSize().length + 1, this.selectionEnd, "end");
+            }
+        }
+        
         // highligh the line number according to the cursor position in textarea
         highlightLineNumber();
     });
@@ -1256,17 +1289,19 @@ Best for debugging , feature implementing , educational purpose , etc.</pre>
     }
     
     const sidebar = document.getElementsByClassName("sidebar")[0];
-    sidebar.addEventListener("click", function(e) {
-        // https://stackoverflow.com/questions/20025685/detect-click-on-empty-area
-        if ((e.target == document.body.getElementsByTagName("nav")[0]) || (e.target == sidebar)) {
-            sidebar.classList.remove("active");
-        }
-    });
-
     function toggleSettingsMenu() {
         // toggle settings menu
         sidebar.classList.toggle("active");
     }
+    
+    sidebar.addEventListener("click", function(event) {
+        // https://stackoverflow.com/questions/20025685/detect-click-on-empty-area
+        if ((event.target == document.body.getElementsByTagName("nav")[0]) || (event.target == sidebar)) {
+            // the user click on any blank space of the side bar
+            // sidebar.classList.remove("active");
+            toggleSettingsMenu();
+        }
+    });
 </script>
 
 
