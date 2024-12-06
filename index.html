@@ -37,7 +37,7 @@
             /* FONT */
             
             /* SIDEBAR */
-            --sidebar-width: 350px;
+            --settings-sidebar-width: 350px;
         }
         
         html {
@@ -46,6 +46,7 @@
         
         body {
             margin: 0 0;
+						margin-left: 85px;  /* for the sidebar */
             color: var(--text-color-dark-mode);
             background-color: var(--background-color-dark-mode);
             -webkit-transition: 0.5s;
@@ -81,11 +82,16 @@
             background-color: #BCBCBC;
         }
         
-        .light_mode .sidebar {
+				.light_mode .sidebar {
+				    background-color: var(--background-color-light-mode);
+						box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1):
+				}
+				
+        .light_mode .sidebar #settingsSidebar {
             background-color: var(--background-color-light-mode);
             box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
             
-            background: linear-gradient(to right, var(--background-color-light-mode) 0%, var(--background-color-light-mode) var(--sidebar-width), #FFFFFF00 var(--sidebar-width), #FFFFFF00 100%);
+            background: linear-gradient(to right, var(--background-color-light-mode) 0%, var(--background-color-light-mode) var(--settings-sidebar-width), #FFFFFF00 var(--settings-sidebar-width), #FFFFFF00 100%);
         }
         
         .light_mode footer {
@@ -96,7 +102,7 @@
             color: blue;
         }
         
-        h1, h2 {
+        h1, h2, h3 {
             text-align: center;
             margin-top: 50px;
             margin-bottom: 50px;
@@ -353,7 +359,185 @@ justify-items: center;
         
         /* class sidebar */
         .sidebar {
-            /* https://youtu.be/neb7WcDixoY */
+            /* https://www.youtube.com/watch?v=VU74s-XAn7M */
+						/* https://www.youtube.com/watch?v=uy1tgKOnPB0 */
+            /* flex: 1 1 0; 
+            /* margin-width: 300px; */
+						display: flex;
+						flex-direction: column;
+						justify-content: space-between;
+						align-items: center;
+						overflow-x: hidden;
+            position: fixed;
+            padding: 2rem 1rem;  /* vertical horizontal ( space around ) */
+						gap: 10px 0;  /* gap between each child elements */
+            top: 0;
+            left: 0vw;
+            width: 50px;  /* 85 / 250px */
+            height: 100vh;
+            background-color: var(--background-color-dark-mode);
+						-webkit-transition: all 0.5s;
+            transition: all 0.5s;
+        }
+				
+				.sidebar span {
+				    padding-left: 10px;
+				}
+				
+				.sidebar:hover {
+				    width: 200px;
+				}
+				
+				.sidebar:hover .sidebarHeader span {
+				    display: block;
+				}
+        
+				.sidebar:hover .sidebarContent h4 {
+				    opacity: 1;
+				}
+				
+				.sidebar:hover .sidebarContent div a span {
+				    display: block;
+				}
+				.sidebar:hover .sidebarFooter span {
+				    display: block;
+				}
+				
+				/* class sidebarHeader */
+				.sidebarHeader {
+				    display: flex;
+						flex-direction: row;
+						justify-content: center;
+						align-items: center;
+						text-align: center;
+						overflow-x: hidden;
+						align-items: center;
+				}
+				
+				.sidebarHeader img {
+				    width: 50px;
+				    border-radius: 50%;
+				}
+				
+				.sidebarHeader svg {
+				    width: 50px;
+						height: 50px;
+				    border-radius: 15%;
+				}
+				
+				.sidebarHeader h3 span {
+				    display: none;
+				    font-size: 1.25rem;
+						font-weight: 600;
+						margin-left: 5px;
+				}
+				
+				/* class sidebarContent */
+				.sidebarContent {
+				    overflow-x: hidden;
+				    overflow-y: scroll;
+						scrollbar-width: none;
+						width: 100%;
+				}
+				
+				.sidebarContent h4 {
+				    opacity: 0;
+				    font-weight: 600;
+						margin: 0px 0px;
+						padding: 15px 50px;
+						white-space: nowrap;
+						text-align: left;
+				}
+				
+				.sidebarContent div {
+				    display: flex;
+						flex-direction: column;
+						justify-content: center;
+						align-items: left;
+						text-align: center;  /* left */
+						overflow-x: hidden;
+						gap: 10px 0px;  /* gap between each child elements */
+						margin: 10px 0;
+				}
+				
+				.sidebarContent div a {
+			    	display: flex;
+		    		flex-direction: row;
+						justify-content: center;
+						font-weight: 500;
+						padding: 15px 0px;  /* 15px 30px */
+						white-space: nowrap;
+				}
+				
+				.sidebarContent div a:hover {
+				    color: #555555;
+						background: #AAAAAA;
+				    border-radius: 4px;
+				}
+				
+				.sidebarContent div a img {
+				    width: 25px;
+						border-radius: 50%;
+				}
+				
+				.sidebarContent div a svg {
+				    display: block;
+				    width: 25px;
+						height: 25px;
+						border-radius: 15%;
+				}
+				
+				.sidebarContent div a span {
+				    display: none;
+				}
+				
+			  /* class sidebarFooter */
+				.sidebarFooter {
+				    display: flex;
+						flex-direction: column;
+						justify-content: center;
+						align-items: center;
+				    width: 100%;
+						/* margin: 10px 0; */
+						margin-bottom: 75px;
+				}
+				
+				.sidebarFooter a {
+				    display: flex;
+		    		flex-direction: row;
+				    justify-content: center;
+						align-items: center;
+						font-weight: 500;
+						white-space: nowrap;
+						text-align: center;
+						width: 100%;
+						padding: 15px 0;
+				}
+				
+				.sidebarFooter a:hover {
+				    color: #555555;
+						background: #AAAAAA;
+				    border-radius: 4px;
+				}
+				
+				.sidebarFooter img {
+				    width: 25px;
+						border-radius: 50%;
+				}
+				
+				.sidebarFooter svg {
+				    width: 25px;
+						height: 25px;
+						border-radius: 50%;
+				}
+				
+				.sidebarFooter span {
+				    display: none;
+				}
+				
+				/* Settings Sidebar */
+				.sidebar #settingsSidebar {
+				    /* https://youtu.be/neb7WcDixoY */
             /* https://www.w3schools.com/cssref/css_units.php */
             /* display: flex; */
             /* flex: 1 1 0; 
@@ -366,30 +550,30 @@ justify-items: center;
             height: 100vh;
             /* background-color: var(--background-color-dark-mode); */
             /* https://stackoverflow.com/questions/68732189/how-to-partially-color-an-html-elements-background-from-bottom-to-top-using-css */
-            background: linear-gradient(to right, var(--background-color-dark-mode) 0%, var(--background-color-dark-mode) var(--sidebar-width), #FFFFFF00 var(--sidebar-width), #FFFFFF00 100%);
-            -webkit-transition: 0.5s;  /* linear */
-            transition: 0.5s;
-        }
-        
-        .sidebar.active {
+            background: linear-gradient(to right, var(--background-color-dark-mode) 0%, var(--background-color-dark-mode) var(--settings-sidebar-width), #FFFFFF00 var(--settings-sidebar-width), #FFFFFF00 100%);
+            -webkit-transition: all 0.5s;  /* linear */
+            transition: all 0.5s;
+				}
+				
+				.sidebar #settingsSidebar.active {
             left: 0;
         }
-        
-        .sidebar .settings > * {
+				
+        .sidebar #settingsSidebar > * {
             /* display: block;
             padding: 1rem; */
             text-decoration: none;
             -webkit-transition: 0.5s;
             transition: 0.5s;
         }
-        
-        
-        
+				
+				
+				
         footer {
             display: flex;
             margin-top: 50px;
             background-color: #393E46;
-            height: 325px;
+            min-height: 325px;
             justify-content: space-evenly;
             align-items: stretch;
         }
@@ -427,12 +611,13 @@ justify-items: center;
     <h1>HTML Code Debugger</h1>
     <h2>Having Trouble Finding Errors in Your HTML Code ?<br>
         We've Got a Solution for You !</h2>
-    <pre>Get an instant look of your HTML code by pasting / writing the code in the text box below.
-Best for debugging , feature implementing , educational purpose , etc.</pre>
+    <h3>Get an instant look of your HTML code by pasting / writing the code in the text box below.<br>
+        Best for debugging , feature implementing , educational purpose , etc.</h3>
     <br>
     
-    <div style="width: 100%;">
-        <iframe id="outputIframe" scr="" srcdoc="" title="Test HTML iFrame" width="1056" height="594" frameborder="1" scrolling="yes" allowtransparency="false"></iframe>
+		
+    <div style="width: 100%;"> <!-- todo : output frame as "popup window" -->
+        <iframe id="outputIframe" src="" srcdoc="" title="Test HTML iFrame" width="1056" height="594" frameborder="1" scrolling="yes" allowtransparency="false"></iframe>
         
         <br><br>
         
@@ -482,6 +667,7 @@ Best for debugging , feature implementing , educational purpose , etc.</pre>
     <br><br>
     
     <!-- GOTO -->
+		<!--
     <table style="text-align: center; width: 100%; margin: auto;">
         <tr>
             <th colspan="4">Go To<th>
@@ -496,12 +682,82 @@ Best for debugging , feature implementing , educational purpose , etc.</pre>
     
     <br><br>
     
-    <!-- SideBar -->
     <button type="button" id="" class="button" onclick="toggleSettingsMenu()">Settings</button>
-    <aside class="sidebar">
-        <h3>Settings</h3>
-        <nav class="settings">
-            
+		-->
+		
+    <!-- SideBar -->
+		<aside id="" class="sidebar">
+			  <!-- Sidebar Header -->
+				<div class="sidebarHeader">
+					  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="1.5" stroke="currentColor" class="size-6">
+							  <path stroke-linecap="round" stroke-linejoin="round" d="m6.75 7.5 3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0 0 21 18V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v12a2.25 2.25 0 0 0 2.25 2.25Z" />
+            </svg>
+					  <!-- <img src="https://img.icons8.com/ios-glyphs/30/source-code.png" alt="Brand Icon"> -->
+						<h3><span>Brand Name</span></h3>
+				</div>
+				
+				<!-- Sidebar Content -->
+				<div class="sidebarContent">
+						<h4><span>GOTO</span></h4>
+						<div>
+						    <a class="" onclick="textareaGoto(this.innerHTML)">
+									  <img src="https://img.icons8.com/?size=100&id=102969&format=png&color=000000" alt="Head Icon">
+										<span>Head</span>
+								</a>
+                <a class="" onclick="textareaGoto(this.innerHTML)">
+									  <img src="https://img.icons8.com/?size=100&id=4669&format=png&color=000000" alt="Brush Icon">
+										<span>Style</span>
+								</a>
+                <a class="" onclick="textareaGoto(this.innerHTML)">
+									  <img src="https://img.icons8.com/?size=100&id=9158&format=png&color=000000" alt="Cloth Icon">
+										<span>Body</span>
+								</a>
+                <a class="" onclick="textareaGoto(this.innerHTML)">
+									  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="1.5" stroke="currentColor" class="size-6">
+											  <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
+                    </svg>
+									  <!-- <img src="https://img.icons8.com/?size=100&id=37927&format=png&color=000000" alt="Script Icon"> -->
+										<span>Script</span>
+								</a>
+						</div>
+						
+						<h4><span>Header</span></h4>
+						<div>
+						    <a class="">
+									  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="1.5" stroke="currentColor" class="size-6">
+											  <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
+                    </svg>
+									  <!-- <img src="https://img.icons8.com/?size=100&id=19167&format=png&color=000000" alt=""> -->
+									  <span>Links</span>
+								</a>
+						</div>
+						
+						<h4><span>Header</span></h4>
+						<div>
+						    <a class="">
+									  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="1.5" stroke="currentColor" class="size-6">
+											  <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
+                    </svg>
+									  <!-- <img src="https://img.icons8.com/?size=100&id=19167&format=png&color=000000" alt=""> -->
+									  <span>Links</span>
+								</a>
+						</div>
+				</div>
+				
+				<!-- Sidebar Footer -->
+				<div class="sidebarFooter">
+				    <a id="" class="" onclick="toggleSettingsMenu()">
+							  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="1.5" stroke="currentColor" class="size-6">
+									  <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12a7.5 7.5 0 0 0 15 0m-15 0a7.5 7.5 0 1 1 15 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077 1.41-.513m14.095-5.13 1.41-.513M5.106 17.785l1.15-.964m11.49-9.642 1.149-.964M7.501 19.795l.75-1.3m7.5-12.99.75-1.3m-6.063 16.658.26-1.477m2.605-14.772.26-1.477m0 17.726-.26-1.477M10.698 4.614l-.26-1.477M16.5 19.794l-.75-1.299M7.5 4.205 12 12m6.894 5.785-1.149-.964M6.256 7.178l-1.15-.964m15.352 8.864-1.41-.513M4.954 9.435l-1.41-.514M12.002 12l-3.75 6.495" />
+								</svg>
+								<!-- <img src="https://img.icons8.com/?size=100&id=364&format=png&color=000000" alt="Settings Icon"> -->
+								<span>Settings</span>
+						</a>
+				</div>
+				
+				<nav id="settingsSidebar" class="">
+            <h4>Settings</h4>
+						
             <!-- iFrame Size / Resolution -->
             <label for="inputIframeWidth">iFrame Size :</label>
             <input type="number" id="inputIframeWidth" value="1056" min="100" max="3000" step="1" onfocus="select()" onchange="updateIframeSize(this.value, document.getElementById('inputIframeHeight').value)"> X
@@ -1288,17 +1544,17 @@ Best for debugging , feature implementing , educational purpose , etc.</pre>
         document.body.classList.toggle("light_mode");
     }
     
-    const sidebar = document.getElementsByClassName("sidebar")[0];
+    const settingsSidebar = document.getElementById("settingsSidebar");
     function toggleSettingsMenu() {
         // toggle settings menu
-        sidebar.classList.toggle("active");
+        settingsSidebar.classList.toggle("active");
     }
     
-    sidebar.addEventListener("click", function(event) {
+    settingsSidebar.addEventListener("click", function(event) {
         // https://stackoverflow.com/questions/20025685/detect-click-on-empty-area
-        if ((event.target == document.body.getElementsByTagName("nav")[0]) || (event.target == sidebar)) {
+        if ((event.target == document.body.getElementsByTagName("nav")[0]) || (event.target == settingsSidebar)) {
             // the user click on any blank space of the side bar
-            // sidebar.classList.remove("active");
+            // settingsSidebar.classList.remove("active");
             toggleSettingsMenu();
         }
     });
