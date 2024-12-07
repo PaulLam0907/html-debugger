@@ -134,7 +134,7 @@
             /* https://stackoverflow.com/questions/424192/html-textarea-horizontal-scroll */
             /* https://stackoverflow.com/questions/44754987/getting-osx-safari-to-honor-css-white-space-pre
             https://stackoverflow.com/questions/11697841/wrap-text-like-the-latest-safari-does-with-white-space-pre */
-            word-weap: normal;
+            word-wrap: normal;
             white-space: pre;  /* normal | nowrap */
             outline: none;  /* the border when focused */
         }
@@ -168,9 +168,9 @@
             color: var(--text-color-dark-mode);
             background-color: #393E46;
         }
-        
-        
-        
+				
+				
+				
         /* the console log of iframe */
         #log {
             display: none;  /* inline-block | none */
@@ -193,7 +193,7 @@
         }
         
         
-        
+				
         /* display line number for textarea */
         #lineNumberDisplay {
             font-size: 15px;
@@ -369,13 +369,13 @@ justify-items: center;
 						align-items: center;
 						overflow-x: hidden;
             position: fixed;
+						background-color: var(--background-color-dark-mode);
             padding: 2rem 1rem;  /* vertical horizontal ( space around ) */
 						gap: 10px 0;  /* gap between each child elements */
             top: 0;
             left: 0vw;
             width: 50px;  /* 85 / 250px */
             height: 100vh;
-            background-color: var(--background-color-dark-mode);
 						-webkit-transition: all 0.5s;
             transition: all 0.5s;
         }
@@ -453,7 +453,7 @@ justify-items: center;
 				    display: flex;
 						flex-direction: column;
 						justify-content: center;
-						align-items: left;
+						/* align-items: left; */
 						text-align: center;  /* left */
 						overflow-x: hidden;
 						gap: 10px 0px;  /* gap between each child elements */
@@ -613,16 +613,17 @@ justify-items: center;
         We've Got a Solution for You !</h2>
     <h3>Get an instant look of your HTML code by pasting / writing the code in the text box below.<br>
         Best for debugging , feature implementing , educational purpose , etc.</h3>
+		
     <br>
     
 		
-    <div style="width: 100%;"> <!-- todo : output frame as "popup window" -->
+		<div style="width: 100%;"> <!-- todo : output frame as "popup window" -->
         <iframe id="outputIframe" src="" srcdoc="" title="Test HTML iFrame" width="1056" height="594" frameborder="1" scrolling="yes" allowtransparency="false"></iframe>
         
         <br><br>
         
         <!-- code editor -->
-        <div style="display: flex; width: 100%; align-items: top; justify-content: center;">  <!-- flex-direction: column; align-items: top; justify-content: center; --> <!-- https://stackoverflow.com/questions/19026884/flexbox-center-horizontally-and-vertically -->
+        <div style="display: flex; width: 100%; justify-content: center;">  <!-- flex-direction: column; align-items: top; justify-content: center; --> <!-- https://stackoverflow.com/questions/19026884/flexbox-center-horizontally-and-vertically -->
             <!-- line number -->
             <div id="lineNumberDisplay"></div>
             
@@ -1216,6 +1217,23 @@ justify-items: center;
 <\/script>`;
     }
     
+		// todo iframe as a "popup"
+		
+		const settingsSidebar = document.getElementById("settingsSidebar");
+    function toggleSettingsMenu() {
+        // toggle settings menu
+        settingsSidebar.classList.toggle("active");
+    }
+    
+    settingsSidebar.addEventListener("click", function(event) {
+        // https://stackoverflow.com/questions/20025685/detect-click-on-empty-area
+        if ((event.target == document.body.getElementsByTagName("nav")[0]) || (event.target == settingsSidebar)) {
+            // the user click on any blank space of the side bar
+            // settingsSidebar.classList.remove("active");
+            toggleSettingsMenu();
+        }
+    });
+		
     function updateIframeSize(_width, _height) {
         // change the size of the iframe according to the value of the number input field
         iframe.width = _width;
@@ -1543,21 +1561,6 @@ justify-items: center;
         // body
         document.body.classList.toggle("light_mode");
     }
-    
-    const settingsSidebar = document.getElementById("settingsSidebar");
-    function toggleSettingsMenu() {
-        // toggle settings menu
-        settingsSidebar.classList.toggle("active");
-    }
-    
-    settingsSidebar.addEventListener("click", function(event) {
-        // https://stackoverflow.com/questions/20025685/detect-click-on-empty-area
-        if ((event.target == document.body.getElementsByTagName("nav")[0]) || (event.target == settingsSidebar)) {
-            // the user click on any blank space of the side bar
-            // settingsSidebar.classList.remove("active");
-            toggleSettingsMenu();
-        }
-    });
 </script>
 
 
