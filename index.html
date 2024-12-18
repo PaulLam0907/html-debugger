@@ -19,13 +19,13 @@
             --text-color-light-mode: #222222;
             --background-color-light-mode: #DDDDDD;
             --text-color-dark-mode: #EDEDED;
-            --background-color-dark-mode: #222831;
+            --background-color-dark-mode: #292A2C;  /* #222831; */
             
             /* Secondary Color */
             --text-color-light-mode-secondary: #;
             --background-color-light-mode-secondary: #;
             --text-color-dark-mode-secondary: #;
-            --background-color-dark-mode-secondary: #;
+            --background-color-dark-mode-secondary: #393A3C;
             
             /* Tertiary Color */
             --text-color-light-mode-tertiary: #;
@@ -46,7 +46,7 @@
         
         body {
             margin: 0 0;
-						margin-left: 85px;  /* for the sidebar */
+	    margin-left: 85px;  /* for the sidebar */
             color: var(--text-color-dark-mode);
             background-color: var(--background-color-dark-mode);
             -webkit-transition: 0.5s;
@@ -57,6 +57,7 @@
         .light_mode {
             color: var(--text-color-light-mode);
             background-color: var(--background-color-light-mode);
+--background-color-dark-mode: var(--background-color-light-mode);  /* todo */
         }
         
         .light_mode textarea {
@@ -82,10 +83,10 @@
             background-color: #BCBCBC;
         }
         
-				.light_mode .sidebar {
-				    background-color: var(--background-color-light-mode);
-						box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1):
-				}
+        .light_mode .sidebar {
+            background-color: var(--background-color-light-mode);
+            box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
+        }
 				
         .light_mode .sidebar #settingsSidebar {
             background-color: var(--background-color-light-mode);
@@ -168,9 +169,63 @@
             color: var(--text-color-dark-mode);
             background-color: #393E46;
         }
-				
-				
-				
+	
+	
+	
+        /* class popupModal : Popup Modal Box */
+        /* https://www.w3schools.com/howto/howto_css_modals.asp */
+        /* https://stackoverflow.com/questions/15445865/best-way-to-center-align-a-div-with-unknown-width-and-height */
+        /* https://stackoverflow.com/questions/6810031/css-center-element-within-a-div-element */
+        .popupModal {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;  /* fixed / absolute */
+            /* visibility: visible;  /* visible / hidden */
+            width: 100vw;
+            height: 100vh;
+            top: 100vh;
+left: 0px;
+            /* background-color: #00000000; */
+            /* overflow: auto; */
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+            /* box-shadow: 0px 7px 15px 0px rgba(0, 0, 0, 0.3);  /* x y density shadow-size shadow-color */
+            -webkit-transition: all 0.25s ease-out;
+            transition: all 0.25s ease-out;
+        }
+        
+        .popupModalContainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        /* HTML output iframe */
+        #outputIframe {
+            /* margin: 0 auto; */
+            background-color: #DDDDDD;
+            box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.3);  /* x y density shadow-size shadow-color */
+        }
+        
+        /* full screen button for outputIframe */
+        #outputIframeFullScreenButton {
+            position: absolute;
+            /* float: right; */
+            right: 0;
+            top: 0;
+            margin: 20px 30px;  /* vertical horizontal */
+            width: 2rem;
+            height: 2rem;
+        }
+        
+        #outputIframeFullScreenButton:hover {
+            background-color: #777777;
+            border-radius: 4px;
+        }
+        
+        
+        
         /* the console log of iframe */
         #log {
             display: none;  /* inline-block | none */
@@ -178,6 +233,8 @@
             margin: auto;  /* horizontal center align */
             height: 150px;
             overflow: scroll;
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* FireFox */
         }
         
         #log button {
@@ -360,184 +417,188 @@ justify-items: center;
         /* class sidebar */
         .sidebar {
             /* https://www.youtube.com/watch?v=VU74s-XAn7M */
-						/* https://www.youtube.com/watch?v=uy1tgKOnPB0 */
+            /* https://www.youtube.com/watch?v=uy1tgKOnPB0 */
             /* flex: 1 1 0; 
             /* margin-width: 300px; */
-						display: flex;
-						flex-direction: column;
-						justify-content: space-between;
-						align-items: center;
-						overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            overflow-x: hidden;
             position: fixed;
-						background-color: var(--background-color-dark-mode);
+            background-color: var(--background-color-dark-mode);
             padding: 2rem 1rem;  /* vertical horizontal ( space around ) */
-						gap: 10px 0;  /* gap between each child elements */
+            gap: 10px 0;  /* gap between each child elements */
             top: 0;
             left: 0vw;
             width: 50px;  /* 85 / 250px */
             height: 100vh;
-						-webkit-transition: all 0.5s;
+            -webkit-transition: all 0.5s;
             transition: all 0.5s;
         }
 				
-				.sidebar span {
-				    padding-left: 10px;
-				}
-				
-				.sidebar:hover {
-				    width: 200px;
-				}
-				
-				.sidebar:hover .sidebarHeader span {
-				    display: block;
-				}
+        .sidebar span {
+            padding-left: 10px;
+        }
         
-				.sidebar:hover .sidebarContent h4 {
-				    opacity: 1;
-				}
+        .sidebar:hover {
+            width: 200px;
+        }
+        
+        .sidebar:hover .sidebarHeader span {
+            display: block;
+        }
+        
+        .sidebar:hover .sidebarContent h4 {
+            opacity: 1;
+        }
+        
+	.sidebar:hover .sidebarContent div a span {
+	    display: block;
+	}
+	
+        .sidebar:hover .sidebarFooter span {
+	    display: block;
+	}
+	
+	/* class sidebarHeader */
+	.sidebarHeader {
+	    display: flex;
+	    flex-direction: row;
+	    justify-content: center;
+	    align-items: center;
+	    text-align: center;
+            overflow-x: hidden;
+	    align-items: center;
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* FireFox */
+
+	}
+	
+	.sidebarHeader img {
+	    width: 50px;
+	    border-radius: 50%;
+	}
+	
+	.sidebarHeader svg {
+	    width: 50px;
+	    height: 50px;
+	    border-radius: 15%;
+	}
+	
+	.sidebarHeader h3 span {
+	    display: none;
+	    font-size: 1.25rem;
+	    font-weight: 600;
+	    margin-left: 5px;
+	}
+	
+	/* class sidebarContent */
+	.sidebarContent {
+	    overflow-x: hidden;
+	    overflow-y: scroll;
+	    scrollbar-width: none;
+	    width: 100%;
+	}
+	
+	.sidebarContent h4 {
+	    opacity: 0;
+	    font-weight: 600;
+	    margin: 0px 0px;
+	    padding: 15px 50px;
+	    white-space: nowrap;
+	    text-align: left;
+	}
+	
+	.sidebarContent div {
+	    display: flex;
+            flex-direction: column;
+            justify-content: center;
+	    /* align-items: left; */
+	    text-align: center;  /* left */
+	    overflow-x: hidden;
+	    gap: 10px 0px;  /* gap between each child elements */
+	    margin: 10px 0;
+	}
+	
+	.sidebarContent div a {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+	    font-weight: 500;
+	    padding: 15px 0px;  /* 15px 30px */
+	    white-space: nowrap;
+	}
+	
+	.sidebarContent div a:hover {
+	    color: #555555;
+	    background: #AAAAAA;
+	    border-radius: 4px;
+	}
+	
+	.sidebarContent div a img {
+	    width: 25px;
+	    border-radius: 50%;
+	}
+	
+	.sidebarContent div a svg {
+	    display: block;
+	    width: 25px;
+	    height: 25px;
+	    border-radius: 15%;
+	}
+	
+	.sidebarContent div a span {
+	    display: none;
+	}
+	
+	/* class sidebarFooter */
+	.sidebarFooter {
+	    display: flex;
+	    flex-direction: column;
+	    justify-content: center;
+	    align-items: center;
+	    width: 100%;
+	    /* margin: 10px 0; */
+	    margin-bottom: 75px;
+	}
+        
+	.sidebarFooter a {
+	    display: flex;
+	    flex-direction: row;
+	    justify-content: center;
+	    align-items: center;
+	    font-weight: 500;
+	    white-space: nowrap;
+	    text-align: center;
+	    width: 100%;
+	    padding: 15px 0;
+	}
 				
-				.sidebar:hover .sidebarContent div a span {
-				    display: block;
-				}
-				.sidebar:hover .sidebarFooter span {
-				    display: block;
-				}
+	.sidebarFooter a:hover {
+	    color: #555555;
+	    background: #AAAAAA;
+	    border-radius: 4px;
+	}
+	
+	.sidebarFooter img {
+	    width: 25px;
+	    border-radius: 50%;
+	}
+	
+	.sidebarFooter svg {
+	    width: 25px;
+	    height: 25px;
+	    border-radius: 50%;
+	}
+	
+	.sidebarFooter span {
+	    display: none;
+	}
 				
-				/* class sidebarHeader */
-				.sidebarHeader {
-				    display: flex;
-						flex-direction: row;
-						justify-content: center;
-						align-items: center;
-						text-align: center;
-						overflow-x: hidden;
-						align-items: center;
-				}
-				
-				.sidebarHeader img {
-				    width: 50px;
-				    border-radius: 50%;
-				}
-				
-				.sidebarHeader svg {
-				    width: 50px;
-						height: 50px;
-				    border-radius: 15%;
-				}
-				
-				.sidebarHeader h3 span {
-				    display: none;
-				    font-size: 1.25rem;
-						font-weight: 600;
-						margin-left: 5px;
-				}
-				
-				/* class sidebarContent */
-				.sidebarContent {
-				    overflow-x: hidden;
-				    overflow-y: scroll;
-						scrollbar-width: none;
-						width: 100%;
-				}
-				
-				.sidebarContent h4 {
-				    opacity: 0;
-				    font-weight: 600;
-						margin: 0px 0px;
-						padding: 15px 50px;
-						white-space: nowrap;
-						text-align: left;
-				}
-				
-				.sidebarContent div {
-				    display: flex;
-						flex-direction: column;
-						justify-content: center;
-						/* align-items: left; */
-						text-align: center;  /* left */
-						overflow-x: hidden;
-						gap: 10px 0px;  /* gap between each child elements */
-						margin: 10px 0;
-				}
-				
-				.sidebarContent div a {
-			    	display: flex;
-		    		flex-direction: row;
-						justify-content: center;
-						font-weight: 500;
-						padding: 15px 0px;  /* 15px 30px */
-						white-space: nowrap;
-				}
-				
-				.sidebarContent div a:hover {
-				    color: #555555;
-						background: #AAAAAA;
-				    border-radius: 4px;
-				}
-				
-				.sidebarContent div a img {
-				    width: 25px;
-						border-radius: 50%;
-				}
-				
-				.sidebarContent div a svg {
-				    display: block;
-				    width: 25px;
-						height: 25px;
-						border-radius: 15%;
-				}
-				
-				.sidebarContent div a span {
-				    display: none;
-				}
-				
-			  /* class sidebarFooter */
-				.sidebarFooter {
-				    display: flex;
-						flex-direction: column;
-						justify-content: center;
-						align-items: center;
-				    width: 100%;
-						/* margin: 10px 0; */
-						margin-bottom: 75px;
-				}
-				
-				.sidebarFooter a {
-				    display: flex;
-		    		flex-direction: row;
-				    justify-content: center;
-						align-items: center;
-						font-weight: 500;
-						white-space: nowrap;
-						text-align: center;
-						width: 100%;
-						padding: 15px 0;
-				}
-				
-				.sidebarFooter a:hover {
-				    color: #555555;
-						background: #AAAAAA;
-				    border-radius: 4px;
-				}
-				
-				.sidebarFooter img {
-				    width: 25px;
-						border-radius: 50%;
-				}
-				
-				.sidebarFooter svg {
-				    width: 25px;
-						height: 25px;
-						border-radius: 50%;
-				}
-				
-				.sidebarFooter span {
-				    display: none;
-				}
-				
-				/* Settings Sidebar */
-				.sidebar #settingsSidebar {
-				    /* https://youtu.be/neb7WcDixoY */
+	/* Settings Sidebar */
+	.sidebar #settingsSidebar {
+	    /* https://youtu.be/neb7WcDixoY */
             /* https://www.w3schools.com/cssref/css_units.php */
             /* display: flex; */
             /* flex: 1 1 0; 
@@ -553,9 +614,9 @@ justify-items: center;
             background: linear-gradient(to right, var(--background-color-dark-mode) 0%, var(--background-color-dark-mode) var(--settings-sidebar-width), #FFFFFF00 var(--settings-sidebar-width), #FFFFFF00 100%);
             -webkit-transition: all 0.5s;  /* linear */
             transition: all 0.5s;
-				}
+	}
 				
-				.sidebar #settingsSidebar.active {
+	.sidebar #settingsSidebar.active {
             left: 0;
         }
 				
@@ -616,11 +677,26 @@ justify-items: center;
 		
     <br>
     
-		
-		<div style="width: 100%;"> <!-- todo : output frame as "popup window" -->
-        <iframe id="outputIframe" src="" srcdoc="" title="Test HTML iFrame" width="1056" height="594" frameborder="1" scrolling="yes" allowtransparency="false"></iframe>
+    
+    <!-- Popup Modal -->
+    <div id="outputIframePopupModal" class="popupModal">
+        <div class="popupModalContainer">
+            <!-- HTML output -->
+            <iframe id="outputIframe" src="" srcdoc="" title="Test HTML iFrame" width="1056" height="594" frameborder="1" scrolling="yes" allow="fullscreen" allowtransparency="false"></iframe>
+            <!-- full-screen iFrame button -->
+            <span id="outputIframeFullScreenButton" class="" title="Full Screen" onclick="document.getElementById('outputIframe').requestFullscreen()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M432 320v112H320M421.8 421.77L304 304M80 192V80h112M90.2 90.23L208 208M320 80h112v112M421.77 90.2L304 208M192 432H80V320M90.23 421.8L208 304"/>
+                </svg>
+            </span>
+        </div>
+    </div>
+    
+    
+    <div style="width: 100%;">
+        <!-- <iframe id="outputIframe" src="" srcdoc="" title="Test HTML iFrame" width="1056" height="594" frameborder="1" scrolling="yes" allowtransparency="false"></iframe>
         
-        <br><br>
+        <br><br> -->
         
         <!-- code editor -->
         <div style="display: flex; width: 100%; justify-content: center;">  <!-- flex-direction: column; align-items: top; justify-content: center; --> <!-- https://stackoverflow.com/questions/19026884/flexbox-center-horizontally-and-vertically -->
@@ -668,7 +744,7 @@ justify-items: center;
     <br><br>
     
     <!-- GOTO -->
-		<!--
+    <!--
     <table style="text-align: center; width: 100%; margin: auto;">
         <tr>
             <th colspan="4">Go To<th>
@@ -684,81 +760,101 @@ justify-items: center;
     <br><br>
     
     <button type="button" id="" class="button" onclick="toggleSettingsMenu()">Settings</button>
-		-->
+    -->
 		
     <!-- SideBar -->
-		<aside id="" class="sidebar">
-			  <!-- Sidebar Header -->
-				<div class="sidebarHeader">
-					  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="1.5" stroke="currentColor" class="size-6">
-							  <path stroke-linecap="round" stroke-linejoin="round" d="m6.75 7.5 3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0 0 21 18V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v12a2.25 2.25 0 0 0 2.25 2.25Z" />
+    <aside id="" class="sidebar">
+        <!-- Sidebar Header -->
+	<div class="sidebarHeader">
+	    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="1.5" stroke="currentColor" class="size-6">
+	        <path stroke-linecap="round" stroke-linejoin="round" d="m6.75 7.5 3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0 0 21 18V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v12a2.25 2.25 0 0 0 2.25 2.25Z" />
             </svg>
-					  <!-- <img src="https://img.icons8.com/ios-glyphs/30/source-code.png" alt="Brand Icon"> -->
-						<h3><span>Brand Name</span></h3>
-				</div>
-				
-				<!-- Sidebar Content -->
-				<div class="sidebarContent">
-						<h4><span>GOTO</span></h4>
-						<div>
-						    <a class="" onclick="textareaGoto(this.innerHTML)">
-									  <img src="https://img.icons8.com/?size=100&id=102969&format=png&color=000000" alt="Head Icon">
-										<span>Head</span>
-								</a>
-                <a class="" onclick="textareaGoto(this.innerHTML)">
-									  <img src="https://img.icons8.com/?size=100&id=4669&format=png&color=000000" alt="Brush Icon">
-										<span>Style</span>
-								</a>
-                <a class="" onclick="textareaGoto(this.innerHTML)">
-									  <img src="https://img.icons8.com/?size=100&id=9158&format=png&color=000000" alt="Cloth Icon">
-										<span>Body</span>
-								</a>
-                <a class="" onclick="textareaGoto(this.innerHTML)">
-									  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="1.5" stroke="currentColor" class="size-6">
-											  <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
+	    <!-- <img src="https://img.icons8.com/ios-glyphs/30/source-code.png" alt="Brand Icon"> -->
+	    <h3><span>Brand Name</span></h3>
+        </div>
+        
+        <!-- Sidebar Content -->
+        <div class="sidebarContent">
+            <h4><span>Execution</span></h4>
+	    <div>
+                <!-- button to open Popup Modal ( run the HTML code ) -->
+	        <a class="" onclick="document.getElementById('outputIframePopupModal').style.top = '0vh';" title="F9">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+                        <path d="M112 111v290c0 17.44 17 28.52 31 20.16l247.9-148.37c12.12-7.25 12.12-26.33 0-33.58L143 90.84c-14-8.36-31 2.72-31 20.16z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"/>
                     </svg>
-									  <!-- <img src="https://img.icons8.com/?size=100&id=37927&format=png&color=000000" alt="Script Icon"> -->
-										<span>Script</span>
-								</a>
-						</div>
-						
-						<h4><span>Header</span></h4>
-						<div>
-						    <a class="">
-									  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="1.5" stroke="currentColor" class="size-6">
-											  <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
+		    <span>Run</span>
+		</a>
+            </div>
+            
+            <h4><span>GOTO</span></h4>
+	    <div>
+                <a class="" onclick="textareaGoto(this.children[1].innerHTML)">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.182 15.182a4.5 4.5 0 0 1-6.364 0M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Z" />
                     </svg>
-									  <!-- <img src="https://img.icons8.com/?size=100&id=19167&format=png&color=000000" alt=""> -->
-									  <span>Links</span>
-								</a>
-						</div>
-						
-						<h4><span>Header</span></h4>
-						<div>
-						    <a class="">
-									  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="1.5" stroke="currentColor" class="size-6">
-											  <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
+	            <!-- <img src="https://img.icons8.com/?size=100&id=102969&format=png&color=000000" alt="Head Icon"> -->
+		    <span>Head</span>
+		</a>
+                <a class="" onclick="textareaGoto(this.children[1].innerHTML)">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+                        <path d="M452.37 59.63h0a40.49 40.49 0 00-57.26 0L184 294.74c23.08 4.7 46.12 27.29 49.26 49.26l219.11-227.11a40.49 40.49 0 000-57.26zM138 336c-29.88 0-54 24.5-54 54.86 0 23.95-20.88 36.57-36 36.57C64.56 449.74 92.82 464 120 464c39.78 0 72-32.73 72-73.14 0-30.36-24.12-54.86-54-54.86z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/>
                     </svg>
-									  <!-- <img src="https://img.icons8.com/?size=100&id=19167&format=png&color=000000" alt=""> -->
-									  <span>Links</span>
-								</a>
-						</div>
-				</div>
-				
-				<!-- Sidebar Footer -->
-				<div class="sidebarFooter">
-				    <a id="" class="" onclick="toggleSettingsMenu()">
-							  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="1.5" stroke="currentColor" class="size-6">
-									  <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12a7.5 7.5 0 0 0 15 0m-15 0a7.5 7.5 0 1 1 15 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077 1.41-.513m14.095-5.13 1.41-.513M5.106 17.785l1.15-.964m11.49-9.642 1.149-.964M7.501 19.795l.75-1.3m7.5-12.99.75-1.3m-6.063 16.658.26-1.477m2.605-14.772.26-1.477m0 17.726-.26-1.477M10.698 4.614l-.26-1.477M16.5 19.794l-.75-1.299M7.5 4.205 12 12m6.894 5.785-1.149-.964M6.256 7.178l-1.15-.964m15.352 8.864-1.41-.513M4.954 9.435l-1.41-.514M12.002 12l-3.75 6.495" />
-								</svg>
-								<!-- <img src="https://img.icons8.com/?size=100&id=364&format=png&color=000000" alt="Settings Icon"> -->
-								<span>Settings</span>
-						</a>
-				</div>
-				
-				<nav id="settingsSidebar" class="">
+                    <!-- <img src="https://img.icons8.com/?size=100&id=4669&format=png&color=000000" alt="Brush Icon"> -->
+	            <span>Style</span>
+	        </a>
+                <a class="" onclick="textareaGoto(this.children[1].innerHTML)">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+                        <path d="M314.56 48s-22.78 8-58.56 8-58.56-8-58.56-8a31.94 31.94 0 00-10.57 1.8L32 104l16.63 88 48.88 5.52a24 24 0 0121.29 24.58L112 464h288l-6.8-241.9a24 24 0 0121.29-24.58l48.88-5.52L480 104 325.13 49.8a31.94 31.94 0 00-10.57-1.8zM333.31 52.66a80 80 0 01-154.62 0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/>
+                    </svg>
+                    <span>Body</span>
+		</a>
+                <a class="" onclick="textareaGoto(this.children[1].innerHTML)">
+		    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="1.5" stroke="currentColor" class="size-6">
+		        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
+                    </svg>
+		    <!-- <img src="https://img.icons8.com/?size=100&id=37927&format=png&color=000000" alt="Script Icon"> -->
+		    <span>Script</span>
+		</a>
+	    </div>
+	    
+	    <h4><span>Header</span></h4>
+	    <div>
+                <a class="">
+	            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="1.5" stroke="currentColor" class="size-6">
+		        <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
+                    </svg>
+		    <!-- <img src="https://img.icons8.com/?size=100&id=19167&format=png&color=000000" alt=""> -->
+		    <span>Links</span>
+		</a>
+	    </div>
+            
+	    <h4><span>Header</span></h4>
+	    <div>
+	        <a class="">
+		    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="1.5" stroke="currentColor" class="size-6">
+		        <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
+                    </svg>
+		    <!-- <img src="https://img.icons8.com/?size=100&id=19167&format=png&color=000000" alt=""> -->
+		    <span>Links</span>
+		</a>
+            </div>
+        </div>
+        
+	<!-- Sidebar Footer -->
+	<div class="sidebarFooter">
+	    <a id="" class="" onclick="toggleSettingsMenu()">
+	        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="1.5" stroke="currentColor" class="size-6">
+		    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12a7.5 7.5 0 0 0 15 0m-15 0a7.5 7.5 0 1 1 15 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077 1.41-.513m14.095-5.13 1.41-.513M5.106 17.785l1.15-.964m11.49-9.642 1.149-.964M7.501 19.795l.75-1.3m7.5-12.99.75-1.3m-6.063 16.658.26-1.477m2.605-14.772.26-1.477m0 17.726-.26-1.477M10.698 4.614l-.26-1.477M16.5 19.794l-.75-1.299M7.5 4.205 12 12m6.894 5.785-1.149-.964M6.256 7.178l-1.15-.964m15.352 8.864-1.41-.513M4.954 9.435l-1.41-.514M12.002 12l-3.75 6.495" />
+		</svg>
+		<!-- <img src="https://img.icons8.com/?size=100&id=364&format=png&color=000000" alt="Settings Icon"> -->
+		<span>Settings</span>
+	    </a>
+        </div>
+	
+        <!-- Settings Sidebar -->
+	<nav id="settingsSidebar" class="">
             <h4>Settings</h4>
-						
+            
             <!-- iFrame Size / Resolution -->
             <label for="inputIframeWidth">iFrame Size :</label>
             <input type="number" id="inputIframeWidth" value="1056" min="100" max="3000" step="1" onfocus="select()" onchange="updateIframeSize(this.value, document.getElementById('inputIframeHeight').value)"> X
@@ -1058,6 +1154,7 @@ justify-items: center;
         log.scrollTop = log.scrollHeight;
     });
     
+    // ====================================================================================================
     function updateIframe() {
         // this function is being called everytime when the content of textarea change
         
@@ -1217,29 +1314,14 @@ justify-items: center;
 <\/script>`;
     }
     
-		// todo iframe as a "popup"
-		
-		const settingsSidebar = document.getElementById("settingsSidebar");
-    function toggleSettingsMenu() {
-        // toggle settings menu
-        settingsSidebar.classList.toggle("active");
-    }
-    
-    settingsSidebar.addEventListener("click", function(event) {
-        // https://stackoverflow.com/questions/20025685/detect-click-on-empty-area
-        if ((event.target == document.body.getElementsByTagName("nav")[0]) || (event.target == settingsSidebar)) {
-            // the user click on any blank space of the side bar
-            // settingsSidebar.classList.remove("active");
-            toggleSettingsMenu();
-        }
-    });
-		
+    // ====================================================================================================
     function updateIframeSize(_width, _height) {
         // change the size of the iframe according to the value of the number input field
         iframe.width = _width;
         iframe.height = _height;
     }
-
+    
+    // ====================================================================================================
     var textarea_line_number = 1;
     function updateLineNumber() {
         // this function is being called everytime when the content of textarea change
@@ -1265,6 +1347,7 @@ justify-items: center;
     }
     updateLineNumber();
     
+    // ====================================================================================================
     // allow line number scroll with textarea
     /* Procedure / Approach :
         detect textarea scroll event
@@ -1287,7 +1370,8 @@ justify-items: center;
         
         previous_scrollY = current_scrollY;
     }
-
+    
+    // ====================================================================================================
     function highlightLineNumber() {
         // highlight the line number according to the cursor position in textareas
         var cursor_position_line = textarea.value.substr(0, textarea.selectionStart).split("\n").length;
@@ -1304,6 +1388,7 @@ justify-items: center;
     }
     highlightLineNumber();
     
+    // ====================================================================================================
     // auto indent when an Enter key is pressed
     // size of indentation depends on the previous line
     /* Reference :
@@ -1422,6 +1507,7 @@ justify-items: center;
         highlightLineNumber();
     });
     
+    // ====================================================================================================
     function onTextareaResize() {
         // when the textarea is being resized manually from client
         // https://stackoverflow.com/questions/5570390/resize-event-for-textarea
@@ -1431,6 +1517,7 @@ justify-items: center;
     }
     new MutationObserver(onTextareaResize).observe(textarea, { attributes: true });
     
+    // ====================================================================================================
     function resetTextareaContent() {
         // reset the content of the textarea to default value
         defaultText = `<!DOCTYPE html>
@@ -1471,6 +1558,7 @@ justify-items: center;
         }
     }
     
+    // ====================================================================================================
     var count = { };
     var index = { };
     function textareaGoto(_tag) {
@@ -1519,6 +1607,37 @@ justify-items: center;
         highlightLineNumber();
     }
     
+    // ====================================================================================================
+    const popupModal = document.getElementsByClassName("popupModal");
+    for (var i = 0; i < popupModal.length; ++i) {
+        popupModal[i].addEventListener("click", function(event) {
+            
+            if (event.target.className == "popupModal") {
+                // click inside popupModal
+                // but not its content
+                // --> hide popup modal
+                this.style.top = "100vh";
+            }
+        });
+    }
+    
+    // ====================================================================================================
+    const settingsSidebar = document.getElementById("settingsSidebar");
+    function toggleSettingsMenu() {
+        // toggle settings menu
+        settingsSidebar.classList.toggle("active");
+    }
+    
+    settingsSidebar.addEventListener("click", function(event) {
+        // https://stackoverflow.com/questions/20025685/detect-click-on-empty-area
+        if ((event.target == document.body.getElementsByTagName("nav")[0]) || (event.target == settingsSidebar)) {
+            // the user click on any blank space of the side bar
+            // settingsSidebar.classList.remove("active");
+            toggleSettingsMenu();
+        }
+    });
+    
+    // ====================================================================================================
     function updateTextareaFontSize(_font_size) {
         // change the font size of the textarea according to the value of the number input field
         textarea.style.fontSize = _font_size + "px";
@@ -1527,6 +1646,7 @@ justify-items: center;
         updateLineNumber();
     }
     
+    // ====================================================================================================
     function updateTextareaFontFamily(_font_family) {
         // change the font family of the textarea according to the value of the dropdown list ( select tag )
         textarea.style.fontFamily = _font_family;
@@ -1535,6 +1655,7 @@ justify-items: center;
         updateLineNumber();
     }
     
+    // ====================================================================================================
     function updateTextareaLineHeight(_line_height) {
         // change the line height of the textarea according to the value of the number input field
         textarea.style.lineHeight = _line_height;
@@ -1542,6 +1663,7 @@ justify-items: center;
         updateLineNumber();
     }
     
+    // ====================================================================================================
     function toggleTextWrap() {
         // toggle text wrap in textarea
         
@@ -1555,11 +1677,43 @@ justify-items: center;
         }
     }
     
+    // ====================================================================================================
     function toggleDarkMode() {
         // toggle dark mode
         
         // body
         document.body.classList.toggle("light_mode");
+    }
+    
+    // ====================================================================================================
+    var keyPressed = [];
+    window.onkeydown = function(event) {
+        
+        if (!keyPressed.includes(event.key)) {
+            // key pressed not in existing list
+            // ie. not recording repeated key press
+            // --> record the keyboard key pressed
+            keyPressed[keyPressed.length] = event.key;
+        }
+    }
+    
+    window.onkeyup = function(event) {
+        // keyboard shortcut
+        if (keyPressed.includes("F9")) {
+            event.preventDefault();  // prevent default keyboard actions
+            
+            // toggle the outputIframe in popupModal
+            if (document.getElementById("outputIframePopupModal").style.top != "0vh") {
+                // show
+                document.getElementById("outputIframePopupModal").style.top = "0vh";
+                            
+            } else if (document.getElementById("outputIframePopupModal").style.top == "0vh") {
+                // hide
+                document.getElementById("outputIframePopupModal").style.top = "100vh";
+            }
+        }
+        
+        keyPressed = [];  // empty the list
     }
 </script>
 
