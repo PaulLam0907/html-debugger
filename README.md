@@ -21,7 +21,7 @@ To view the webpage on browser , fire the URL : https://paullam0907.github.io/ht
 
 Pull requests are welcome. 
 
-Kindly open an issue for discussion of feature requests, bug reports, or any changes related to the project.
+Kindly open an issue for discussion of feature requests, bug reports, any changes / suggestions, etc. related to the project.
 
 
 ## License
