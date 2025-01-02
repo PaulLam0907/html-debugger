@@ -8,30 +8,47 @@
     <meta name="description" content="HTML CSS JavaScript Debugger">
     <meta name="autor" content="Paul Lam Siu Ping">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- https://www.w3schools.com/howto/howto_html_favicon.asp -->
+    <!-- https://stackoverflow.com/questions/4888377/how-to-add-a-browser-tab-icon-favicon-for-a-website -->
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     
     
     <style>
         :root {
             /* COLOR */
-            --transparent: #00000000;
+            /* https://m3.material.io/styles/color/roles */
+            /* https://www.w3schools.com/colors/colors_theory.asp */
+            /* https://www.w3schools.com/colors/colors_schemes.asp */
             
             /* Primary Color */
             --text-color-light-mode: #222222;
             --background-color-light-mode: #DDDDDD;
+            
             --text-color-dark-mode: #EDEDED;
             --background-color-dark-mode: #292A2C;  /* #222831; */
             
+            --text-color: var(--text-color-dark-mode);
+            --background-color: var(--background-color-dark-mode);
+            
             /* Secondary Color */
-            --text-color-light-mode-secondary: #;
-            --background-color-light-mode-secondary: #;
-            --text-color-dark-mode-secondary: #;
+            --text-color-light-mode-secondary: #393A3C;
+            --background-color-light-mode-secondary: #E7E7E1;
+            
+            --text-color-dark-mode-secondary: #E7E7E1;
             --background-color-dark-mode-secondary: #393A3C;
             
+            --text-color-secondary: var(--text-color-dark-mode-secondary);
+            --background-color-secondary: var(--background-color-dark-mode-secondary);
+            
             /* Tertiary Color */
-            --text-color-light-mode-tertiary: #;
-            --background-color-light-mode-tertiary: #;
-            --text-color-dark-mode-tertiary: #;
-            --background-color-dark-mode-tertiary: #;
+            --text-color-light-mode-tertiary: #1D1E1F;
+            --background-color-light-mode-tertiary: #B3B3B6;
+            
+            --text-color-dark-mode-tertiary: #E3E3E6;
+            --background-color-dark-mode-tertiary: #3D3E3F;
+            
+            --text-color-tertiary: var(--text-color-dark-mode-tertiary);
+            --background-color-tertiary: var(--background-color-dark-mode-tertiary);
             
             
             /* FONT */
@@ -47,8 +64,8 @@
         body {
             margin: 0 0;
 	    margin-left: 55px;  /* for the sidebar */
-            color: var(--text-color-dark-mode);
-            background-color: var(--background-color-dark-mode);
+            color: var(--text-color);
+            background-color: var(--background-color);
             -webkit-transition: 0.5s;
             transition: 0.5s;
         }
@@ -61,7 +78,7 @@
         }
         
         ::-webkit-scrollbar-track {
-            background: var(--background-color-dark-mode);
+            background: var(--background-color);
         }
         
         ::-webkit-scrollbar-thumb {
@@ -70,50 +87,41 @@
         }
         
         ::-webkit-scrollbar-corner {
-            background: var(--background-color-dark-mode);
+            background: var(--background-color);
         }
+        
+        
         
         /* class light mode */
         .light_mode {
-            color: var(--text-color-light-mode);
-            background-color: var(--background-color-light-mode);
---background-color-dark-mode: var(--background-color-light-mode);  /* todo */
-        }
-        
-        .light_mode textarea {
-            color: var(--text-color-light-mode);
-        }
-        
-        .light_mode label {
-            color: var(--text-color-light-mode);
-            background-color: var(--transparent);
+            --text-color: var(--text-color-light-mode);
+            --background-color: var(--background-color-light-mode);
+            
+            --text-color-secondary: var(--text-color-light-mode-secondary);
+            --background-color-secondary: var(--background-color-light-mode-secondary);
+            
+            --text-color-tertiary: var(--text-color-light-mode-tertiary);
+            --background-color-tertiary: var(--background-color-light-mode-tertiary);
         }
         
         .light_mode input {
-            color: var(--text-color-light-mode);
-            background-color: var(--transparent);
+            background-color: transparent;
         }
         
         .light_mode select {
-            color: var(--text-color-light-mode);
-            background-color: var(--transparent);
+            background-color: transparent;
         }
         
         .light_mode #lineNumberDisplay span.Highlighted {
             background-color: #BCBCBC;
         }
-        
-        .light_mode .sidebar {
-            background-color: var(--background-color-light-mode);
-            box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
-        }
 				
-        .light_mode .sidebar #settingsSidebar {
+        /* .light_mode .sidebar #settingsSidebar {  /* MIGRATED TO POPUP MODAL */ /*
             background-color: var(--background-color-light-mode);
             box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
             
             background: linear-gradient(to right, var(--background-color-light-mode) 0%, var(--background-color-light-mode) var(--settings-sidebar-width), #FFFFFF00 var(--settings-sidebar-width), #FFFFFF00 100%);
-        }
+        } */
         
         .light_mode footer {
             background-color: #BCBCBC;
@@ -125,8 +133,9 @@
         
         h1, h2, h3 {
             text-align: center;
-            margin-top: 50px;
+            /* margin-top: 50px;
             margin-bottom: 50px;
+            margin: 50px 0; */
         }
         
         p, pre, label, button {
@@ -144,9 +153,10 @@
         
         textarea {
             font-size: 15px;
-            color: var(--text-color-dark-mode);
-            background-color: transparent;
+            font-family: consolas, Menlo, "courier new", monospace;
             line-height: 1.3;
+            color: var(--text-color);
+            background-color: transparent;
             margin: auto 0;
             /* https://stackoverflow.com/questions/47817/most-elegant-way-to-force-a-textarea-element-to-line-wrap-regardless-of-white */
             /* word-wrap: break-word;
@@ -177,16 +187,17 @@
         */
         
         label {
-            color: var(--text-color-dark-mode);
+            color: var(--text-color);
+            background-color: transparent;
         }
         
         input {
-            color: var(--text-color-dark-mode);
+            color: var(--text-color);
             background-color: #393E46;
         }
         
         select {
-            color: var(--text-color-dark-mode);
+            color: var(--text-color);
             background-color: #393E46;
         }
 	
@@ -207,13 +218,13 @@ visibility: hidden;
             height: 100vh;
             top: 100vh;
 left: 0px;
-            /* background-color: #00000000; */
+            background-color: #00000033;
             /* overflow: auto; */
             backdrop-filter: blur(3px);
             -webkit-backdrop-filter: blur(3px);
             /* box-shadow: 0px 7px 15px 0px rgba(0, 0, 0, 0.3);  /* x y density shadow-size shadow-color */
-            -webkit-transition: all 0.25s ease-out;
-            transition: all 0.25s ease-out;
+            -webkit-transition: all 0.2s ease-out;
+            transition: all 0.2s ease-out;
         }
         
         .popupModalContainer {
@@ -248,6 +259,7 @@ left: 0px;
         #outputIframeFullScreenButton:hover {
             background-color: #777777;
             border-radius: 4px;
+            cursor: pointer;
         }
         
         
@@ -453,23 +465,24 @@ justify-items: center;
             align-items: center;
             /* overflow-x: hidden; */
             position: fixed;
-            background-color: var(--background-color-dark-mode);
-            padding: 0rem 0.5rem;  /* vertical horizontal ( space around ) */
-            margin: 0 0;
-            gap: 10px 0;  /* gap between each child elements */
             top: 0;
             left: 0vw;
             width: 40px;  /* 85 / 250px */
             height: 100vh;
+            background-color: var(--background-color);
+            padding: 0rem 0.5rem;  /* vertical horizontal ( space around ) */
+            margin: 0 0;
+            gap: 10px 0;  /* gap between each child elements */
+            box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
             -webkit-transition: all 0.5s;
             transition: all 0.5s;
         }
 				
-        .sidebar span {
+        /* .sidebar span {
             padding-left: 10px;
         }
         
-        /* .sidebar:hover {
+        .sidebar:hover {
             width: 200px;
         }
         
@@ -496,10 +509,10 @@ justify-items: center;
 	    justify-content: center;
 	    align-items: center;
 	    text-align: center;
+            margin-top: 15px;
             overflow-x: hidden;
             -ms-overflow-style: none;  /* IE and Edge */
             scrollbar-width: none;  /* FireFox */
-
 	}
 	
 	.sidebarHeader img {
@@ -522,6 +535,7 @@ justify-items: center;
 	
 	/* class sidebarContent */
 	.sidebarContent {
+            /* position: relative; */
 	    overflow-x: hidden;
 	    overflow-y: scroll;
 	    scrollbar-width: none;
@@ -552,6 +566,7 @@ justify-items: center;
             display: flex;
             flex-direction: row;
             justify-content: center;
+            align-items: center;
 	    font-weight: 500;
 	    padding: 10px 0px;  /* 15px 30px */
 	    white-space: nowrap;
@@ -625,24 +640,37 @@ justify-items: center;
 	    display: none;
 	}
         
-	/* Settings Sidebar */
-	.sidebar #settingsSidebar {
+        /* class sidebarTooltip */
+        .sidebar a:hover .sidebarTooltip {
+            display: block;
+            position: absolute;
+            left: 70px;
+            padding: 0.4rem 1.2rem;
+            line-height: 1.2rem;
+            color: #333333;
+            background-color: #AAAAAA;
+            box-shadow: 0 0.5rem 0.8rem rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+        
+	/* Settings Sidebar ( MIGRATED TO POPUP MODAL ) */
+	/* .sidebar #settingsSidebar {
 	    /* https://youtu.be/neb7WcDixoY */
             /* https://www.w3schools.com/cssref/css_units.php */
             /* display: flex; */
             /* flex: 1 1 0; 
             /* margin-width: 300px; */
-            position: fixed;
+        /*    position: fixed;
             padding: 2rem 1rem;  /* vertical horizontal ( space around ) */
-            top: 0;
+        /*    top: 0;
             left: -150vw;
             width: 100vw;
             height: 100vh;
             /* background-color: var(--background-color-dark-mode); */
             /* https://stackoverflow.com/questions/68732189/how-to-partially-color-an-html-elements-background-from-bottom-to-top-using-css */
-            background: linear-gradient(to right, var(--background-color-dark-mode) 0%, var(--background-color-dark-mode) var(--settings-sidebar-width), #FFFFFF00 var(--settings-sidebar-width), #FFFFFF00 100%);
+        /*    background: linear-gradient(to right, var(--background-color-dark-mode) 0%, var(--background-color-dark-mode) var(--settings-sidebar-width), #FFFFFF00 var(--settings-sidebar-width), #FFFFFF00 100%);
             -webkit-transition: all 0.5s;  /* linear */
-            transition: all 0.5s;
+        /*    transition: all 0.5s;
 	}
         
 	.sidebar #settingsSidebar.active {
@@ -652,9 +680,61 @@ justify-items: center;
         .sidebar #settingsSidebar > * {
             /* display: block;
             padding: 1rem; */
-            text-decoration: none;
+        /*    text-decoration: none;
             -webkit-transition: 0.5s;
             transition: 0.5s;
+        } */
+        
+        
+        
+        /* Settings Popup Modal's Container */
+        #settingsPopupModal .popupModalContainer {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            width: 80vw;
+            height: 80vh;
+            background-color: var(--background-color);
+            overflow-y: scroll;
+        }
+        
+        /* the columns in settings popup modal container */
+        /* https://dev.to/drews256/ridiculously-easy-row-and-column-layouts-with-flexbox-1k01 */
+        #settingsPopupModal .popupModalContainer div {
+            display: flex;
+            flex-direction: column;
+            flex: 1;  /* flex-grow=ratio-of-grow flex-shrink=ratio-of-shrink flex-basis=initial-length */
+            height: 100%;
+            overflow-y: scroll;
+        }
+        
+        #settingsPopupModal .popupModalContainer #settingsSectionsContainer {
+            flex: 0.25;
+            cursor: default;
+        }
+        
+        #settingsPopupModal .popupModalContainer #settingsSectionsContainer span {
+            padding: 20px 0;
+            cursor: pointer;
+        }
+        
+        #settingsPopupModal .popupModalContainer #settingsSectionsContainer span:hover {
+            color: var(--text-color-secondary);
+            background-color: var(--background-color-secondary);
+        }
+        
+        #settingsPopupModal .popupModalContainer #settingsSectionsContainer span.active {
+            color: var(--text-color-tertiary);
+            background-color: var(--background-color-tertiary);
+        }
+        
+        #settingsPopupModal .popupModalContainer #settingsSectionsContentContainer > div {  /* > means all children of the specified type , use asterisk (*) to select all children */
+            display: none;
+            padding: 20px 0;
+        }
+        
+        #settingsPopupModal .popupModalContainer #settingsSectionsContentContainer > div.active {
+            display: initial;
         }
         
         
@@ -697,37 +777,38 @@ justify-items: center;
 </head>
 
 
-<body>  <!-- todo4 splash screen -> code editor (main) --> <!-- https://stackoverflow.com/questions/20823767/welcome-screen-before-website-loads-click-to-enter-splash-screen -->
-    <h1>HTML Code Debugger</h1>
-    <h2>Having Trouble Finding Errors in Your HTML Code ?<br>
-        We've Got a Solution for You !</h2>
-    <h3>Get an instant look of your HTML code by pasting / writing the code in the text box below.<br>
+<body>  <!-- todo5 splash screen -> code editor (main) --> <!-- https://stackoverflow.com/questions/20823767/welcome-screen-before-website-loads-click-to-enter-splash-screen --> <!-- https://speckyboy.com/splash-screen-design/ -->
+    <h1>HTML Code Debugger</h1><br>
+    <h2>The Ultimate HTML Debugger You Ever Need</h2><br>
+    <h3>Having Trouble Finding Errors in Your HTML Code ?<br>
+        We've Got a Solution for You !<br><br>
+        Get an instant look of your HTML code by pasting / writing the code in the text box below.<br>
         Best for debugging , feature implementing , educational purpose , etc.</h3>
-		
+    
+    
     <br>
     
     
-    <!-- Popup Modal -->
-    <div id="outputIframePopupModal" class="popupModal">
-        <div class="popupModalContainer">
-            <!-- HTML output -->
-            <iframe id="outputIframe" src="" srcdoc="" title="Test HTML iFrame" width="1056" height="594" frameborder="1" scrolling="yes" allow="fullscreen" allowtransparency="false"></iframe>
-            <!-- full-screen iFrame button -->
-            <span id="outputIframeFullScreenButton" class="" title="Full Screen" onclick="document.getElementById('outputIframe').requestFullscreen()">
-                <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
-                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M432 320v112H320M421.8 421.77L304 304M80 192V80h112M90.2 90.23L208 208M320 80h112v112M421.77 90.2L304 208M192 432H80V320M90.23 421.8L208 304"/>
-                </svg>
-            </span>
-        </div>
-    </div>
-    
-    
-    <div style="width: 100%;">
+    <div id="codeEditorContainer" style="width: 100%;">  <!-- todo6 field for finding text in textarea -->
         <!-- <iframe id="outputIframe" src="" srcdoc="" title="Test HTML iFrame" width="1056" height="594" frameborder="1" scrolling="yes" allowtransparency="false"></iframe>
         
         <br><br> -->
         
-        <!-- code editor -->
+        <!-- outputIframe Popup Modal -->
+        <div id="outputIframePopupModal" class="popupModal">
+            <div class="popupModalContainer">
+                <!-- HTML output -->
+                <iframe id="outputIframe" src="" srcdoc="" title="Test HTML iFrame" width="1056" height="594" frameborder="1" scrolling="yes" allow="fullscreen" allowtransparency="false"></iframe>
+                <!-- full-screen iFrame button -->
+                <span id="outputIframeFullScreenButton" class="" title="Full Screen" onclick="document.getElementById('outputIframe').requestFullscreen()">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+                        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M432 320v112H320M421.8 421.77L304 304M80 192V80h112M90.2 90.23L208 208M320 80h112v112M421.77 90.2L304 208M192 432H80V320M90.23 421.8L208 304"/>
+                    </svg>
+                </span>
+            </div>
+        </div>
+        
+        <!-- code editor todo4 keyword highlight -->
         <div style="display: flex; width: 100%; justify-content: center;">  <!-- flex-direction: column; align-items: top; justify-content: center; --> <!-- https://stackoverflow.com/questions/19026884/flexbox-center-horizontally-and-vertically -->
             <!-- line number -->
             <div id="lineNumberDisplay"></div>
@@ -776,7 +857,9 @@ justify-items: center;
         <div id="log"></div>
     </div>
     
+    
     <br><br>
+    
     
     <!-- GOTO -->
     <!--
@@ -796,7 +879,8 @@ justify-items: center;
     
     <button type="button" id="" class="button" onclick="toggleSettingsMenu()">Settings</button>
     -->
-		
+    
+    
     <!-- SideBar -->
     <aside id="" class="sidebar">
         <!-- Sidebar Header -->
@@ -818,7 +902,7 @@ justify-items: center;
                         <path d="M112 111v290c0 17.44 17 28.52 31 20.16l247.9-148.37c12.12-7.25 12.12-26.33 0-33.58L143 90.84c-14-8.36-31 2.72-31 20.16z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"/>
                     </svg>
 		    <span>Run</span>
-                    <!-- todo2 tooltip ? -->
+                    <span class="sidebarTooltip">Run ( F9 )</span>
 		</a>
             </div>
             
@@ -830,6 +914,7 @@ justify-items: center;
                     </svg>
 	            <!-- <img src="https://img.icons8.com/?size=100&id=102969&format=png&color=000000" alt="Head Icon"> -->
 		    <span>Head</span>
+                    <span class="sidebarTooltip">Head</span>
 		</a>
                 
                 <a class="" onclick="textareaGoto(this.children[1].innerHTML)" title="Go To : Style">
@@ -838,6 +923,7 @@ justify-items: center;
                     </svg>
                     <!-- <img src="https://img.icons8.com/?size=100&id=4669&format=png&color=000000" alt="Brush Icon"> -->
 	            <span>Style</span>
+                    <span class="sidebarTooltip">Style</span>
 	        </a>
                 
                 <a class="" onclick="textareaGoto(this.children[1].innerHTML)" title="Go To : Body">
@@ -845,6 +931,7 @@ justify-items: center;
                         <path d="M314.56 48s-22.78 8-58.56 8-58.56-8-58.56-8a31.94 31.94 0 00-10.57 1.8L32 104l16.63 88 48.88 5.52a24 24 0 0121.29 24.58L112 464h288l-6.8-241.9a24 24 0 0121.29-24.58l48.88-5.52L480 104 325.13 49.8a31.94 31.94 0 00-10.57-1.8zM333.31 52.66a80 80 0 01-154.62 0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/>
                     </svg>
                     <span>Body</span>
+                    <span class="sidebarTooltip">Body</span>
 		</a>
                 
                 <a class="" onclick="textareaGoto(this.children[1].innerHTML)" title="Go To : Script">
@@ -853,6 +940,7 @@ justify-items: center;
                     </svg>
 		    <!-- <img src="https://img.icons8.com/?size=100&id=37927&format=png&color=000000" alt="Script Icon"> -->
 		    <span>Script</span>
+                    <span class="sidebarTooltip">Script</span>
 		</a>
 	    </div>
 	    
@@ -887,33 +975,34 @@ justify-items: center;
 		</svg>
 		<!-- <img src="https://img.icons8.com/?size=100&id=364&format=png&color=000000" alt="Settings Icon"> -->
 		<span>Settings</span>
+                <span class="sidebarTooltip">Settings</span>
 	    </a>
         </div>
 	
-        <!-- Settings Sidebar -->  <!-- todo3 migrate to PopupModal -->
-	<nav id="settingsSidebar" class="">
+        <!-- Settings Sidebar ( MIGRATED TO POPUP MODAL ) -->
+	<!-- <nav id="settingsSidebar" class="">
             <h4>Settings</h4>
             
-            <!-- iFrame Size / Resolution -->
+            <!-- iFrame Size / Resolution --> <!--
             <label for="inputIframeWidth">iFrame Size :</label>
             <input type="number" id="inputIframeWidth" value="1056" min="100" max="3000" step="1" onfocus="select()" onchange="updateIframeSize(this.value, document.getElementById('inputIframeHeight').value)"> X
             <input type="number" id="inputIframeHeight" value="594" min="100" max="3000" step="1" onfocus="select()" onchange="updateIframeSize(document.getElementById('inputIframeWidth').value, this.value)">
             
             <br><br>
             
-            <!-- input field for changing font size -->
+            <!-- input field for changing font size --> <!--
             <label for="inputTextareaFontSize">Font Size :</label>
             <input type="number" id="inputTextareaFontSize" value="15" min="1" max="50" step="1" onfocus="select()" onchange="updateTextareaFontSize(this.value)">
             
             <br><br>
             
-            <!-- input field for changing tab size -->
+            <!-- input field for changing tab size --> <!--
             <label for="inputTextareaTabSize">Tab ( Indent ) Size :</label>
             <input type="number" id="inputTextareaTabSize" value="4" min="2" max="10" step="1" onfocus="select()" onchange="">
             
             <br><br>
             
-            <!-- input field for changing font family -->
+            <!-- input field for changing font family --> <!--
             <label for="inputTextareaFontFamily">Font Family :</label>
             <select id="inputTextareaFontFamily" onchange="updateTextareaFontFamily(this.value)">
                 <!-- fonts that might unable to apply :
@@ -935,9 +1024,8 @@ justify-items: center;
                 Slab Serif
                 Source Code Pro
                 Space Mono
-                Terminus -->
+                Terminus --> <!--
                 <option value="Arial">Arial</option>
-                <option value="Arial Narrow">Arial Narrow</option>
                 <option value="Cambria">Cambria</option>
                 <option value="Garamond">Garamond</option>
                 <option value="Georgia">Georgia</option>
@@ -965,18 +1053,18 @@ justify-items: center;
                 <option value="Space Mono">Space Mono</option>
                 <option value="Terminus">Terminus</option>
                 <option value="???">???</option>
-                -->
+                --> <!--
             </select>
             
             <br><br>
             
-            <!-- input field for changing line spacing -->
+            <!-- input field for changing line spacing --> <!--
             <label for="inputTextareaLineSpacing">Line Spacing :</label>
             <input type="number" id="inputTextareaLineSpacing" value="1.3" min="1" max="10" step="0.1" onfocus="select()" onchange="updateTextareaLineHeight(this.value)">
             
             <br><br>
             
-            <!-- toggle allow text wrap -->
+            <!-- toggle allow text wrap --> <!--
             <div style="display: inline-block;
                         vertical-align: middle;
                         padding: 7px 8px;">
@@ -989,7 +1077,7 @@ justify-items: center;
             
             <br>
             
-            <!-- toogle dark mode switch -->
+            <!-- toogle dark mode switch --> <!--
             <div style="display: inline-block;
                         vertical-align: middle;
                         padding: 7px 8px;">
@@ -1002,13 +1090,145 @@ justify-items: center;
             
             <br><br>
             
-            <!-- button to reset textarea content to default value -->
+            <!-- button to reset textarea content to default value --> <!--
             <button type="button" id="buttonResetTextarea" class="button" onclick="resetTextareaContent()">Reset HTML Content</button>
             
-        </nav>
+        </nav> -->
     </aside>
     
-    <br><br>
+    
+    <!-- Settings Popup Modal -->
+    <div id="settingsPopupModal" class="popupModal">
+        <div class="popupModalContainer">
+            <div id="settingsSectionsContainer">  <!-- Settings Sections -->
+                <h3>Settings</h3>
+                
+                <span class="active" onclick="activateSettingsTab(this, 'settingsIframeSize');">
+                    iFrame Size
+                </span>
+                <span onclick="activateSettingsTab(this, 'settingsCodeEditor');">
+                    Code Editor
+                </span>
+                <span onclick="activateSettingsTab(this, 'settingsTheme');">
+                    Theme
+                </span>
+                <span onclick="activateSettingsTab(this, 'settingsOther');">
+                    Other
+                </span>
+            </div>
+            
+            <div id="settingsSectionsContentContainer">  <!-- Settings Section Content / Details -->
+                <div id="settingsIframeSize" class="active">  <!-- iFrame Size -->
+                    <!-- iFrame Size / Resolution -->
+                    <label for="inputIframeWidth">Width X Height :</label>
+                    <input type="number" id="inputIframeWidth" value="1056" min="100" max="3000" step="1" onfocus="select()" onchange="updateIframeSize(this.value, document.getElementById('inputIframeHeight').value)"> X
+                    <input type="number" id="inputIframeHeight" value="594" min="100" max="3000" step="1" onfocus="select()" onchange="updateIframeSize(document.getElementById('inputIframeWidth').value, this.value)">
+                </div>
+                <div id="settingsCodeEditor">  <!-- Code Editor -->
+                    <!-- input field for changing font size -->
+                    <label for="inputTextareaFontSize">Font Size :</label>
+                    <input type="number" id="inputTextareaFontSize" value="15" min="1" max="50" step="1" onfocus="select()" onchange="updateTextareaFontSize(this.value)">
+                    
+                    <br><br>
+                    
+                    <!-- input field for changing tab size -->
+                    <label for="inputTextareaTabSize">Tab ( Indent ) Size :</label>
+                    <input type="number" id="inputTextareaTabSize" value="4" min="2" max="10" step="1" onfocus="select()" onchange="">
+                    
+                    <br><br>
+                    
+                    <!-- input field for changing font family -->
+                    <label for="inputTextareaFontFamily">Font Family :</label>
+                    <select id="inputTextareaFontFamily" onchange="updateTextareaFontFamily(this.value)">
+                        <!-- fonts that might unable to apply :
+                        BioRhyme
+                        Brush Script MT
+                        Consolas
+                        Didot
+                        Eczar
+                        Futura Bold
+                        Futura Demibold
+                        Helvetica
+                        JetBrains Mono
+                        Monoid
+                        Myriad Pro
+                        Product Sans
+                        San Serif
+                        Segoe UI
+                        Serif
+                        Slab Serif
+                        Source Code Pro
+                        Space Mono
+                        Terminus -->
+                        <option value="Arial">Arial</option>
+                        <option value="Cambria">Cambria</option>
+                        <option value="Garamond">Garamond</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Monospace" selected="selected">Monospace</option>
+                        <option value="Times New Roman">Times New Roman</option>
+                        <option value="Verdana">Verdana</option>
+                        <!-- 
+                        <option value="BioRhyme">BioRhyme</option>
+                        <option value="Brush Script MT">Brush Script MT</option>
+                        <option value="Consolas">Consolas</option>
+                        <option value="Didot">Didot</option>
+                        <option value="Eczar">Eczar</option>
+                        <option value="Futura Bold">Futura Bold</option>
+                        <option value="Futura Demibold">Futura Demibold</option>
+                        <option value="Helvetica">Helvetica</option>
+                        <option value="JetBrains Mono">JetBrains Mono</option>
+                        <option value="Monoid">Monoid</option>
+                        <option value="Myriad Pro">Myriad Pro</option>
+                        <option value="Product Sans">Product Sans</option>
+                        <option value="San Serif">San Serif</option>
+                        <option value="Segoe UI">Segoe UI</option>
+                        <option value="Serif">Serif</option>
+                        <option value="Slab Serif">Slab Serif</option>
+                        <option value="Source Code Pro">Source Code Pro</option>
+                        <option value="Space Mono">Space Mono</option>
+                        <option value="Terminus">Terminus</option>
+                        <option value="???">???</option>
+                        -->
+                    </select>
+                    
+                    <br><br>
+                    
+                    <!-- input field for changing line spacing -->
+                    <label for="inputTextareaLineSpacing">Line Spacing :</label>
+                    <input type="number" id="inputTextareaLineSpacing" value="1.3" min="1" max="10" step="0.1" onfocus="select()" onchange="updateTextareaLineHeight(this.value)">
+                    
+                    <br><br>
+                    
+                    <!-- toggle allow text wrap -->
+                    <label for="textWrapSwitch">Text Wrap</label>
+                    <label class="switch">
+                        <input type="checkbox" id="textWrapSwitch" onclick="toggleTextWrap()">
+                        <span class="switchSlider round"></span>
+                    </label>
+                    
+                    <br><br>
+                    
+                    <!-- button to reset textarea content to default value -->
+                    <button type="button" id="buttonResetTextarea" class="button" onclick="resetTextareaContent()">Reset HTML Content</button>
+                </div>
+                <div id="settingsTheme">  <!-- Theme -->
+                    <!-- toogle dark mode switch -->
+                    <label for="darkModeSwitch">Dark Mode</label>
+                    <label class="switch">
+                        <input type="checkbox" id="darkModeSwitch" checked="true" onclick="toggleDarkMode()">
+                        <span class="switchSlider round"></span>
+                    </label>
+                </div>
+                <div id="settingsOther">  <!-- Other -->
+                    Other
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <br><br> <!-- todo --> <button class="button" onclick="document.documentElement.requestFullscreen();">Full Screen The Webpage</button> <button class="button" onclick="document.getElementById('codeEditorContainer').requestFullscreen();">Full Screen The Code Editor</button>
+    
     
     <!-- Notes to Open Web Inspector and Show Page Source -->
     <pre>Note : <br>
@@ -1016,7 +1236,9 @@ justify-items: center;
        To show page source , use CTRL + u
     </pre>
     
+    
     <br><br>
+    
     
     <!-- Footer -->
     <!-- https://www.w3schools.com/tags/tag_footer.asp -->
@@ -1664,21 +1886,37 @@ justify-items: center;
     }
     
     // ====================================================================================================
-    /* ( Migrating to Popup Modal ) todo3 */
-    const settingsSidebar = document.getElementById("settingsSidebar");
+    // const settingsSidebar = document.getElementById("settingsSidebar");  // MIGRATED TO POPUP MODAL
+    const settingsPopupModal = document.getElementById("settingsPopupModal");
     function toggleSettingsMenu() {
         // toggle settings menu
-        settingsSidebar.classList.toggle("active");
+        // settingsSidebar.classList.toggle("active");
+        settingsPopupModal.classList.toggle("active");
     }
     
-    settingsSidebar.addEventListener("click", function(event) {
+    function activateSettingsTab(_tab, _tab_content_id) {
+        // deactivate all active tabs
+        _tabs = _tab.parentElement.getElementsByTagName("span");
+        _tabs_content = document.getElementById("settingsSectionsContentContainer").children;
+        
+        for (var i = 0; i < _tabs.length; ++i) {
+            _tabs[i].classList.remove("active");
+            _tabs_content[i].classList.remove("active");
+        }
+        
+        // activate clicked tab
+        _tab.classList.add("active");
+        document.getElementById(_tab_content_id).classList.add("active");
+    }
+    
+    /* settingsSidebar.addEventListener("click", function(event) {
         // https://stackoverflow.com/questions/20025685/detect-click-on-empty-area
         if ((event.target == document.body.getElementsByTagName("nav")[0]) || (event.target == settingsSidebar)) {
             // the user click on any blank space of the side bar
             // settingsSidebar.classList.remove("active");
             toggleSettingsMenu();
         }
-    });
+    }); */
     
     // ====================================================================================================
     function updateTextareaFontSize(_font_size) {
@@ -1749,7 +1987,11 @@ justify-items: center;
         
         if (keyPressed.includes("Escape")) {
             event.preventDefault();  // prevent default keyboard actions
-            document.getElementById("outputIframePopupModal").classList.remove("active");  // hide the outputIframe in popupModal
+            // document.getElementById("outputIframePopupModal").classList.remove("active");  // hide the outputIframe in popupModal
+            
+            for (var i = 0; i < popupModal.length; ++i) {
+                popupModal[i].classList.remove("active");
+            }
         }
         
         keyPressed = [];  // empty the list
