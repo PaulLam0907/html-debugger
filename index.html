@@ -203,6 +203,20 @@
 	
 	
 	
+        /* Welcome Screen */
+        #welcomeScreen {
+            /* position: fixed;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--background-color);
+            left: 0;
+            opacity: 1;
+            overflow-y: scroll;
+            z-index: 1; */
+        }
+        
+        
+        
         /* class popupModal : Popup Modal Box */
         /* https://www.w3schools.com/howto/howto_css_modals.asp */
         /* https://stackoverflow.com/questions/15445865/best-way-to-center-align-a-div-with-unknown-width-and-height */
@@ -212,11 +226,12 @@
             justify-content: center;
             align-items: center;
 visibility: hidden;
+opacity: 0;
             position: fixed;  /* fixed / absolute */
             /* visibility: visible;  /* visible / hidden */
             width: 100vw;
             height: 100vh;
-            top: 100vh;
+            top: 0vh;  /* 100vh */
 left: 0px;
             background-color: #00000033;
             /* overflow: auto; */
@@ -236,6 +251,7 @@ left: 0px;
         .popupModal.active {
             visibility: visible;
             top: 0vh;
+            opacity: 1;
         }
         
         /* HTML output iframe */
@@ -476,6 +492,7 @@ justify-items: center;
             box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
             -webkit-transition: all 0.5s;
             transition: all 0.5s;
+            /* z-index: 1; */
         }
 				
         /* .sidebar span {
@@ -777,16 +794,20 @@ justify-items: center;
 </head>
 
 
-<body>  <!-- todo5 splash screen -> code editor (main) --> <!-- https://stackoverflow.com/questions/20823767/welcome-screen-before-website-loads-click-to-enter-splash-screen --> <!-- https://speckyboy.com/splash-screen-design/ -->
-    <h1>HTML Code Debugger</h1><br>
-    <h2>The Ultimate HTML Debugger You Ever Need</h2><br>
-    <h3>Having Trouble Finding Errors in Your HTML Code ?<br>
-        We've Got a Solution for You !<br><br>
-        Get an instant look of your HTML code by pasting / writing the code in the text box below.<br>
-        Best for debugging , feature implementing , educational purpose , etc.</h3>
-    
-    
-    <br>
+<body>
+    <!-- Welcome Screen -->
+    <div id="welcomeScreen">
+        <!-- todo5 splash screen -> code editor (main) -->
+        <!-- https://stackoverflow.com/questions/20823767/welcome-screen-before-website-loads-click-to-enter-splash-screen --> <!-- https://speckyboy.com/splash-screen-design/ -->
+        <h1>HTML Code Debugger</h1><br>
+        <h2>The Ultimate HTML Debugger You Ever Need</h2><br>
+        <h3>Having Trouble Finding Errors in Your HTML Code ?<br>
+            We've Got a Solution for You !<br><br>
+            Get an instant look of your HTML code by pasting / writing the code in the text box below.<br>
+            Best for debugging , feature implementing , educational purpose , etc.</h3>
+        
+        <br>
+    </div>
     
     
     <div id="codeEditorContainer" style="width: 100%;">  <!-- todo6 field for finding text in textarea -->
@@ -808,12 +829,12 @@ justify-items: center;
             </div>
         </div>
         
-        <!-- code editor todo4 keyword highlight -->
+        <!-- code editor -->
         <div style="display: flex; width: 100%; justify-content: center;">  <!-- flex-direction: column; align-items: top; justify-content: center; --> <!-- https://stackoverflow.com/questions/19026884/flexbox-center-horizontally-and-vertically -->
             <!-- line number -->
             <div id="lineNumberDisplay"></div>
             
-            <!-- HTML code editing -->
+            <!-- HTML code editing  todo4 keyword highlight : Prism -->
             <textarea id="inputTextarea"
                       rows="30"
                       cols="150"
@@ -1296,8 +1317,13 @@ justify-items: center;
             </div>
             <div class="footerContent">
                 <address>
-                    Site created by : Paul Lam<br>
+                    Site created by : Paul Lam
+                    <br>
                     Instagram : <a class="link" href="https://www.instagram.com/paul_lam_0907?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">paul_lam_0907</a>
+                    <br>
+                    GitHub : <a class="link" href="https://github.com/PaulLam0907/html-debugger" target="_blank">PaulLam0907</a>
+                    <br>
+                    <a class="link" href="" target="_blank">Buy me a Snack</a>
                 </address>
             </div>
         </div>
@@ -1307,6 +1333,7 @@ justify-items: center;
 
 
 <script>
+    // ====================================================================================================
     var iframe = document.getElementById("outputIframe");
     // var iframeWindow = (iframe.contentWindow || iframe.contentDocument);
     var textarea = document.getElementById("inputTextarea");
