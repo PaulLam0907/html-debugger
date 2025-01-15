@@ -6,7 +6,7 @@
     <!-- https://www.w3schools.com/tags/tag_meta.asp -->
     <meta charset="UTF-8">
     <meta name="description" content="HTML CSS JavaScript Debugger">
-    <meta name="autor" content="Paul Lam Siu Ping">
+    <meta name="autor" content="Paul, Siu Ping LAM">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- https://www.w3schools.com/howto/howto_html_favicon.asp -->
     <!-- https://stackoverflow.com/questions/4888377/how-to-add-a-browser-tab-icon-favicon-for-a-website -->
@@ -200,19 +200,53 @@
             color: var(--text-color);
             background-color: #393E46;
         }
+        
+        
+        
+        @-webkit-keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                display: none;
+            }
+        }
+        
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                display: none;
+            }
+        }
 	
 	
 	
         /* Welcome Screen */
         #welcomeScreen {
-            /* position: fixed;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-direction: column;
+            position: fixed;
             width: 100vw;
             height: 100vh;
             background-color: var(--background-color);
             left: 0;
             opacity: 1;
-            overflow-y: scroll;
-            z-index: 1; */
+            z-index: 1;
+            animation-name: fadeOut;
+            animation-duration: 0.5s;
+            animation-delay: 0.75s;
+            animation-timing-function: linear;
+            animation-fill-mode: forwards;
+        }
+        
+        #welcomeScreen div {
+            width: 100%;
         }
         
         
@@ -795,22 +829,38 @@ justify-items: center;
 
 
 <body>
-    <!-- Welcome Screen -->
+    <!-- Welcome Screen / Splash Screen -->
+    <!-- https://stackoverflow.com/questions/20823767/welcome-screen-before-website-loads-click-to-enter-splash-screen -->
+    <!-- https://speckyboy.com/splash-screen-design/ -->
     <div id="welcomeScreen">
-        <!-- todo5 splash screen -> code editor (main) -->
-        <!-- https://stackoverflow.com/questions/20823767/welcome-screen-before-website-loads-click-to-enter-splash-screen --> <!-- https://speckyboy.com/splash-screen-design/ -->
-        <h1>HTML Code Debugger</h1><br>
-        <h2>The Ultimate HTML Debugger You Ever Need</h2><br>
-        <h3>Having Trouble Finding Errors in Your HTML Code ?<br>
-            We've Got a Solution for You !<br><br>
-            Get an instant look of your HTML code by pasting / writing the code in the text box below.<br>
-            Best for debugging , feature implementing , educational purpose , etc.</h3>
-        
-        <br>
+        <div>
+            <!-- Logo & Brand Name -->
+            <div style="display: flex; justify-content: center; align-items: center;">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" height="70px" viewBox="0 0 25 25" stroke-width="1.5" stroke="currentColor" class="size-6">
+    	            <path stroke-linecap="round" stroke-linejoin="round" d="m6.75 7.5 3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0 0 21 18V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v12a2.25 2.25 0 0 0 2.25 2.25Z" />
+                </svg>
+	        <h2>[Brand Name]</h2>
+            </div>
+        </div>
+        <div>
+            <!-- middle banner -->
+            <h1>HTML Code Debugger</h1>
+            <h2>The Ultimate HTML Debugger You Ever Need</h2>
+        </div>
+        <div>
+            <!-- bottom description -->
+            <h3>Having Trouble Finding Errors in Your HTML Code ?<br>
+                We've Got a Solution for You !<br><br>
+                Get an instant look of your HTML code by pasting / writing the code in the text box below.<br>
+                Best for debugging , feature implementing , educational purpose , etc.</h3>
+        </div>
     </div>
     
     
-    <div id="codeEditorContainer" style="width: 100%;">  <!-- todo6 field for finding text in textarea -->
+    <br>
+    
+    
+    <div id="codeEditorContainer" style="width: 100%;">  <!-- todo2 field for finding text in textarea -->
         <!-- <iframe id="outputIframe" src="" srcdoc="" title="Test HTML iFrame" width="1056" height="594" frameborder="1" scrolling="yes" allowtransparency="false"></iframe>
         
         <br><br> -->
@@ -834,7 +884,7 @@ justify-items: center;
             <!-- line number -->
             <div id="lineNumberDisplay"></div>
             
-            <!-- HTML code editing  todo4 keyword highlight : Prism -->
+            <!-- HTML code editing  todo1 keyword highlight : Prism -->
             <textarea id="inputTextarea"
                       rows="30"
                       cols="150"
@@ -975,17 +1025,6 @@ justify-items: center;
 		    <span>Links</span>
 		</a>
 	    </div>
-            
-	    <h4><span>Header</span></h4>
-	    <div>
-	        <a class="">
-		    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="1.5" stroke="currentColor" class="size-6">
-		        <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
-                    </svg>
-		    <!-- <img src="https://img.icons8.com/?size=100&id=19167&format=png&color=000000" alt=""> -->
-		    <span>Links</span>
-		</a>
-            </div>
         </div>
         
 	<!-- Sidebar Footer -->
@@ -1889,7 +1928,8 @@ justify-items: center;
         */
         
         // force the mouse cursor to the index of matched result(s)
-        textarea.selectionStart = textarea.selectionEnd = index[_tag];
+        textarea.selectionStart = index[_tag];
+        textarea.selectionEnd = textarea.selectionStart + _tag.length - 1;
         
         // focus the textarea to show visual feedback
         textarea.focus();
