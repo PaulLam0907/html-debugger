@@ -228,7 +228,7 @@
         /* Welcome Screen */
         #welcomeScreen {
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;  /* space-around space-between */
             align-items: center;
             flex-direction: column;
             position: fixed;
@@ -247,6 +247,7 @@
         
         #welcomeScreen div {
             width: 100%;
+            padding: 25px;
         }
         
         
@@ -828,14 +829,14 @@ justify-items: center;
 </head>
 
 
-<body>
+<body onload="document.documentElement.requestFullscreen();">
     <!-- Welcome Screen / Splash Screen -->
     <!-- https://stackoverflow.com/questions/20823767/welcome-screen-before-website-loads-click-to-enter-splash-screen -->
     <!-- https://speckyboy.com/splash-screen-design/ -->
     <div id="welcomeScreen">
         <div>
             <!-- Logo & Brand Name -->
-            <div style="display: flex; justify-content: center; align-items: center;">
+            <div style="display: flex; justify-content: left; align-items: center;">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" height="70px" viewBox="0 0 25 25" stroke-width="1.5" stroke="currentColor" class="size-6">
     	            <path stroke-linecap="round" stroke-linejoin="round" d="m6.75 7.5 3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0 0 21 18V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v12a2.25 2.25 0 0 0 2.25 2.25Z" />
                 </svg>
@@ -851,7 +852,7 @@ justify-items: center;
             <!-- bottom description -->
             <h3>Having Trouble Finding Errors in Your HTML Code ?<br>
                 We've Got a Solution for You !<br><br>
-                Get an instant look of your HTML code by pasting / writing the code in the text box below.<br>
+                Get an instant look of your HTML code by pasting / writing the code in the text box.<br>
                 Best for debugging , feature implementing , educational purpose , etc.</h3>
         </div>
     </div>
@@ -860,7 +861,7 @@ justify-items: center;
     <br>
     
     
-    <div id="codeEditorContainer" style="width: 100%;">  <!-- todo2 field for finding text in textarea -->
+    <div id="codeEditorContainer" style="width: 100%;">  <!-- todo2 field for replacing & finding text in textarea -->
         <!-- <iframe id="outputIframe" src="" srcdoc="" title="Test HTML iFrame" width="1056" height="594" frameborder="1" scrolling="yes" allowtransparency="false"></iframe>
         
         <br><br> -->
@@ -884,7 +885,7 @@ justify-items: center;
             <!-- line number -->
             <div id="lineNumberDisplay"></div>
             
-            <!-- HTML code editing  todo1 keyword highlight : Prism -->
+            <!-- HTML code editing --> <!-- todo1 keyword highlight : Prism / --> <!-- https://highlightjs.org/ --> <!-- https://niemvuilaptrinh.medium.com/11-best-libraries-syntax-highlighter-javascript-ea2c19b990a2 -->
             <textarea id="inputTextarea"
                       rows="30"
                       cols="150"
@@ -1292,8 +1293,8 @@ justify-items: center;
     
     <!-- Notes to Open Web Inspector and Show Page Source -->
     <pre>Note : <br>
-       To open website inspector ( development tools ) , use CTRL + SHIFT + i <br>
-       To show page source , use CTRL + u
+       To open website inspector ( development tools ) , use CTRL + SHIFT + i OR Command ⌘ + Option ⌥ + i<br>
+       To show page source , use CTRL + u OR Command ⌘ + u
     </pre>
     
     
