@@ -11,6 +11,17 @@
     <!-- https://www.w3schools.com/howto/howto_html_favicon.asp -->
     <!-- https://stackoverflow.com/questions/4888377/how-to-add-a-browser-tab-icon-favicon-for-a-website -->
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <!-- Code highlighting -->
+    <!-- https://github.com/highlightjs/highlight.js/tree/main/src/styles -->
+    <!-- https://highlightjs.org/ -->
+    <!-- https://prismjs.com/ -->
+    <!-- https://niemvuilaptrinh.medium.com/11-best-libraries-syntax-highlighter-javascript-ea2c19b990a2 -->
+    <!-- https://stackoverflow.com/questions/1647724/color-syntax-highlighting-within-an-html-code-tag -->
+    <!-- https://css-tricks.com/creating-an-editable-textarea-that-supports-syntax-highlighted-code/ -->
+    <!-- https://www.youtube.com/watch?v=R38WpkO14MA -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.3/highlight.min.js"></script>  <!-- 10.0.3 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.3/styles/a11y-dark.min.css" id="codeTheme">
+    <script>hljs.highlightAll();</script>
     
     
     <style>
@@ -63,7 +74,7 @@
         
         body {
             margin: 0 0;
-	    margin-left: 55px;  /* for the sidebar */
+	    /* margin-left: 55px;  /* for the sidebar */
             color: var(--text-color);
             background-color: var(--background-color);
             -webkit-transition: 0.5s;
@@ -141,7 +152,7 @@
         p, pre, label, button {
             margin-left: 15px;
         }
-        
+
         div {
             text-align: center;
         }
@@ -201,6 +212,14 @@
             background-color: #393E46;
         }
         
+        code {
+            font-family: monospace;
+            word-wrap: break-word;
+            text-align: justify;
+            text-justify: inter-word;
+            white-space: pre-line;
+        }
+        
         
         
         @-webkit-keyframes fadeOut {
@@ -252,10 +271,279 @@
         
         
         
+        /* Page Layout */
+        #pageLayout {
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        /* Page Layout - Top */
+        #pageLayoutTop {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 5vh;
+            /* overflow-x: scroll; */
+            overflow-y: visible;
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* FireFox */
+            box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        #pageLayoutTop > * {  /* left and right container */
+            display: flex;
+            flex-direction: row;
+            height: 100%;
+            /* gap: 10px; */
+        }
+        
+        #pageLayoutTop > * > * {  /* container's child */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0px 10px 0px 10px;  /* top right bottom left */
+            cursor: pointer;  /* default / pointer */
+        }
+        
+        #pageLayoutTop > * > *:hover {
+            color: var(--text-color-secondary);
+            background-color: var(--background-color-secondary);
+        }
+        
+        /* Page Layout - Middle */
+        #pageLayoutMiddle {
+            display: flex;
+            flex-direction: row;
+            margin: 0;
+            padding: 0;
+            height: 92vh;
+        }
+        
+        #pageLayoutMiddleLeft {
+            
+        }
+        
+        #pageLayoutMiddleMiddle {
+            overflow-y: scroll;
+            width: 0px;
+            -webkit-transition: all 0.2s ease-out;
+            transition: all 0.2s ease-out;
+        }
+        
+        #pageLayoutMiddleMiddle.active {
+            overflow-y: scroll;
+            width: 300px;
+        }
+        
+        #pageLayoutMiddleRight {
+            overflow-y: scroll;
+            width: 100%;
+        }
+        
+        /* Page Layout - Bottom */
+        #pageLayoutBottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 3vh;
+            overflow: scroll;
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* FireFox */
+        }
+        
+        #pageLayoutBottom > * {  /* left and right container */
+            display: flex;
+            flex-direction: row;
+            height: 100%;
+            /* gap: 10px; */
+        }
+        
+        #pageLayoutBottom > * > * {  /* container's child */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0px 10px 0px 10px;  /* top right bottom left */
+            cursor: default;
+        }
+        
+        #pageLayoutBottom > * > *:hover {
+            color: var(--text-color-secondary);
+            background-color: var(--background-color-secondary);
+        }
+        
+        
+
+        /* class codeEditor */
+        /* https://www.w3schools.com/howto/howto_css_contenteditable_border.asp */
+        /* structure :
+           <pre class="codeEditor-pre"><code class="codeEditor-code">
+               Your code here
+           </code></pre>
+        */
+        .codeEditor-pre {
+            height: 100%;
+            width: 100%;
+            overflow: scroll;
+            margin: 0 0;
+        }
+
+        .codeEditor-code {
+            display: inline-block;  /* block | inline-block */
+            min-width: 100%;
+            min-height: 100%;
+            outline: 0px solid transparent;  /* the border when focused */
+            padding: 0 0;
+            font-size: 15px;
+            /* color: var(--text-color); */
+            font-family: consolas, Menlo, "courier new", monospace;
+            line-height: 1.3;
+            text-align: left;
+            white-space: pre;  /* pre | normal | nowrap */
+            /* word-wrap: normal; */
+        }
+
+
+
+        /* class dropdown-hover : Drop-Down by Hovering */
+        /*
+            Usage :
+            <div class="dropdown-hover">
+                DropDown Button
+
+                <div class="dropdownContent-hover">
+                    <div>Drop Content 1</div>
+                    <div>Drop Content 2</div>
+                    <div class="dropdownContentOption-hover">
+                        <div class="dropdownContentOptionLeft-hover">Drop Content 3</div>
+                        <div class="dropdownContentOptionRight-hover">Hint Text</div>
+                    </div>
+                    <div class="dropdownContentSub-hover">
+                        <div class="dropdownContentOption-hover">
+                            <div class="dropdownContentOptionLeft-hover">Open Sub-menu</div>
+                            <div class="dropdownContentOptionRight-hover"> > </div>
+                        </div>
+                        <div class="dropdownContentSubContent-hover">
+                            <div>Sub-menu Content 1</div>
+                            <div>Sub-menu Content 2</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        */
+        .dropdown-hover {
+            position: relative;
+        }
+        
+        .dropdownContent-hover {
+            display: none;
+            position: absolute;
+            top: calc(100% + 0px);
+            left: 0;
+            min-width: 10rem;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.3);  /* x y density shadow-size shadow-color */
+            border-radius: 3px;
+            outline-style: solid;
+            outline-width: 1px;  /* thin / medium / thick */
+            outline-color: var(--background-color-secondary);
+        }
+        
+        .dropdown-hover:hover .dropdownContent-hover {
+            display: block;
+        }
+        
+        .dropdownContent-hover > * {
+            /* display: flex;
+            justify-content: flex-start;
+            align-items: flex-start; */
+            text-align: left;
+            white-space: nowrap;  /* don't allow multi-line */
+            padding: 3px 20px;
+            border-radius: 3px;
+        }
+        
+        .dropdownContent-hover > *:hover {
+            color: var(--text-color-secondary);
+            background-color: var(--background-color-secondary);
+        }
+
+        /* class dropdownContentOption-hover : The Individual Drop-Down element in dropdownContent */
+        .dropdownContentOption-hover {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            /* https://stackoverflow.com/questions/20626685/how-do-i-set-distance-between-flexbox-items */
+            gap: 7rem;
+        }
+
+        .dropdownContentOptionLeft-hover {
+
+        }
+
+        .dropdownContentOptionRight-hover {
+            text-align: right;
+            color: var(--text-color-secondary);
+        }
+
+        /* class dropdownContentSub-hover : Sub Drop-Down for the dropdownContent-hover */
+        .dropdownContentSub-hover {
+            position: relative;
+        }
+        
+        .dropdownContentSubContent-hover {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: calc(100%);
+            min-width: 10rem;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.3);  /* x y density shadow-size shadow-color */
+            border-radius: 3px;
+        }
+        
+        .dropdownContentSub-hover:hover .dropdownContentSubContent-hover {
+            display: block;
+        }
+        
+        .dropdownContentSubContent-hover > * {
+            text-align: left;
+            white-space: nowrap;  /* don't allow multi-line */
+            padding: 3px 20px;
+            border-radius: 3px;
+        }
+        
+        .dropdownContentSubContent-hover > *:hover {
+            color: var(--text-color-secondary);
+            background-color: var(--background-color-secondary);
+        }
+        
+        
+        
         /* class popupModal : Popup Modal Box */
         /* https://www.w3schools.com/howto/howto_css_modals.asp */
         /* https://stackoverflow.com/questions/15445865/best-way-to-center-align-a-div-with-unknown-width-and-height */
         /* https://stackoverflow.com/questions/6810031/css-center-element-within-a-div-element */
+        /* Usage :
+           <div id="mypopup" class="popupModal">
+               <div class="popupModalContainer">
+                   <span class="popupModalCloseButton" title="Close" onclick="this.parentNode.parentNode.classList.toggle('active');">  <!-- close button -->
+                       <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+                           <path fill="currentColor" d="M289.94 256l95-95A24 24 0 00351 127l-95 95-95-95a24 24 0 00-34 34l95 95-95 95a24 24 0 1034 34l95-95 95 95a24 24 0 0034-34z"/>
+                       </svg>
+                   </span>
+                   Popup Content Here
+               </div>
+           </div>
+           
+           <button onclick="document.getElementById('mypopup').classList.toggle('active');"></button>
+        */
         .popupModal {
             display: flex;
             justify-content: center;
@@ -275,12 +563,16 @@ left: 0px;
             /* box-shadow: 0px 7px 15px 0px rgba(0, 0, 0, 0.3);  /* x y density shadow-size shadow-color */
             -webkit-transition: all 0.2s ease-out;
             transition: all 0.2s ease-out;
+            z-index: 1;
         }
         
         .popupModalContainer {
             display: flex;
             justify-content: center;
             align-items: center;
+            border-radius: 10px;
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* FireFox */
         }
         
         .popupModal.active {
@@ -288,6 +580,25 @@ left: 0px;
             top: 0vh;
             opacity: 1;
         }
+        
+        /* class popupModalCloseButton : Close Button for Popup Modal */
+        .popupModalCloseButton {
+            position: absolute;
+            /* float: right; */
+            right: 0;
+            top: 0;
+            margin: 20px 30px;  /* vertical horizontal */
+            width: 2rem;
+            height: 2rem;
+        }
+        
+        .popupModalCloseButton:hover {
+            background-color: var(--background-color-secondary);
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        
         
         /* HTML output iframe */
         #outputIframe {
@@ -320,7 +631,7 @@ left: 0px;
             display: none;  /* inline-block | none */
             width: 80%;
             margin: auto;  /* horizontal center align */
-            height: 150px;
+            height: 95%;
             overflow: scroll;
             -ms-overflow-style: none;  /* IE and Edge */
             scrollbar-width: none;  /* FireFox */
@@ -328,7 +639,7 @@ left: 0px;
         
         #log button {
             display: inline-block;
-            width: 80%;
+            width: 100%;
             min-height: 50px;  /* for minimum height of button , not vertical center the text */
             /* height: scroll-height; */
             line-height: 20px;
@@ -338,6 +649,22 @@ left: 0px;
             cursor: pointer;
         }
         
+        /* log container */
+        #logContainer {
+            position: sticky;
+            bottom: 0;
+            background-color: var(--background-color-secondary);
+            height: 0px;
+            border-radius: 7px;
+            overflow: hidden;
+            -webkit-transition: all 0.2s;
+            transition: all 0.2s;
+        }
+        
+        #logContainer.active {
+            height: 200px;
+        }
+        
         
 				
         /* display line number for textarea */
@@ -345,6 +672,7 @@ left: 0px;
             font-size: 15px;
             text-align: right;
             min-width: 25px;
+            height: 100%;
             margin-right: 5px;  /* preserve some space from textarea*/
             overflow-y: hidden;  /* disable scroll manually from client */
             /* hide the scroll bar ( for IE, Edge and Firefox ) */
@@ -515,16 +843,16 @@ justify-items: center;
             justify-content: space-between;
             align-items: center;
             /* overflow-x: hidden; */
-            position: fixed;
+            /* position: fixed; */
             top: 0;
             left: 0vw;
             width: 40px;  /* 85 / 250px */
-            height: 100vh;
+            height: 100%;
             background-color: var(--background-color);
             padding: 0rem 0.5rem;  /* vertical horizontal ( space around ) */
             margin: 0 0;
             gap: 10px 0;  /* gap between each child elements */
-            box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
+            /* box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1); */
             -webkit-transition: all 0.5s;
             transition: all 0.5s;
             /* z-index: 1; */
@@ -546,151 +874,151 @@ justify-items: center;
             opacity: 1;
         }
         
-	.sidebar:hover .sidebarContent div a span {
-	    display: block;
-	}
+        .sidebar:hover .sidebarContent div a span {
+            display: block;
+        }
+
+            .sidebar:hover .sidebarFooter span {
+            display: block;
+        } */
 	
-        .sidebar:hover .sidebarFooter span {
-	    display: block;
-	} */
-	
-	/* class sidebarHeader */
-	.sidebarHeader {
-	    display: flex;
-	    flex-direction: row;
-	    justify-content: center;
-	    align-items: center;
-	    text-align: center;
-            margin-top: 15px;
-            overflow-x: hidden;
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* FireFox */
-	}
-	
-	.sidebarHeader img {
-	    width: 50px;
-	    border-radius: 50%;
-	}
-	
-	.sidebarHeader svg {
-	    width: 50px;
-	    height: 50px;
-	    border-radius: 15%;
-	}
-	
-	.sidebarHeader h3 span {
-	    display: none;
-	    font-size: 1.25rem;
-	    font-weight: 600;
-	    margin-left: 5px;
-	}
-	
-	/* class sidebarContent */
-	.sidebarContent {
-            /* position: relative; */
-	    overflow-x: hidden;
-	    overflow-y: scroll;
-	    scrollbar-width: none;
-	    width: 100%;
-	}
-	
-	.sidebarContent h4 {
-	    opacity: 0;
-	    font-weight: 600;
-	    margin: 0px 0px;
-	    padding: 15px 50px;
-	    white-space: nowrap;
-	    text-align: left;
-	}
-	
-	.sidebarContent div {
-	    display: flex;
-            flex-direction: column;
-            justify-content: center;
-	    /* align-items: left; */
-	    text-align: center;  /* left */
-	    /* overflow-x: hidden; */
-	    gap: 10px 0px;  /* gap between each child elements */
-	    margin: 10px 0;
-	}
-	
-	.sidebarContent div a {
+        /* class sidebarHeader */
+        .sidebarHeader {
             display: flex;
             flex-direction: row;
             justify-content: center;
             align-items: center;
-	    font-weight: 500;
-	    padding: 10px 0px;  /* 15px 30px */
-	    white-space: nowrap;
-	}
-	
-	.sidebarContent div a:hover {
-	    color: #555555;
-	    background: #AAAAAA;
-	    border-radius: 4px;
-            cursor: pointer;
-	}
-	
-	.sidebarContent div a img {
-	    width: 25px;
-	    border-radius: 50%;
-	}
-	
-	.sidebarContent div a svg {
-	    display: block;
-	    width: 25px;
-	    height: 25px;
-	    border-radius: 15%;
-	}
-	
-	.sidebarContent div a span {
-	    display: none;
-	}
-	
-	/* class sidebarFooter */
-	.sidebarFooter {
-	    display: flex;
-	    flex-direction: column;
-	    justify-content: center;
-	    align-items: center;
-	    width: 100%;
-	    /* margin: 10px 0; */
-	    margin-bottom: 15px;
-	}
-        
-	.sidebarFooter a {
-	    display: flex;
-	    flex-direction: row;
-	    justify-content: center;
-	    align-items: center;
-	    font-weight: 500;
-	    white-space: nowrap;
-	    text-align: center;
-	    width: 100%;
-	    padding: 10px 0;
-	}
-				
-	.sidebarFooter a:hover {
-	    color: #555555;
-	    background: #AAAAAA;
-	    border-radius: 4px;
-            cursor: pointer;
-	}
-	
-	.sidebarFooter img {
-	    width: 25px;
-	    border-radius: 50%;
-	}
-	
-	.sidebarFooter svg {
-	    width: 25px;
-	    height: 25px;
-	    border-radius: 50%;
-	}
-	
-	.sidebarFooter span {
-	    display: none;
-	}
+            text-align: center;
+                margin-top: 15px;
+                overflow-x: hidden;
+                -ms-overflow-style: none;  /* IE and Edge */
+                scrollbar-width: none;  /* FireFox */
+        }
+
+        .sidebarHeader img {
+            width: 50px;
+            border-radius: 50%;
+        }
+
+        .sidebarHeader svg {
+            width: 50px;
+            height: 50px;
+            border-radius: 15%;
+        }
+
+        .sidebarHeader h3 span {
+            display: none;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-left: 5px;
+        }
+
+        /* class sidebarContent */
+        .sidebarContent {
+                /* position: relative; */
+            overflow-x: hidden;
+            overflow-y: scroll;
+            scrollbar-width: none;
+            width: 100%;
+        }
+
+        .sidebarContent h4 {
+            opacity: 0;
+            font-weight: 600;
+            margin: 0px 0px;
+            padding: 15px 50px;
+            white-space: nowrap;
+            text-align: left;
+        }
+
+        .sidebarContent div {
+            display: flex;
+                flex-direction: column;
+                justify-content: center;
+            /* align-items: left; */
+            text-align: center;  /* left */
+            /* overflow-x: hidden; */
+            gap: 10px 0px;  /* gap between each child elements */
+            margin: 10px 0;
+        }
+
+        .sidebarContent div a {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+            font-weight: 500;
+            padding: 10px 0px;  /* 15px 30px */
+            white-space: nowrap;
+        }
+
+        .sidebarContent div a:hover {
+            color: #555555;
+            background: #AAAAAA;
+            border-radius: 4px;
+                cursor: pointer;
+        }
+
+        .sidebarContent div a img {
+            width: 25px;
+            border-radius: 50%;
+        }
+
+        .sidebarContent div a svg {
+            display: block;
+            width: 25px;
+            height: 25px;
+            border-radius: 15%;
+        }
+
+        .sidebarContent div a span {
+            display: none;
+        }
+
+        /* class sidebarFooter */
+        .sidebarFooter {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            /* margin: 10px 0; */
+            margin-bottom: 15px;
+        }
+
+        .sidebarFooter a {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            font-weight: 500;
+            white-space: nowrap;
+            text-align: center;
+            width: 100%;
+            padding: 10px 0;
+        }
+
+        .sidebarFooter a:hover {
+            color: #555555;
+            background: #AAAAAA;
+            border-radius: 4px;
+                cursor: pointer;
+        }
+
+        .sidebarFooter img {
+            width: 25px;
+            border-radius: 50%;
+        }
+
+        .sidebarFooter svg {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+        }
+
+        .sidebarFooter span {
+            display: none;
+        }
         
         /* class sidebarTooltip */
         .sidebar a:hover .sidebarTooltip {
@@ -705,34 +1033,34 @@ justify-items: center;
             border-radius: 5px;
         }
         
-	/* Settings Sidebar ( MIGRATED TO POPUP MODAL ) */
-	/* .sidebar #settingsSidebar {
-	    /* https://youtu.be/neb7WcDixoY */
-            /* https://www.w3schools.com/cssref/css_units.php */
-            /* display: flex; */
-            /* flex: 1 1 0; 
-            /* margin-width: 300px; */
-        /*    position: fixed;
-            padding: 2rem 1rem;  /* vertical horizontal ( space around ) */
-        /*    top: 0;
-            left: -150vw;
-            width: 100vw;
-            height: 100vh;
-            /* background-color: var(--background-color-dark-mode); */
-            /* https://stackoverflow.com/questions/68732189/how-to-partially-color-an-html-elements-background-from-bottom-to-top-using-css */
-        /*    background: linear-gradient(to right, var(--background-color-dark-mode) 0%, var(--background-color-dark-mode) var(--settings-sidebar-width), #FFFFFF00 var(--settings-sidebar-width), #FFFFFF00 100%);
-            -webkit-transition: all 0.5s;  /* linear */
-        /*    transition: all 0.5s;
-	}
-        
-	.sidebar #settingsSidebar.active {
+        /* Settings Sidebar ( MIGRATED TO POPUP MODAL ) */
+        /* .sidebar #settingsSidebar {
+            /* https://youtu.be/neb7WcDixoY */
+                /* https://www.w3schools.com/cssref/css_units.php */
+                /* display: flex; */
+                /* flex: 1 1 0;
+                /* margin-width: 300px; */
+            /*    position: fixed;
+                padding: 2rem 1rem;  /* vertical horizontal ( space around ) */
+            /*    top: 0;
+                left: -150vw;
+                width: 100vw;
+                height: 100vh;
+                /* background-color: var(--background-color-dark-mode); */
+                /* https://stackoverflow.com/questions/68732189/how-to-partially-color-an-html-elements-background-from-bottom-to-top-using-css */
+            /*    background: linear-gradient(to right, var(--background-color-dark-mode) 0%, var(--background-color-dark-mode) var(--settings-sidebar-width), #FFFFFF00 var(--settings-sidebar-width), #FFFFFF00 100%);
+                -webkit-transition: all 0.5s;  /* linear */
+            /*    transition: all 0.5s;
+        }
+
+        .sidebar #settingsSidebar.active {
             left: 0;
         }
         
         .sidebar #settingsSidebar > * {
             /* display: block;
             padding: 1rem; */
-        /*    text-decoration: none;
+            /* text-decoration: none;
             -webkit-transition: 0.5s;
             transition: 0.5s;
         } */
@@ -829,7 +1157,7 @@ justify-items: center;
 </head>
 
 
-<body onload="document.documentElement.requestFullscreen();">
+<body>  <!-- onload="document.documentElement.requestFullscreen();" -->
     <!-- Welcome Screen / Splash Screen -->
     <!-- https://stackoverflow.com/questions/20823767/welcome-screen-before-website-loads-click-to-enter-splash-screen -->
     <!-- https://speckyboy.com/splash-screen-design/ -->
@@ -858,82 +1186,473 @@ justify-items: center;
     </div>
     
     
-    <br>
-    
-    
-    <div id="codeEditorContainer" style="width: 100%;">  <!-- todo2 field for replacing & finding text in textarea -->
-        <!-- <iframe id="outputIframe" src="" srcdoc="" title="Test HTML iFrame" width="1056" height="594" frameborder="1" scrolling="yes" allowtransparency="false"></iframe>
-        
-        <br><br> -->
-        
-        <!-- outputIframe Popup Modal -->
-        <div id="outputIframePopupModal" class="popupModal">
-            <div class="popupModalContainer">
-                <!-- HTML output -->
-                <iframe id="outputIframe" src="" srcdoc="" title="Test HTML iFrame" width="1056" height="594" frameborder="1" scrolling="yes" allow="fullscreen" allowtransparency="false"></iframe>
-                <!-- full-screen iFrame button -->
-                <span id="outputIframeFullScreenButton" class="" title="Full Screen" onclick="document.getElementById('outputIframe').requestFullscreen()">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
-                        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M432 320v112H320M421.8 421.77L304 304M80 192V80h112M90.2 90.23L208 208M320 80h112v112M421.77 90.2L304 208M192 432H80V320M90.23 421.8L208 304"/>
+    <!-- Page Layout 
+         [top id=pageLayoutTop]
+         [middle id=pageLayoutMiddle]
+             [middle left   id=pageLayoutMiddleLeft]   : side bar
+             [middle middle id=pageLayoutMiddleMiddle] : file explorer
+             [middle right  id=pageLayoutMiddleRight]  : main ( code editor , error message display , etc. )
+         [bottom id=pageLayoutBottom]
+    -->
+    <div id="pageLayout">
+        <!-- Page Layout - Top todo 0 -->
+        <div id="pageLayoutTop">
+            <div>  <!-- Top Tool Bar Left -->
+                <!-- Icon -->
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="25px" viewBox="0 0 25 25" stroke-width="1.5" stroke="currentColor" class="size-6">
+	                <path stroke-linecap="round" stroke-linejoin="round" d="m6.75 7.5 3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0 0 21 18V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v12a2.25 2.25 0 0 0 2.25 2.25Z" />
                     </svg>
-                </span>
+                </div>
+                <!-- Top Tool Bar : Edit -->
+                <div class="dropdown-hover">
+                    Edit
+                    <div class="dropdownContent-hover">
+                        <div class="dropdownContentOption-hover">
+                            <div class="dropdownContentOptionLeft-hover">Find & Replace...</div>
+                            <div class="dropdownContentOptionRight-hover">CTRL+F</div>
+                        </div>
+                        <div class="dropdownContentOption-hover">
+                            <div class="dropdownContentOptionLeft-hover">...</div>
+                            <div class="dropdownContentOptionRight-hover">Hint text</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Top Tool Bar : View -->
+                <div class="dropdown-hover">
+                    View
+                    <div class="dropdownContent-hover">
+                        <div class="dropdownContentSub-hover">
+                            <div class="dropdownContentOption-hover">
+                                <div class="dropdownContentOptionLeft-hover">Full Screen</div>
+                                <div class="dropdownContentOptionRight-hover"> > </div>
+                            </div>
+                            <div class="dropdownContentSubContent-hover">
+                                <div onclick="document.documentElement.requestFullscreen();">Webpage</div>
+                                <div onclick="document.getElementById('codeEditorContainer').requestFullscreen();">Code Editor Only</div>
+                            </div>
+                        </div>
+                        <div class="dropdownContentOption-hover">
+                            <div class="dropdownContentOptionLeft-hover">...</div>
+                            <div class="dropdownContentOptionRight-hover">Hint text</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Top Tool Bar : Navigate -->
+                <div class="dropdown-hover">
+                    Navigate
+                    <div class="dropdownContent-hover">
+                        <div class="dropdownContentSub-hover">
+                            <div class="dropdownContentOption-hover">
+                                <div class="dropdownContentOptionLeft-hover">Tag</div>
+                                <div class="dropdownContentOptionRight-hover"> > </div>
+                            </div>
+                            <div class="dropdownContentSubContent-hover">
+                                <div onclick="textareaGoto(this.innerHTML)">Head</div>
+                                <div onclick="textareaGoto(this.innerHTML)">Style</div>
+                                <div onclick="textareaGoto(this.innerHTML)">Body</div>
+                                <div onclick="textareaGoto(this.innerHTML)">Script</div>
+                            </div>
+                        </div>
+                        <div class="dropdownContentOption-hover">
+                            <div class="dropdownContentOptionLeft-hover">Line:Column...</div>
+                            <div class="dropdownContentOptionRight-hover">CTRL+G</div>
+                        </div>
+                        <div>...</div>
+                    </div>
+                </div>
+                <!-- Top Tool Bar : Help -->
+                <div class="dropdown-hover">
+                    Help
+                    <div class="dropdownContent-hover">
+                        <div>Getting Started</div>
+                        <div>Submit a Bug Report...</div>
+                        <div>Submit Feedback...</div>
+                        <div>...</div>
+                    </div>
+                </div>
             </div>
-        </div>
+            <div>  <!-- Top Tool Bar Right -->
+                <div onclick="document.getElementById('aboutPopupModal').classList.toggle('active')">About</div>
+                <div onclick="document.getElementById('creditPopupModal').classList.toggle('active')">Credit</div>
+                <div onclick="document.getElementById('usefulLinksPopupModal').classList.toggle('active')">Useful Links</div>
+                <div onclick="document.getElementById('contactPopupModal').classList.toggle('active')">Contact</div>
+            </div>
+        </div>  <!-- End of Page Layout - Top -->
         
-        <!-- code editor -->
-        <div style="display: flex; width: 100%; justify-content: center;">  <!-- flex-direction: column; align-items: top; justify-content: center; --> <!-- https://stackoverflow.com/questions/19026884/flexbox-center-horizontally-and-vertically -->
-            <!-- line number -->
-            <div id="lineNumberDisplay"></div>
-            
-            <!-- HTML code editing --> <!-- todo1 keyword highlight : Prism / --> <!-- https://highlightjs.org/ --> <!-- https://niemvuilaptrinh.medium.com/11-best-libraries-syntax-highlighter-javascript-ea2c19b990a2 -->
-            <textarea id="inputTextarea"
-                      rows="30"
-                      cols="150"
-                      placeholder="Write or paste HTML code here. Press F9 to show/hide the result iframe. Any errors or logs will be displayed in the console below."
-                      oninput="updateIframe(); updateLineNumber();"
-                      onscroll="updateLineNumberScrollPosition();"
-                      autofocus><!DOCTYPE html>
+        
+        <!-- Page Layout - Middle -->
+        <div id="pageLayoutMiddle">
+            <!-- Page Layout - Middle Left todo 0 -->
+            <div id="pageLayoutMiddleLeft">
+                <!-- SideBar -->
+                <aside id="" class="sidebar">
+                    <!-- Sidebar Header ( REMOVED ) -->
+                    <!-- <div class="sidebarHeader">  <!-- icon moved to top tool bar -->
+                    <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m6.75 7.5 3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0 0 21 18V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v12a2.25 2.25 0 0 0 2.25 2.25Z" />
+                        </svg> -->
+                    <!-- <img src="https://img.icons8.com/ios-glyphs/30/source-code.png" alt="Brand Icon"> -->
+                    <!-- <h3><span>Brand Name</span></h3>
+                    </div> -->
+
+                    <!-- Sidebar Content -->
+                    <div class="sidebarContent">
+                        <!-- <h4><span>File</span></h4> -->
+                        <div>
+                            <!-- button to expand file explorer -->
+                            <a class="" onclick="document.getElementById('pageLayoutMiddleMiddle').classList.toggle('active');" title="File">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+                                    <path d="M440 432H72a40 40 0 01-40-40V120a40 40 0 0140-40h75.89a40 40 0 0122.19 6.72l27.84 18.56a40 40 0 0022.19 6.72H440a40 40 0 0140 40v240a40 40 0 01-40 40zM32 192h448" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/>
+                                </svg>
+                                <span>File</span>
+                                <span class="sidebarTooltip">File</span>
+                            </a>
+                        </div>
+
+                        <!-- <h4><span>Execution</span></h4> -->
+                        <div>
+                            <!-- button to open Popup Modal ( run the HTML code ) -->
+                            <a class="" onclick="document.getElementById('outputIframePopupModal').classList.toggle('active');" title="Run ( F9 )">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+                                    <path d="M112 111v290c0 17.44 17 28.52 31 20.16l247.9-148.37c12.12-7.25 12.12-26.33 0-33.58L143 90.84c-14-8.36-31 2.72-31 20.16z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"/>
+                                </svg>
+                                <span>Run</span>
+                                <span class="sidebarTooltip">Run ( F9 )</span>
+                            </a>
+                        </div>
+
+                        <!-- <h4><span>Debug</span></h4> -->
+                        <div>
+                            <!-- button to toggle log -->
+                            <a class="" onclick="document.getElementById('logContainer').classList.toggle('active');" title="Log ( SHIFT + F9 )">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+                                    <path d="M370 378c28.89 23.52 46 46.07 46 86M142 378c-28.89 23.52-46 46.06-46 86M384 208c28.89-23.52 32-56.07 32-96M128 206c-28.89-23.52-32-54.06-32-94M464 288.13h-80M128 288.13H48M256 192v256" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path d="M256 448h0c-70.4 0-128-57.6-128-128v-96.07c0-65.07 57.6-96 128-96h0c70.4 0 128 25.6 128 96V320c0 70.4-57.6 128-128 128z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path d="M179.43 143.52a49.08 49.08 0 01-3.43-15.73A80 80 0 01255.79 48h.42A80 80 0 01336 127.79a41.91 41.91 0 01-3.12 14.3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/>
+                                </svg>
+                                <span>Log</span>
+                                <span class="sidebarTooltip">Log ( SHIFT + F9 )</span>
+                            </a>
+                        </div>
+
+                        <!-- <h4><span>GOTO</span></h4> -->
+                        <!-- MIGRATED TO TOP TOOL BAR <div>
+                        <a class="" onclick="textareaGoto(this.children[1].innerHTML)" title="Go To : Head">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.182 15.182a4.5 4.5 0 0 1-6.364 0M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Z" />
+                            </svg>
+                            <!-- <img src="https://img.icons8.com/?size=100&id=102969&format=png&color=000000" alt="Head Icon"> -->
+                            <!-- <span>Head</span>
+                            <span class="sidebarTooltip">Head</span>
+                        </a>
+
+                        <a class="" onclick="textareaGoto(this.children[1].innerHTML)" title="Go To : Style">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+                                <path d="M452.37 59.63h0a40.49 40.49 0 00-57.26 0L184 294.74c23.08 4.7 46.12 27.29 49.26 49.26l219.11-227.11a40.49 40.49 0 000-57.26zM138 336c-29.88 0-54 24.5-54 54.86 0 23.95-20.88 36.57-36 36.57C64.56 449.74 92.82 464 120 464c39.78 0 72-32.73 72-73.14 0-30.36-24.12-54.86-54-54.86z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/>
+                            </svg>
+                            <!-- <img src="https://img.icons8.com/?size=100&id=4669&format=png&color=000000" alt="Brush Icon"> -->
+                            <!-- <span>Style</span>
+                            <span class="sidebarTooltip">Style</span>
+                        </a>
+
+                        <a class="" onclick="textareaGoto(this.children[1].innerHTML)" title="Go To : Body">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+                                <path d="M314.56 48s-22.78 8-58.56 8-58.56-8-58.56-8a31.94 31.94 0 00-10.57 1.8L32 104l16.63 88 48.88 5.52a24 24 0 0121.29 24.58L112 464h288l-6.8-241.9a24 24 0 0121.29-24.58l48.88-5.52L480 104 325.13 49.8a31.94 31.94 0 00-10.57-1.8zM333.31 52.66a80 80 0 01-154.62 0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/>
+                            </svg>
+                            <span>Body</span>
+                            <span class="sidebarTooltip">Body</span>
+                        </a>
+
+                        <a class="" onclick="textareaGoto(this.children[1].innerHTML)" title="Go To : Script">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
+                            </svg>
+                            <!-- <img src="https://img.icons8.com/?size=100&id=37927&format=png&color=000000" alt="Script Icon"> -->
+                            <!-- <span>Script</span>
+                            <span class="sidebarTooltip">Script</span>
+                        </a>
+                    </div> MIGRATED TO TOP TOOL BAR -->
+
+                        <h4><span>Header</span></h4>
+                        <div>
+                            <a class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
+                                </svg>
+                                <!-- <img src="https://img.icons8.com/?size=100&id=19167&format=png&color=000000" alt=""> -->
+                                <span class="sidebarTooltip">?</span>
+                            </a>
+                        </div>
+                    </div>  <!-- End of Sidebar Content -->
+
+                    <!-- Sidebar Footer -->
+                    <div class="sidebarFooter">
+                        <!-- Settings Button -->
+                        <a id="" class="" onclick="toggleSettingsMenu()" title="Settings ( CTRL + ALT + s )">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12a7.5 7.5 0 0 0 15 0m-15 0a7.5 7.5 0 1 1 15 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077 1.41-.513m14.095-5.13 1.41-.513M5.106 17.785l1.15-.964m11.49-9.642 1.149-.964M7.501 19.795l.75-1.3m7.5-12.99.75-1.3m-6.063 16.658.26-1.477m2.605-14.772.26-1.477m0 17.726-.26-1.477M10.698 4.614l-.26-1.477M16.5 19.794l-.75-1.299M7.5 4.205 12 12m6.894 5.785-1.149-.964M6.256 7.178l-1.15-.964m15.352 8.864-1.41-.513M4.954 9.435l-1.41-.514M12.002 12l-3.75 6.495" />
+                            </svg>
+                            <!-- <img src="https://img.icons8.com/?size=100&id=364&format=png&color=000000" alt="Settings Icon"> -->
+                            <span>Settings</span>
+                            <span class="sidebarTooltip">Settings ( CTRL + ALT + s )</span>
+                        </a>
+                    </div>  <!-- End of Sidebar Footer -->
+
+                    <!-- Settings Sidebar ( MIGRATED TO POPUP MODAL ) -->
+                    <!-- <nav id="settingsSidebar" class="">
+                        <h4>Settings</h4>
+
+                        <!-- iFrame Size / Resolution --> <!--
+                        <label for="inputIframeWidth">iFrame Size :</label>
+                        <input type="number" id="inputIframeWidth" value="1056" min="100" max="3000" step="1" onfocus="select()" onchange="updateIframeSize(this.value, document.getElementById('inputIframeHeight').value)"> X
+                        <input type="number" id="inputIframeHeight" value="594" min="100" max="3000" step="1" onfocus="select()" onchange="updateIframeSize(document.getElementById('inputIframeWidth').value, this.value)">
+
+                        <br><br>
+
+                        <!-- input field for changing font size --> <!--
+                        <label for="inputTextareaFontSize">Font Size :</label>
+                        <input type="number" id="inputTextareaFontSize" value="15" min="1" max="50" step="1" onfocus="select()" onchange="updateTextareaFontSize(this.value)">
+
+                        <br><br>
+
+                        <!-- input field for changing tab size --> <!--
+                        <label for="inputTextareaTabSize">Tab ( Indent ) Size :</label>
+                        <input type="number" id="inputTextareaTabSize" value="4" min="2" max="10" step="1" onfocus="select()" onchange="">
+
+                        <br><br>
+
+                        <!-- input field for changing font family --> <!--
+                        <label for="inputTextareaFontFamily">Font Family :</label>
+                        <select id="inputTextareaFontFamily" onchange="updateTextareaFontFamily(this.value)">
+                            <!-- fonts that might unable to apply :
+                            BioRhyme
+                            Brush Script MT
+                            Consolas
+                            Didot
+                            Eczar
+                            Futura Bold
+                            Futura Demibold
+                            Helvetica
+                            JetBrains Mono
+                            Monoid
+                            Myriad Pro
+                            Product Sans
+                            San Serif
+                            Segoe UI
+                            Serif
+                            Slab Serif
+                            Source Code Pro
+                            Space Mono
+                            Terminus --> <!--
+                            <option value="Arial">Arial</option>
+                            <option value="Cambria">Cambria</option>
+                            <option value="Garamond">Garamond</option>
+                            <option value="Georgia">Georgia</option>
+                            <option value="Monospace" selected="selected">Monospace</option>
+                            <option value="Times New Roman">Times New Roman</option>
+                            <option value="Verdana">Verdana</option>
+                            <!--
+                            <option value="BioRhyme">BioRhyme</option>
+                            <option value="Brush Script MT">Brush Script MT</option>
+                            <option value="Consolas">Consolas</option>
+                            <option value="Didot">Didot</option>
+                            <option value="Eczar">Eczar</option>
+                            <option value="Futura Bold">Futura Bold</option>
+                            <option value="Futura Demibold">Futura Demibold</option>
+                            <option value="Helvetica">Helvetica</option>
+                            <option value="JetBrains Mono">JetBrains Mono</option>
+                            <option value="Monoid">Monoid</option>
+                            <option value="Myriad Pro">Myriad Pro</option>
+                            <option value="Product Sans">Product Sans</option>
+                            <option value="San Serif">San Serif</option>
+                            <option value="Segoe UI">Segoe UI</option>
+                            <option value="Serif">Serif</option>
+                            <option value="Slab Serif">Slab Serif</option>
+                            <option value="Source Code Pro">Source Code Pro</option>
+                            <option value="Space Mono">Space Mono</option>
+                            <option value="Terminus">Terminus</option>
+                            <option value="???">???</option>
+                            --> <!--
+                        </select>
+
+                        <br><br>
+
+                        <!-- input field for changing line spacing --> <!--
+                        <label for="inputTextareaLineSpacing">Line Spacing :</label>
+                        <input type="number" id="inputTextareaLineSpacing" value="1.3" min="1" max="10" step="0.1" onfocus="select()" onchange="updateTextareaLineHeight(this.value)">
+
+                        <br><br>
+
+                        <!-- toggle allow text wrap --> <!--
+                        <div style="display: inline-block;
+                                    vertical-align: middle;
+                                    padding: 7px 8px;">
+                            <label for="textWrapSwitch">Text Wrap</label>
+                            <label class="switch">
+                                <input type="checkbox" id="textWrapSwitch" onclick="toggleTextWrap()">
+                                <span class="switchSlider round"></span>
+                            </label>
+                        </div>
+
+                        <br>
+
+                        <!-- toogle dark mode switch --> <!--
+                        <div style="display: inline-block;
+                                    vertical-align: middle;
+                                    padding: 7px 8px;">
+                            <label for="darkModeSwitch">Dark Mode</label>
+                            <label class="switch">
+                                <input type="checkbox" id="darkModeSwitch" checked="true" onclick="toggleDarkMode()">
+                                <span class="switchSlider round"></span>
+                            </label>
+                        </div>
+
+                        <br><br>
+
+                        <!-- button to reset textarea content to default value --> <!--
+                        <button type="button" id="buttonResetTextarea" class="button" onclick="resetTextareaContent()">Reset HTML Content</button>
+
+                    </nav> [Settings Sidebar ( MIGRATED TO POPUP MODAL )] -->
+                </aside>
+            </div>  <!-- End of Page Layout - Middle Left -->
+    
+    
+            <!-- Page Layout - Middle Middle todo 4 multi-file support -->
+            <div id="pageLayoutMiddleMiddle">
+                <!-- https://stackoverflow.com/questions/12194469/best-way-to-do-a-split-pane-in-html
+                     https://stackoverflow.com/questions/72036460/full-page-with-nested-flexbox-and-scrolling -->
+                ( Project Files )<br>
+                ( Comming Soon )
+                <br><br><br><br><br>
+                <br><br><br><br><br>
+                <br><br><br><br><br>
+                <br><br><br><br><br>
+                <br><br><br><br><br>
+                <br><br><br><br><br>
+                <br><br><br><br><br>
+                <br><br><br><br><br>
+                <br><br><br><br><br>
+                <br><br><br><br><br>
+                <br><br><br><br><br>
+                <br><br><br><br><br>
+                <br><br><br><br><br>
+                <br><br><br><br><br>
+            </div>  <!-- End of Page Layout - Middle Middle -->
+    
+    
+            <!-- Page Layout - Main todo 0 -->
+            <div id="pageLayoutMiddleRight">
+                <div id="codeEditorContainer" style="width: 100%; height: 100%;">  <!-- todo 3 field for finding & replacing text in textarea -->
+                    <!-- <iframe id="outputIframe" src="" srcdoc="" title="Test HTML iFrame" width="1056" height="594" frameborder="1" scrolling="yes" allowtransparency="false"></iframe>
+
+                    <br><br> -->
+
+                    <!-- outputIframe Popup Modal -->
+                    <div id="outputIframePopupModal" class="popupModal">
+                        <div class="popupModalContainer">
+                            <!-- HTML output -->
+                            <iframe id="outputIframe" src="" srcdoc="" title="Test HTML iFrame" width="1056" height="594" frameborder="1" scrolling="yes" allow="fullscreen" allowtransparency="false"></iframe>
+                            <!-- full-screen iFrame button -->
+                            <span id="outputIframeFullScreenButton" class="" title="Full Screen" onclick="document.getElementById('outputIframe').requestFullscreen()">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+                                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M432 320v112H320M421.8 421.77L304 304M80 192V80h112M90.2 90.23L208 208M320 80h112v112M421.77 90.2L304 208M192 432H80V320M90.23 421.8L208 304"/>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- code editor -->
+                    <div style="display: flex; width: 100%; height: 100%; justify-content: left; overflow: hidden;">  <!-- flex-direction: column; align-items: top/stretch; justify-content: center; align-items: flex-start;--> <!-- https://stackoverflow.com/questions/19026884/flexbox-center-horizontally-and-vertically -->
+                        <!-- line number -->
+                        <div id="lineNumberDisplay"></div>
+                        <!-- HTML code editing -->
+                        <pre class="codeEditor-pre"
+                             onscroll="updateLineNumberScrollPosition();"><code class="codeEditor-code"
+                                                                                oninput="updateIframe(); updateLineNumber();" contenteditable autofocus>&lt;!DOCTYPE html&gt;
+
+&lt;html>
+&lt;head>
+    &lt;title>Page Title&lt;/title>
+    &lt;meta charset="UTF-8">
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    &lt;!-- CSS Style -->
+    &lt;style>
+        
+    &lt;/style>
+    
+&lt;/head>
+
+
+&lt;!-- HTML Page Body / Content -->
+&lt;body>
+    
+    
+    &lt;!-- Javascript -->
+    &lt;script>
+        
+    &lt;/script>
+&lt;/body>
+
+
+&lt;/html></code></pre>
+                    </div>
+                    <!--
+                    <div style="display: flex; width: 100%; justify-content: center; align-items: flex-start;">  <!-- flex-direction: column; align-items: top; justify-content: center; --> <!-- https://stackoverflow.com/questions/19026884/flexbox-center-horizontally-and-vertically -->
+                        <!-- line number --> <!--
+                        <div id="lineNumberDisplay"></div>
+
+                        <!-- HTML code editing -->
+                        <!-- <textarea id="inputTextarea"
+                                  rows="30"
+                                  cols="100"
+                                  style="width: 100%; border-width: 0;"
+                                  placeholder="Write or paste HTML code here. Press F9 to show/hide the result iframe. Any errors or logs will be displayed in the console below."
+                                  oninput="updateIframe(); updateLineNumber();"
+                                  onscroll="updateLineNumberScrollPosition();"
+                                  autofocus><!DOCTYPE html>
 
 <html>
 <head>
     <title>Page Title</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- CSS Style -->
+
+    <!-- CSS Style --> <!--
     <style>
-        
+
     </style>
-    
+
 </head>
 
 
-<!-- HTML Page Body / Content -->
+<!-- HTML Page Body / Content --> <!--
 <body>
-    
+
+
+    <!-- Javascript --> <!--
+    <script>
+
+    </script>
 </body>
-
-
-<!-- Javascript -->
-<script>
-    
-</script>
 
 
 </html>
 </textarea>
-        </div>
-        
-        <br><br>
-        
-        <div id="log"></div>
-    </div>
+                    </div>  <!-- End of code editor -->
+
+                    <!-- <br><br> -->
+
+                    <!-- Log -->
+                    <div id="logContainer">
+                        <div id="log"></div>
+                    </div>
+                </div>  <!-- End of codeEditorContainer -->
+
+    
+    <!-- <br><br>
     
     
-    <br><br>
-    
-    
-    <!-- GOTO -->
+    <!-- GOTO ( MIGRATED TO TOP TOOL BAR ) -->
     <!--
     <table style="text-align: center; width: 100%; margin: auto;">
         <tr>
@@ -953,355 +1672,446 @@ justify-items: center;
     -->
     
     
-    <!-- SideBar -->
-    <aside id="" class="sidebar">
-        <!-- Sidebar Header -->
-	<div class="sidebarHeader">
-	    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="1.5" stroke="currentColor" class="size-6">
-	        <path stroke-linecap="round" stroke-linejoin="round" d="m6.75 7.5 3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0 0 21 18V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v12a2.25 2.25 0 0 0 2.25 2.25Z" />
-            </svg>
-	    <!-- <img src="https://img.icons8.com/ios-glyphs/30/source-code.png" alt="Brand Icon"> -->
-	    <h3><span>Brand Name</span></h3>
-        </div>
-        
-        <!-- Sidebar Content -->
-        <div class="sidebarContent">
-            <h4><span>Execution</span></h4>
-	    <div>
-                <!-- button to open Popup Modal ( run the HTML code ) -->
-	        <a class="" onclick="document.getElementById('outputIframePopupModal').classList.toggle('active');" title="Run ( F9 )">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
-                        <path d="M112 111v290c0 17.44 17 28.52 31 20.16l247.9-148.37c12.12-7.25 12.12-26.33 0-33.58L143 90.84c-14-8.36-31 2.72-31 20.16z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"/>
-                    </svg>
-		    <span>Run</span>
-                    <span class="sidebarTooltip">Run ( F9 )</span>
-		</a>
-            </div>
-            
-            <h4><span>GOTO</span></h4>
-	    <div>
-                <a class="" onclick="textareaGoto(this.children[1].innerHTML)" title="Go To : Head">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.182 15.182a4.5 4.5 0 0 1-6.364 0M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Z" />
-                    </svg>
-	            <!-- <img src="https://img.icons8.com/?size=100&id=102969&format=png&color=000000" alt="Head Icon"> -->
-		    <span>Head</span>
-                    <span class="sidebarTooltip">Head</span>
-		</a>
-                
-                <a class="" onclick="textareaGoto(this.children[1].innerHTML)" title="Go To : Style">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
-                        <path d="M452.37 59.63h0a40.49 40.49 0 00-57.26 0L184 294.74c23.08 4.7 46.12 27.29 49.26 49.26l219.11-227.11a40.49 40.49 0 000-57.26zM138 336c-29.88 0-54 24.5-54 54.86 0 23.95-20.88 36.57-36 36.57C64.56 449.74 92.82 464 120 464c39.78 0 72-32.73 72-73.14 0-30.36-24.12-54.86-54-54.86z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/>
-                    </svg>
-                    <!-- <img src="https://img.icons8.com/?size=100&id=4669&format=png&color=000000" alt="Brush Icon"> -->
-	            <span>Style</span>
-                    <span class="sidebarTooltip">Style</span>
-	        </a>
-                
-                <a class="" onclick="textareaGoto(this.children[1].innerHTML)" title="Go To : Body">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
-                        <path d="M314.56 48s-22.78 8-58.56 8-58.56-8-58.56-8a31.94 31.94 0 00-10.57 1.8L32 104l16.63 88 48.88 5.52a24 24 0 0121.29 24.58L112 464h288l-6.8-241.9a24 24 0 0121.29-24.58l48.88-5.52L480 104 325.13 49.8a31.94 31.94 0 00-10.57-1.8zM333.31 52.66a80 80 0 01-154.62 0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/>
-                    </svg>
-                    <span>Body</span>
-                    <span class="sidebarTooltip">Body</span>
-		</a>
-                
-                <a class="" onclick="textareaGoto(this.children[1].innerHTML)" title="Go To : Script">
-		    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="1.5" stroke="currentColor" class="size-6">
-		        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
-                    </svg>
-		    <!-- <img src="https://img.icons8.com/?size=100&id=37927&format=png&color=000000" alt="Script Icon"> -->
-		    <span>Script</span>
-                    <span class="sidebarTooltip">Script</span>
-		</a>
-	    </div>
-	    
-	    <h4><span>Header</span></h4>
-	    <div>
-                <a class="">
-	            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="1.5" stroke="currentColor" class="size-6">
-		        <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
-                    </svg>
-		    <!-- <img src="https://img.icons8.com/?size=100&id=19167&format=png&color=000000" alt=""> -->
-		    <span>Links</span>
-		</a>
-	    </div>
-        </div>
-        
-	<!-- Sidebar Footer -->
-	<div class="sidebarFooter">
-	    <a id="" class="" onclick="toggleSettingsMenu()" title="Settings">
-	        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="1.5" stroke="currentColor" class="size-6">
-		    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12a7.5 7.5 0 0 0 15 0m-15 0a7.5 7.5 0 1 1 15 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077 1.41-.513m14.095-5.13 1.41-.513M5.106 17.785l1.15-.964m11.49-9.642 1.149-.964M7.501 19.795l.75-1.3m7.5-12.99.75-1.3m-6.063 16.658.26-1.477m2.605-14.772.26-1.477m0 17.726-.26-1.477M10.698 4.614l-.26-1.477M16.5 19.794l-.75-1.299M7.5 4.205 12 12m6.894 5.785-1.149-.964M6.256 7.178l-1.15-.964m15.352 8.864-1.41-.513M4.954 9.435l-1.41-.514M12.002 12l-3.75 6.495" />
-		</svg>
-		<!-- <img src="https://img.icons8.com/?size=100&id=364&format=png&color=000000" alt="Settings Icon"> -->
-		<span>Settings</span>
-                <span class="sidebarTooltip">Settings</span>
-	    </a>
-        </div>
-	
-        <!-- Settings Sidebar ( MIGRATED TO POPUP MODAL ) -->
-	<!-- <nav id="settingsSidebar" class="">
-            <h4>Settings</h4>
-            
-            <!-- iFrame Size / Resolution --> <!--
-            <label for="inputIframeWidth">iFrame Size :</label>
-            <input type="number" id="inputIframeWidth" value="1056" min="100" max="3000" step="1" onfocus="select()" onchange="updateIframeSize(this.value, document.getElementById('inputIframeHeight').value)"> X
-            <input type="number" id="inputIframeHeight" value="594" min="100" max="3000" step="1" onfocus="select()" onchange="updateIframeSize(document.getElementById('inputIframeWidth').value, this.value)">
-            
-            <br><br>
-            
-            <!-- input field for changing font size --> <!--
-            <label for="inputTextareaFontSize">Font Size :</label>
-            <input type="number" id="inputTextareaFontSize" value="15" min="1" max="50" step="1" onfocus="select()" onchange="updateTextareaFontSize(this.value)">
-            
-            <br><br>
-            
-            <!-- input field for changing tab size --> <!--
-            <label for="inputTextareaTabSize">Tab ( Indent ) Size :</label>
-            <input type="number" id="inputTextareaTabSize" value="4" min="2" max="10" step="1" onfocus="select()" onchange="">
-            
-            <br><br>
-            
-            <!-- input field for changing font family --> <!--
-            <label for="inputTextareaFontFamily">Font Family :</label>
-            <select id="inputTextareaFontFamily" onchange="updateTextareaFontFamily(this.value)">
-                <!-- fonts that might unable to apply :
-                BioRhyme
-                Brush Script MT
-                Consolas
-                Didot
-                Eczar
-                Futura Bold
-                Futura Demibold
-                Helvetica
-                JetBrains Mono
-                Monoid
-                Myriad Pro
-                Product Sans
-                San Serif
-                Segoe UI
-                Serif
-                Slab Serif
-                Source Code Pro
-                Space Mono
-                Terminus --> <!--
-                <option value="Arial">Arial</option>
-                <option value="Cambria">Cambria</option>
-                <option value="Garamond">Garamond</option>
-                <option value="Georgia">Georgia</option>
-                <option value="Monospace" selected="selected">Monospace</option>
-                <option value="Times New Roman">Times New Roman</option>
-                <option value="Verdana">Verdana</option>
-                <!-- 
-                <option value="BioRhyme">BioRhyme</option>
-                <option value="Brush Script MT">Brush Script MT</option>
-                <option value="Consolas">Consolas</option>
-                <option value="Didot">Didot</option>
-                <option value="Eczar">Eczar</option>
-                <option value="Futura Bold">Futura Bold</option>
-                <option value="Futura Demibold">Futura Demibold</option>
-                <option value="Helvetica">Helvetica</option>
-                <option value="JetBrains Mono">JetBrains Mono</option>
-                <option value="Monoid">Monoid</option>
-                <option value="Myriad Pro">Myriad Pro</option>
-                <option value="Product Sans">Product Sans</option>
-                <option value="San Serif">San Serif</option>
-                <option value="Segoe UI">Segoe UI</option>
-                <option value="Serif">Serif</option>
-                <option value="Slab Serif">Slab Serif</option>
-                <option value="Source Code Pro">Source Code Pro</option>
-                <option value="Space Mono">Space Mono</option>
-                <option value="Terminus">Terminus</option>
-                <option value="???">???</option>
-                --> <!--
-            </select>
-            
-            <br><br>
-            
-            <!-- input field for changing line spacing --> <!--
-            <label for="inputTextareaLineSpacing">Line Spacing :</label>
-            <input type="number" id="inputTextareaLineSpacing" value="1.3" min="1" max="10" step="0.1" onfocus="select()" onchange="updateTextareaLineHeight(this.value)">
-            
-            <br><br>
-            
-            <!-- toggle allow text wrap --> <!--
-            <div style="display: inline-block;
-                        vertical-align: middle;
-                        padding: 7px 8px;">
-                <label for="textWrapSwitch">Text Wrap</label>
-                <label class="switch">
-                    <input type="checkbox" id="textWrapSwitch" onclick="toggleTextWrap()">
-                    <span class="switchSlider round"></span>
-                </label>
-            </div>
-            
-            <br>
-            
-            <!-- toogle dark mode switch --> <!--
-            <div style="display: inline-block;
-                        vertical-align: middle;
-                        padding: 7px 8px;">
-                <label for="darkModeSwitch">Dark Mode</label>
-                <label class="switch">
-                    <input type="checkbox" id="darkModeSwitch" checked="true" onclick="toggleDarkMode()">
-                    <span class="switchSlider round"></span>
-                </label>
-            </div>
-            
-            <br><br>
-            
-            <!-- button to reset textarea content to default value --> <!--
-            <button type="button" id="buttonResetTextarea" class="button" onclick="resetTextareaContent()">Reset HTML Content</button>
-            
-        </nav> -->
-    </aside>
+                <!-- Settings Popup Modal -->
+                <div id="settingsPopupModal" class="popupModal">
+                    <div class="popupModalContainer">
+                        <span class="popupModalCloseButton" title="Close">  <!-- close button -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+                                <path fill="currentColor" d="M289.94 256l95-95A24 24 0 00351 127l-95 95-95-95a24 24 0 00-34 34l95 95-95 95a24 24 0 1034 34l95-95 95 95a24 24 0 0034-34z"/>
+                            </svg>
+                        </span>
+
+                        <div id="settingsSectionsContainer">  <!-- Settings Sections -->
+                            <h3>Settings</h3>
+
+                            <span class="active" onclick="activateSettingsTab(this, 'settingsIframeSize');">
+                                iFrame Size
+                            </span>
+                            <span onclick="activateSettingsTab(this, 'settingsCodeEditor');">
+                                Code Editor
+                            </span>
+                            <span onclick="activateSettingsTab(this, 'settingsTheme');">
+                                Theme
+                            </span>
+                            <span onclick="activateSettingsTab(this, 'settingsOther');">
+                                Other
+                            </span>
+                        </div>
+
+                        <div id="settingsSectionsContentContainer">  <!-- Settings Section Content / Details -->
+                            <div id="settingsIframeSize" class="active">  <!-- iFrame Size -->
+                                <!-- iFrame Size / Resolution -->
+                                <label for="inputIframeWidth">Width X Height :</label>
+                                <input type="number" id="inputIframeWidth" value="1056" min="100" max="3000" step="1" onfocus="select()" onchange="updateIframeSize(this.value, document.getElementById('inputIframeHeight').value)"> X
+                                <input type="number" id="inputIframeHeight" value="594" min="100" max="3000" step="1" onfocus="select()" onchange="updateIframeSize(document.getElementById('inputIframeWidth').value, this.value)">
+                            </div>
+                            <div id="settingsCodeEditor">  <!-- Code Editor -->
+                                <!-- input field for changing font size -->
+                                <label for="inputTextareaFontSize">Font Size :</label>
+                                <input type="number" id="inputTextareaFontSize" value="15" min="1" max="50" step="1" onfocus="select()" onchange="updateTextareaFontSize(this.value)">
+
+                                <br><br>
+
+                                <!-- input field for changing tab size -->
+                                <label for="inputTextareaTabSize">Tab ( Indent ) Size :</label>
+                                <input type="number" id="inputTextareaTabSize" value="4" min="2" max="10" step="1" onfocus="select()" onchange="">
+
+                                <br><br>
+
+                                <!-- input field for changing font family -->
+                                <label for="inputTextareaFontFamily">Font Family :</label>
+                                <select id="inputTextareaFontFamily" onchange="updateTextareaFontFamily(this.value)">
+                                    <!-- fonts that might unable to apply :
+                                    BioRhyme
+                                    Brush Script MT
+                                    Consolas
+                                    Didot
+                                    Eczar
+                                    Futura Bold
+                                    Futura Demibold
+                                    Helvetica
+                                    JetBrains Mono
+                                    Monoid
+                                    Myriad Pro
+                                    Product Sans
+                                    San Serif
+                                    Segoe UI
+                                    Serif
+                                    Slab Serif
+                                    Source Code Pro
+                                    Space Mono
+                                    Terminus -->
+                                    <option value="Arial">Arial</option>
+                                    <option value="Cambria">Cambria</option>
+                                    <option value="Garamond">Garamond</option>
+                                    <option value="Georgia">Georgia</option>
+                                    <option value="Monospace" selected="selected">Monospace</option>
+                                    <option value="Times New Roman">Times New Roman</option>
+                                    <option value="Verdana">Verdana</option>
+                                    <!--
+                                    <option value="BioRhyme">BioRhyme</option>
+                                    <option value="Brush Script MT">Brush Script MT</option>
+                                    <option value="Consolas">Consolas</option>
+                                    <option value="Didot">Didot</option>
+                                    <option value="Eczar">Eczar</option>
+                                    <option value="Futura Bold">Futura Bold</option>
+                                    <option value="Futura Demibold">Futura Demibold</option>
+                                    <option value="Helvetica">Helvetica</option>
+                                    <option value="JetBrains Mono">JetBrains Mono</option>
+                                    <option value="Monoid">Monoid</option>
+                                    <option value="Myriad Pro">Myriad Pro</option>
+                                    <option value="Product Sans">Product Sans</option>
+                                    <option value="San Serif">San Serif</option>
+                                    <option value="Segoe UI">Segoe UI</option>
+                                    <option value="Serif">Serif</option>
+                                    <option value="Slab Serif">Slab Serif</option>
+                                    <option value="Source Code Pro">Source Code Pro</option>
+                                    <option value="Space Mono">Space Mono</option>
+                                    <option value="Terminus">Terminus</option>
+                                    <option value="???">???</option>
+                                    -->
+                                </select>
+
+                                <br><br>
+
+                                <!-- input field for changing code editor theme -->
+                                <label for="inputTextareaTheme">Theme :</label>
+                                <select id="inputTextareaTheme" onchange="updateCodeEditorTheme(this.value)">
+                                    <option value="a11y-dark" selected="selected">a11y-dark</option>
+                                    <option value="a11y-light">a11y-light</option>
+                                    <option value="agate">agate</option>
+                                    <option value="an-old-hope">an-old-hope</option>
+                                    <option value="androidstudio">androidstudio</option>
+                                    <option value="arduino-light">arduino-light</option>
+                                    <option value="atom-one-dark-reasonable">atom-one-dark-reasonable</option>
+                                    <option value="atom-one-light">atom-one-light</option>
+                                    <option value="brown-paper">brown-paper</option>
+                                    <option value="color-brewer">color-brewer</option>
+                                    <option value="docco">docco</option>
+                                    <option value="github-dark">github-dark</option>
+                                    <option value="github">github</option>
+                                    <option value="googlecode">googlecode</option>
+                                    <option value="gradient-dark">gradient-dark</option>
+                                    <option value="gradient-light">gradient-light</option>
+                                    <option value="grayscale">grayscale</option>
+                                    <option value="hybrid">hybrid</option>
+                                    <option value="idea">idea</option>
+                                    <option value="ir-black">ir-black</option>
+                                    <option value="isbl-editor-dark">isbl-editor-dark</option>
+                                    <option value="isbl-editor-light">isbl-editor-light</option>
+                                    <option value="lightfair">lightfair</option>
+                                    <option value="lioshi">lioshi</option>
+                                    <option value="magula">magula</option>
+                                    <option value="mono-blue">mono-blue</option>
+                                    <option value="monokai-sublime">monokai-sublime</option>
+                                    <option value="monokai">monokai</option>
+                                    <option value="night-owl">night-owl</option>
+                                    <option value="nnfx-dark">nnfx-dark</option>
+                                    <option value="obsidian">obsidian</option>
+                                    <option value="paraiso-dark">paraiso-dark</option>
+                                    <option value="paraiso-light">paraiso-light</option>
+                                    <option value="purebasic">purebasic</option>
+                                    <option value="rainbow">rainbow</option>
+                                    <option value="stackoverflow-dark">stackoverflow-dark</option>
+                                    <option value="stackoverflow-light">stackoverflow-light</option>
+                                    <option value="sunburst">sunburst</option>
+                                    <option value="vs">vs</option>
+                                    <option value="vs2015">vs2015</option>
+                                    <option value="xcode">xcode</option>
+                                </select>
+
+                                <br><br>
+
+                                <!-- input field for changing line spacing -->
+                                <label for="inputTextareaLineSpacing">Line Spacing :</label>
+                                <input type="number" id="inputTextareaLineSpacing" value="1.3" min="1" max="10" step="0.1" onfocus="select()" onchange="updateTextareaLineHeight(this.value)">
+
+                                <br><br>
+
+                                <!-- toggle allow text wrap -->
+                                <label for="textWrapSwitch">Text Wrap</label>
+                                <label class="switch">
+                                    <input type="checkbox" id="textWrapSwitch" onclick="toggleTextWrap()">
+                                    <span class="switchSlider round"></span>
+                                </label>
+
+                                <br><br>
+
+                                <!-- button to reset textarea content to default value -->
+                                <button type="button" id="buttonResetTextarea" class="button" onclick="resetTextareaContent()">Reset HTML Content</button>
+                            </div>
+                            <div id="settingsTheme">  <!-- Theme -->
+                                <!-- toogle dark mode switch -->
+                                <label for="darkModeSwitch">Dark Mode</label>
+                                <label class="switch">
+                                    <input type="checkbox" id="darkModeSwitch" checked="true" onclick="toggleDarkMode()">
+                                    <span class="switchSlider round"></span>
+                                </label>
+                            </div>
+                            <div id="settingsOther">  <!-- Other -->
+                                Other
+                            </div>
+                        </div>
+                    </div>
+                </div>  <!-- End of Settings Popup Modal -->
+
+
+                <!-- About Popup Modal -->
+                <div id="aboutPopupModal" class="popupModal">
+                    <div class="popupModalContainer">
+                        <!-- close button -->
+                        <span class="popupModalCloseButton" title="Close">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+                                <path fill="currentColor" d="M289.94 256l95-95A24 24 0 00351 127l-95 95-95-95a24 24 0 00-34 34l95 95-95 95a24 24 0 1034 34l95-95 95 95a24 24 0 0034-34z"/>
+                            </svg>
+                        </span>
+                        <!-- Content -->
+                        <div style="width: 100vw;
+                                    height: 100vh;
+                                    background-color: var(--background-color);
+                                    overflow-y: scroll;">
+                            <div style="padding: 25px 25px;">
+                                <h3>About</h3>
+                                <p style="word-wrap: break-word; text-align: justify; text-justify: inter-word;">
+                                    <b>The Idea that Comes True</b>
+                                    <br>
+                                    The HTML Code Debugger was created to foster the process of debugging and finding errors in HTML code.<br>
+                                    This idea was raised when I was trying to figure out where the errors in my HTML code were without any hints.
+                                    Accordingly, this tool was born to clearly indicate where and what the errors are.
+                                    Just simply write or paste the HTML code in the code editor and all the errors hidden in the code (if any) will show up in just a matter of time !
+                                    <br><br>
+
+                                    <b>Features</b>
+                                    <br>
+                                    ...
+                                    <br><br>
+
+                                    <b>Development</b>
+                                    <br>
+                                    Version 2.0 (DD/MM/YYYY) (Current release)<br>
+                                    Version 1.4<br>
+                                    Version 1.3<br>
+                                    Version 1.2<br>
+                                    Version 1.1<br>
+                                    Version 1.0<br>
+                                    Version 1.0<br>
+                                    Version 0.1<br>
+                                    Version 0.0 (26 Jan 2025)
+                                    <br><br>
+
+                                    <b>Who am I ?</b>
+                                    <br>
+                                    I am an undergraduate student who are curious in technology and software development.
+                                    ...
+                                    <br><br>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>  <!-- End of About Popup Modal -->
     
     
-    <!-- Settings Popup Modal -->
-    <div id="settingsPopupModal" class="popupModal">
-        <div class="popupModalContainer">
-            <div id="settingsSectionsContainer">  <!-- Settings Sections -->
-                <h3>Settings</h3>
-                
-                <span class="active" onclick="activateSettingsTab(this, 'settingsIframeSize');">
-                    iFrame Size
-                </span>
-                <span onclick="activateSettingsTab(this, 'settingsCodeEditor');">
-                    Code Editor
-                </span>
-                <span onclick="activateSettingsTab(this, 'settingsTheme');">
-                    Theme
-                </span>
-                <span onclick="activateSettingsTab(this, 'settingsOther');">
-                    Other
-                </span>
-            </div>
-            
-            <div id="settingsSectionsContentContainer">  <!-- Settings Section Content / Details -->
-                <div id="settingsIframeSize" class="active">  <!-- iFrame Size -->
-                    <!-- iFrame Size / Resolution -->
-                    <label for="inputIframeWidth">Width X Height :</label>
-                    <input type="number" id="inputIframeWidth" value="1056" min="100" max="3000" step="1" onfocus="select()" onchange="updateIframeSize(this.value, document.getElementById('inputIframeHeight').value)"> X
-                    <input type="number" id="inputIframeHeight" value="594" min="100" max="3000" step="1" onfocus="select()" onchange="updateIframeSize(document.getElementById('inputIframeWidth').value, this.value)">
-                </div>
-                <div id="settingsCodeEditor">  <!-- Code Editor -->
-                    <!-- input field for changing font size -->
-                    <label for="inputTextareaFontSize">Font Size :</label>
-                    <input type="number" id="inputTextareaFontSize" value="15" min="1" max="50" step="1" onfocus="select()" onchange="updateTextareaFontSize(this.value)">
-                    
-                    <br><br>
-                    
-                    <!-- input field for changing tab size -->
-                    <label for="inputTextareaTabSize">Tab ( Indent ) Size :</label>
-                    <input type="number" id="inputTextareaTabSize" value="4" min="2" max="10" step="1" onfocus="select()" onchange="">
-                    
-                    <br><br>
-                    
-                    <!-- input field for changing font family -->
-                    <label for="inputTextareaFontFamily">Font Family :</label>
-                    <select id="inputTextareaFontFamily" onchange="updateTextareaFontFamily(this.value)">
-                        <!-- fonts that might unable to apply :
-                        BioRhyme
-                        Brush Script MT
-                        Consolas
-                        Didot
-                        Eczar
-                        Futura Bold
-                        Futura Demibold
-                        Helvetica
-                        JetBrains Mono
-                        Monoid
-                        Myriad Pro
-                        Product Sans
-                        San Serif
-                        Segoe UI
-                        Serif
-                        Slab Serif
-                        Source Code Pro
-                        Space Mono
-                        Terminus -->
-                        <option value="Arial">Arial</option>
-                        <option value="Cambria">Cambria</option>
-                        <option value="Garamond">Garamond</option>
-                        <option value="Georgia">Georgia</option>
-                        <option value="Monospace" selected="selected">Monospace</option>
-                        <option value="Times New Roman">Times New Roman</option>
-                        <option value="Verdana">Verdana</option>
-                        <!-- 
-                        <option value="BioRhyme">BioRhyme</option>
-                        <option value="Brush Script MT">Brush Script MT</option>
-                        <option value="Consolas">Consolas</option>
-                        <option value="Didot">Didot</option>
-                        <option value="Eczar">Eczar</option>
-                        <option value="Futura Bold">Futura Bold</option>
-                        <option value="Futura Demibold">Futura Demibold</option>
-                        <option value="Helvetica">Helvetica</option>
-                        <option value="JetBrains Mono">JetBrains Mono</option>
-                        <option value="Monoid">Monoid</option>
-                        <option value="Myriad Pro">Myriad Pro</option>
-                        <option value="Product Sans">Product Sans</option>
-                        <option value="San Serif">San Serif</option>
-                        <option value="Segoe UI">Segoe UI</option>
-                        <option value="Serif">Serif</option>
-                        <option value="Slab Serif">Slab Serif</option>
-                        <option value="Source Code Pro">Source Code Pro</option>
-                        <option value="Space Mono">Space Mono</option>
-                        <option value="Terminus">Terminus</option>
-                        <option value="???">???</option>
-                        -->
-                    </select>
-                    
-                    <br><br>
-                    
-                    <!-- input field for changing line spacing -->
-                    <label for="inputTextareaLineSpacing">Line Spacing :</label>
-                    <input type="number" id="inputTextareaLineSpacing" value="1.3" min="1" max="10" step="0.1" onfocus="select()" onchange="updateTextareaLineHeight(this.value)">
-                    
-                    <br><br>
-                    
-                    <!-- toggle allow text wrap -->
-                    <label for="textWrapSwitch">Text Wrap</label>
-                    <label class="switch">
-                        <input type="checkbox" id="textWrapSwitch" onclick="toggleTextWrap()">
-                        <span class="switchSlider round"></span>
-                    </label>
-                    
-                    <br><br>
-                    
-                    <!-- button to reset textarea content to default value -->
-                    <button type="button" id="buttonResetTextarea" class="button" onclick="resetTextareaContent()">Reset HTML Content</button>
-                </div>
-                <div id="settingsTheme">  <!-- Theme -->
-                    <!-- toogle dark mode switch -->
-                    <label for="darkModeSwitch">Dark Mode</label>
-                    <label class="switch">
-                        <input type="checkbox" id="darkModeSwitch" checked="true" onclick="toggleDarkMode()">
-                        <span class="switchSlider round"></span>
-                    </label>
-                </div>
-                <div id="settingsOther">  <!-- Other -->
-                    Other
-                </div>
-            </div>
-        </div>
-    </div>
+                <!-- Credit Popup Modal -->
+                <!--
+                https://opensource.stackexchange.com/questions/11864/using-icons-with-mit-licensing-on-the-website
+                https://opensource.stackexchange.com/questions/6665/where-to-show-the-mit-license-for-a-webpage-theme
+                -->
+                <div id="creditPopupModal" class="popupModal">
+                    <div class="popupModalContainer">
+                        <!-- close button -->
+                        <span class="popupModalCloseButton" title="Close">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+                                <path fill="currentColor" d="M289.94 256l95-95A24 24 0 00351 127l-95 95-95-95a24 24 0 00-34 34l95 95-95 95a24 24 0 1034 34l95-95 95 95a24 24 0 0034-34z"/>
+                            </svg>
+                        </span>
+                        <!-- Content -->
+                        <div style="width: 100vw;
+                                    height: 100vh;
+                                    background-color: var(--background-color);
+                                    overflow-y: scroll;">
+                            <div style="padding: 25px 25px;">
+                                <h3>Credit</h3>
+                                <p style="word-wrap: break-word; text-align: justify; text-justify: inter-word;">
+                                    CSS validated by<br>
+                                    <b>
+                                        <a class="link" href="https://jigsaw.w3.org/css-validator/" target="_blank">Jigsaw W3C CSS Validation Service</a>
+                                    </b>
+                                    <br><br>
+
+                                    HTML (body) validated by<br>
+                                    <b>
+                                        <a class="link" href="https://validator.w3.org/nu" target="_blank">W3 Nu HTML Checker</a>
+                                    </b>
+                                    <br><br>
+
+                                    Icons by<br>
+                                    <b>
+                                        <a class="link" href="https://ionic.io/ionicons" target="_blank">ionicons</a><br>
+                                        <code>The MIT License (MIT)
+
+Copyright (c) 2015-present Ionic (http://ionic.io/)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+                                        </code>
+                                        <br><br>
+
+                                        <a class="link" href="https://heroicons.com/" target="_blank">Heroicons</a><br>
+                                        <code>MIT License
+
+Copyright (c) Tailwind Labs, Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+                                        </code>
+                                    </b>
+                                    <br><br>
+
+                                    Code highlighted by<br>
+                                    <b>
+                                        <a class="link" href="https://highlightjs.org/" target="_blank">highlight.js</a><br>
+                                        <code>BSD 3-Clause License
+
+Copyright (c) 2006, Ivan Sagalaev.
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+* Neither the name of the copyright holder nor the names of its
+  contributors may be used to endorse or promote products derived from
+  this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+                                        </code>
+                                    </b>
+                                    <br><br>
+                                </p>
+                            </div>
+                        </div>  <!-- End of popupModalContainer content -->
+                    </div>  <!-- End of popupModalContainer -->
+                </div>  <!-- End of Credit Popup Modal -->
     
     
-    <br><br> <!-- todo --> <button class="button" onclick="document.documentElement.requestFullscreen();">Full Screen The Webpage</button> <button class="button" onclick="document.getElementById('codeEditorContainer').requestFullscreen();">Full Screen The Code Editor</button>
+                <!-- Useful Links Popup Modal -->
+                <div id="usefulLinksPopupModal" class="popupModal">
+                    <div class="popupModalContainer">
+                        <!-- close button -->
+                        <span class="popupModalCloseButton" title="Close">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+                                <path fill="currentColor" d="M289.94 256l95-95A24 24 0 00351 127l-95 95-95-95a24 24 0 00-34 34l95 95-95 95a24 24 0 1034 34l95-95 95 95a24 24 0 0034-34z"/>
+                            </svg>
+                        </span>
+                        <!-- Content -->
+                        <div style="width: 100vw;
+                                    height: 100vh;
+                                    background-color: var(--background-color);
+                                    overflow-y: scroll;">
+                            <div style="padding: 25px 25px;">
+                                <h3>Useful Links</h3>
+                                <p style="word-wrap: break-word; text-align: justify; text-justify: inter-word;">
+                                    <a class="link" href="https://caniuse.com/" target="_blank">caniuse.com</a>
+                                    <br><br>
+
+                                    <!-- Notes to Open Web Inspector and Show Page Source -->
+                                    <pre>Note : <br>
+To open website inspector ( development tools ) , use CTRL + SHIFT + i OR Command ⌘ + Option ⌥ + i<br>
+To show page source , use CTRL + u OR Command ⌘ + u
+                                    </pre>
+                                    <br><br>
+                                </p>
+                            </div>
+                        </div>
+                    </div>  <!-- End of popupModalContainer -->
+                </div>  <!-- End of Useful Links Popup Modal -->
     
     
-    <!-- Notes to Open Web Inspector and Show Page Source -->
-    <pre>Note : <br>
-       To open website inspector ( development tools ) , use CTRL + SHIFT + i OR Command ⌘ + Option ⌥ + i<br>
-       To show page source , use CTRL + u OR Command ⌘ + u
-    </pre>
-    
-    
-    <br><br>
-    
-    
-    <!-- Footer -->
+                <!-- Contact Popup Modal -->
+                <div id="contactPopupModal" class="popupModal">
+                    <div class="popupModalContainer">
+                        <!-- close button -->
+                        <span class="popupModalCloseButton" title="Close">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+                                <path fill="currentColor" d="M289.94 256l95-95A24 24 0 00351 127l-95 95-95-95a24 24 0 00-34 34l95 95-95 95a24 24 0 1034 34l95-95 95 95a24 24 0 0034-34z"/>
+                            </svg>
+                        </span>
+                        <!-- Content -->
+                        <div style="width: 100vw;
+                                    height: 100vh;
+                                    background-color: var(--background-color);
+                                    overflow-y: scroll;">
+                            <div style="padding: 25px 25px;">
+                                <h3>Contact</h3>
+                                <p style="word-wrap: break-word; text-align: justify; text-justify: inter-word;">
+                                    <address>
+                                        Site created by : Paul Lam
+                                        <br>
+                                        Instagram : <a class="link" href="https://www.instagram.com/paul_lam_0907?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">paul_lam_0907</a>
+                                        <br>
+                                        GitHub : <a class="link" href="https://github.com/PaulLam0907/html-debugger" target="_blank">PaulLam0907</a>
+                                        <br>
+                                    </address>
+                                    <br>
+                                </p>
+
+                                <h3>Support</h3>
+                                <p>
+                                    <a class="link" href="" target="_blank">Buy me a Snack</a>
+                                    <br>
+                                </p>
+                            </div>
+                        </div>
+                    </div>  <!-- End of popupModalContainer -->
+                </div>  <!-- End of Contact Popup Modal -->
+
+
+    <!-- Footer ( CONTENT MIGRATED TO TOP TOOL BAR ) -->
     <!-- https://www.w3schools.com/tags/tag_footer.asp -->
     <!-- Justify text in div
          https://stackoverflow.com/questions/11736870/html-automatic-line-break-doesnt-work -->
@@ -1313,9 +2123,9 @@ justify-items: center;
         back to top links
         related documents
     -->
-    <footer>
+    <!-- <footer>
         <div>
-            <!-- About -->
+            <!-- About --> <!-- 
             <div class="footerHeading">
                 ABOUT
             </div>
@@ -1329,7 +2139,7 @@ justify-items: center;
             </div>
         </div>
         <div>
-            <!-- Credit -->
+            <!-- Credit --> <!--
             <div class="footerHeading">
                 CREDIT
             </div>
@@ -1342,7 +2152,7 @@ justify-items: center;
             </div>
         </div>
         <div>
-            <!-- Useful Links -->
+            <!-- Useful Links --> <!--
             <div class="footerHeading">
                 USEFUL LINKS
             </div>
@@ -1351,7 +2161,7 @@ justify-items: center;
             </div>
         </div>
         <div>
-            <!-- Contact Information -->
+            <!-- Contact Information --> <!--
             <div class="footerHeading">
                 CONTACT
             </div>
@@ -1367,16 +2177,36 @@ justify-items: center;
                 </address>
             </div>
         </div>
-    </footer>
+    </footer> -->
     
-</body>
+            </div>  <!-- End of Page Layout - Main -->
+        </div>  <!-- End of Page Layout - Middle -->
+    
+    
+        <!-- Page Layout - Bottom todo 0 -->
+        <div id="pageLayoutBottom">
+            <div>
+                <div>Bottom Left</div>
+                <div>File Location Path</div>
+                <div>Coming Soon</div>
+            </div>
+            <div>
+                <div id="cursorPositionDisplay" title="Go to Line ( CTRL + G )">1:1</div>  <!-- todo 2 go to line -->
+                <div>Bottom Right</div>
+                <div>Coming Soon</div>
+            </div>
+        </div>  <!-- End of Page Layout - Bottom -->
+    </div>  <!-- End of Page Layout -->
+
 
 
 <script>
     // ====================================================================================================
     var iframe = document.getElementById("outputIframe");
     // var iframeWindow = (iframe.contentWindow || iframe.contentDocument);
-    var textarea = document.getElementById("inputTextarea");
+    // var textarea = document.getElementById("inputTextarea");  // MIGRATED TO codeEditor-pre and codeEditor-code
+    var codeEditor_pre = document.getElementsByClassName("codeEditor-pre")[0];
+    var codeEditor_code = document.getElementsByClassName("codeEditor-code")[0];
     var lineNumberDisplay = document.getElementById("lineNumberDisplay");
     var textWrapSwitch = document.getElementById("textWrapSwitch");
     var log = document.getElementById("log");
@@ -1387,7 +2217,9 @@ justify-items: center;
         // when message(s) is received ( from the iframe )
         
         // delete all previous log(s)
-        /* moved to function updateIframe() --> clear previous logs first , then rebuild/reconstruct everything again instead , such that all current logs can be captured
+        /* moved to function updateIframe() --> clear previous logs first ,
+           then rebuild/reconstruct everything again instead ,
+           such that all current logs can be captured
         for (var i = 0; i < log.children.length; ++i) {
             log.removeChild(log.childNodes[i]);
         }
@@ -1486,7 +2318,7 @@ justify-items: center;
     });
     
     // ====================================================================================================
-    function updateIframe() {
+    function updateIframe() { ////////// USE codeEditor_code.textContent //////////
         // this function is being called everytime when the content of textarea change
         
         // update the iframe when the content of textarea change
@@ -1529,7 +2361,7 @@ justify-items: center;
         window.parent.postMessage({ type: "console", messages: [{ type: "debug", message: args.join(" ") }] }, "*");
     };
 <\/script>`
-            + textarea.value + 
+            + codeEditor_code.textContent +  /* textarea.value */
 `<script>
     // Get all internal CSS style sheets
     const style_sheets = document.styleSheets;
@@ -1591,7 +2423,7 @@ justify-items: center;
     // Get HTML content
     // https://stackoverflow.com/questions/817218/how-to-get-the-entire-document-html-as-a-string
     // https://stackoverflow.com/questions/7027799/access-elements-of-parent-window-from-iframe
-    const html = window.parent.document.getElementById("inputTextarea").value;
+    const html = window.parent.document.getElementsByClassName("codeEditor-code")[0].textContent;
     // "<!DOCTYPE html>" + document.documentElement.outerHTML;
     
     // Check HTML error using HTML Validator API
@@ -1654,11 +2486,12 @@ justify-items: center;
     
     // ====================================================================================================
     var textarea_line_number = 1;
+
     function updateLineNumber() {
         // this function is being called everytime when the content of textarea change
         // https://stackoverflow.com/questions/1995370/adding-line-numbers-to-html-textarea
-        
-        var _lines = textarea.value.split("\n").length;  // get line number
+
+        var _lines = codeEditor_code.textContent.split("\n").length;  // get line number
 
         if (_lines != textarea_line_number) {
             // there is change in line number
@@ -1670,8 +2503,8 @@ justify-items: center;
             lineNumberDisplay.innerHTML = Array(_lines).fill("<span></span>").join("");
             
             // update the height & line-height of div containing line number for textarea
-            lineNumberDisplay.style.height = textarea.offsetHeight + "px";
-            lineNumberDisplay.style.lineHeight = window.getComputedStyle(textarea).getPropertyValue("line-height");
+            // lineNumberDisplay.style.height = codeEditor_code.offsetHeight + "px";
+            lineNumberDisplay.style.lineHeight = window.getComputedStyle(codeEditor_code).getPropertyValue("line-height");
             // update the minimum width
             lineNumberDisplay.style.minWidth = lineNumberDisplay.childNodes[lineNumberDisplay.childNodes.length - 1].scrollWidth + "px";
         }
@@ -1685,14 +2518,15 @@ justify-items: center;
         get textarea scroll distance
         force div to scroll in equivalent distance programmatically
     */
-    var previous_scrollY = textarea.scrollTop;
+    var previous_scrollY = codeEditor_pre.scrollTop;
+
     function updateLineNumberScrollPosition() {
         // this function is being called when the textarea scroll
-        var current_scrollY = textarea.scrollTop;
+        var current_scrollY = codeEditor_pre.scrollTop;
         var scroll_distance = current_scrollY - previous_scrollY;
-        
+
         lineNumberDisplay.scrollTop += scroll_distance;
-        
+
         /* previous_scrollY > current_scrollY
             --> scrolling to top
            previous_scrollY < current_scrollY
@@ -1701,24 +2535,214 @@ justify-items: center;
         
         previous_scrollY = current_scrollY;
     }
+
+    // ====================================================================================================
+    // get all lines from beginning to cursor
+    // https://stackoverflow.com/questions/3972014/get-contenteditable-caret-position
+    function getLinesFromCursor() {
+        var selection = document.getSelection();
+        const range = document.createRange();
+
+        range.setStart(codeEditor_code, 0);
+
+        if (selection.focusNode) {
+            range.setEnd(selection.focusNode, selection.focusOffset);
+
+        } else {
+            range.setEnd(codeEditor_code, 0);
+        }
+
+        var line = range.toString().split("\n");
+
+        return line;
+    }
+
+    // ====================================================================================================
+    // get cursor position
+    function getCursorPosition() {
+        var lines = getLinesFromCursor();
+        var pos = 0;
+
+        for (var i = 0; i < lines.length; ++i) {
+            pos += lines[i].length + 1;
+        }
+
+        if (pos) {
+            // at non-zero position
+            // remove the extra \n character from the previous for-loop
+            pos -= 1;
+        }
+
+        return pos;
+    }
+
+    // ====================================================================================================
+    // get cursor coordinate
+    function getCursorCoordinate() {
+        // const lines = textarea.value.substr(0, textarea.selectionStart).split("\n");
+        // const row = lines.length;
+        // const col = lines[lines.length - 1].length + 1;
+        var line = getLinesFromCursor();
+        var row = line.length;
+        var col = line[line.length - 1].length + 1;
+
+        return [row, col];
+    }
     
+    // update cursor position display ( when mouse clicked / key up )
+    function updateCursorPosition() {
+        var [row, col] = getCursorCoordinate();
+        document.getElementById("cursorPositionDisplay").innerHTML =  row + ":" + col ;
+    }
+
+    // ====================================================================================================
+    // set caret position
+    // https://stackoverflow.com/questions/6249095/how-to-set-the-caret-cursor-position-in-a-contenteditable-element-div
+    // https://stackoverflow.com/questions/36869503/set-caret-position-in-contenteditable-div-that-has-children
+    function setCursorPosition(pos, element = codeEditor_code) {
+        // var pos = pos;
+
+        if (document.selection) {
+            var selection = document.selection.createRange();
+            selection.moveStart("character", pos);
+            selection.select();
+
+        } else {
+            var selection = window.getSelection();
+
+            for (var i = 0; i < element.childNodes.length; ++i) {
+                var node_str = element.childNodes[i].textContent.toString().replace("\n", " ");
+
+                if (pos >= node_str.length) {
+                    // move-position exceed node's text length
+                    // skip to next node & calculate new position at that node
+                    pos -= node_str.length;
+
+                } else {
+                    // position lie within this element
+
+                    if (element.childNodes[i].childNodes.length) {
+                        // element have nested child
+                        setCursorPosition(pos, element = element.childNodes[i]);
+
+                    } else {
+                        // element have no nested child
+                        selection.collapse(element.childNodes[i], pos);
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    // ====================================================================================================
+    // insert text at cursor position
+    // https://stackoverflow.com/questions/2920150/insert-text-at-cursor-in-a-content-editable-div
+    function insertTextAtCursor(text) {
+        var selection = document.getSelection();
+        // var range = document.createRange();
+        var range = selection.getRangeAt(0);
+
+        range.deleteContents();
+
+        // insert text
+        range.insertNode( document.createTextNode( text ) );
+
+        if (text) {
+            // move caret to right for cancelling the selection
+            // https://developer.mozilla.org/en-US/docs/Web/API/Selection/modify
+            selection.modify("move", "right", "character");
+        }
+
+
+        // selection.removeAllRanges();
+
+        // range.selectNode(codeEditor_code.childNodes[row - 1]);
+
+        // selection.removeAllRanges();
+        // selection.addRange(range);
+
+        // selection.focusNode
+        // range.setStart(codeEditor_code[row - 1], col - 1);
+        // range.collapse(true);
+        // range.setEnd(codeEditor_code[row - 1], col - 1 + text.length);
+        // selection.removeAllRanges();
+
+        // for (var i = 0; i < text.length; ++i) {
+            // move caret to the end of inserted text
+            // selection.modify("move", "right", "character");
+        // }
+
+        return true;
+    }
+
+    // ====================================================================================================
+    // delete text backward at cursor position
+    function deleteTextBackward(n) {
+        var pos = getCursorPosition();
+
+        var selection = window.getSelection();
+        var range = document.createRange();
+
+        if (n <= selection.focusOffset) {
+            // delete within same node
+            range.setStart(selection.focusNode, selection.focusOffset - n);
+
+        } else {
+            // get index of selection.focusNode in codeEditor_code.childNodes
+            // https://stackoverflow.com/questions/3779986/how-to-get-the-index-of-the-element-in-javascript
+            // https://stackoverflow.com/questions/17890568/contenteditable-div-backspace-and-deleting-text-node-problems
+            const index = Array.prototype.indexOf.call(codeEditor_code.childNodes, selection.focusNode);
+
+            // set start range
+            range.setStart(codeEditor_code.childNodes[index - 2], 0);
+        }
+
+        range.setEnd(selection.focusNode, selection.focusOffset);
+
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        return true;
+    }
+
+    // ====================================================================================================
+    // highlight code
+    function highlightCode() {
+        // get cursor position
+        const pos = getCursorPosition();
+
+        // highlight code
+        hljs.highlightAll();
+        // hljs.highlightElement(codeEditor_pre);
+
+        // restore cursor position
+        setCursorPosition(pos);
+
+        return true;
+    }
+
     // ====================================================================================================
     function highlightLineNumber() {
-        // highlight the line number according to the cursor position in textareas
-        var cursor_position_line = textarea.value.substr(0, textarea.selectionStart).split("\n").length;
-        
+        // highlight the line number according to the cursor position in textarea
+        // var cursor_position_line = textarea.value.substr(0, textarea.selectionStart).split("\n").length;
+        var [row, col] = getCursorCoordinate();
+
         // disable all highlights
         for (var i = 0; i < lineNumberDisplay.childNodes.length; ++i) {
             // lineNumberDisplay.childNodes[i].style.backgroundColor = "#00000000";  // transparent
             lineNumberDisplay.childNodes[i].className = "";
         }
-        
+
         // highlight
         // lineNumberDisplay.childNodes[cursor_position_line - 1].style.backgroundColor = "#888888";
-        lineNumberDisplay.childNodes[cursor_position_line - 1].className = "Highlighted";
+        lineNumberDisplay.childNodes[row - 1].className = "Highlighted";
     }
     highlightLineNumber();
-    
+
     // ====================================================================================================
     // auto indent when an Enter key is pressed
     // size of indentation depends on the previous line
@@ -1743,33 +2767,51 @@ justify-items: center;
         return tab_str;
     }
     
-    textarea.addEventListener("keyup", function(event) {
-        
+    codeEditor_code.addEventListener("keyup", function(event) {
+
         if (event.key == "Enter") {
             // enter key is pressed in textarea
-            
+
             // get previous line content relative to cursor position
-            var line = this.value.substring(0, this.selectionStart).split("\n");
+            // var line = this.value.substring(0, this.selectionStart).split("\n");
+            var line = getLinesFromCursor();
             line = line[line.length - 2];  // string
-            
+
             // getting the indentation
-            var content_to_remove = line.trimStart();  // string
-            var indentation = line.replace(content_to_remove, "");
+            // var content_to_remove = line.trimStart();  // string
+            // var indentation = line.replace(content_to_remove, "");
+            var indentation = "";
+
+            for (var i = 0; i < line.length; ++i) {
+
+                if (line[i] != " ") {
+                    break;
+                }
+
+                indentation += " ";
+            }
 
             // indent if previously typed is open bracket or close of HTML tag
-            if (["{", "(", "["].includes(content_to_remove[content_to_remove.length - 1])) {
+            if (["{", "(", "["].includes(line.trim()[line.trim().length - 1])) {
                 indentation += getTabSize();
             }
-            
+
             // insert indentation
-            this.setRangeText(indentation, this.selectionStart, this.selectionEnd, "end");
+            // this.setRangeText(indentation, this.selectionStart, this.selectionEnd, "end");
+            insertTextAtCursor(indentation);
+
+            // highlight code when Enter key is pressed
+            highlightCode();  // todo 1 appropriate timing to update highlight
         }
-        
-        // highligh the line number according to the cursor position in textarea
+
+        // highlight the line number according to the cursor position in textarea
         highlightLineNumber();
+
+        // update cursor position display
+        updateCursorPosition();
     });
     
-    // use Tab key to indent
+    // use Tab key to indent ==============================================================================
     /* Reference :
         https://stackoverflow.com/questions/6637341/use-tab-to-indent-in-textarea
         https://stackoverflow.com/questions/5203407/how-to-detect-if-multiple-keys-are-pressed-at-once-using-javascript
@@ -1779,7 +2821,7 @@ justify-items: center;
         2) detect Tab key press in textarea
         3) force insert tab ( indent ) at current cursor position according to specified tab size
     */
-    textarea.addEventListener("keydown", function(event) {
+    codeEditor_code.addEventListener("keydown", function(event) {
         
         if (event.key == "Tab") {
             // Tab key is pressed in textarea
@@ -1797,14 +2839,16 @@ justify-items: center;
             var _tab_str = getTabSize();
             
             // insert indentation according to specified tab size
-            this.setRangeText(_tab_str, this.selectionStart, this.selectionEnd, "end");
+            // this.setRangeText(_tab_str, this.selectionStart, this.selectionEnd, "end");
+            insertTextAtCursor(_tab_str);
         }
         
         if (event.key == "Backspace") {
             // backspace key is pressed in textarea
             
             // get current line content relative to cursor position
-            var line = this.value.substring(0, this.selectionStart).split("\n");
+            // var line = this.value.substring(0, this.selectionStart).split("\n");
+            var line = getLinesFromCursor();
             line = line[line.length - 1];  // string
             
             // check if the content-to-delete equals to 1 indent
@@ -1823,30 +2867,68 @@ justify-items: center;
                 // need to outdent
                 
                 // remove indentation
-                this.setRangeText("", this.selectionStart - getTabSize().length + 1, this.selectionEnd, "end");
+                // this.setRangeText("", this.selectionStart - getTabSize().length + 1, this.selectionEnd, "end");
+                deleteTextBackward(getTabSize().length);
             }
         }
         
         // highligh the line number according to the cursor position in textarea
         highlightLineNumber();
     });
-    
-    textarea.addEventListener("click", function(event) {
+
+    // ====================================================================================================
+    codeEditor_code.addEventListener("click", function(event) {
         // when click inside the textarea
         
-        // highligh the line number according to the cursor position in textarea
+        // highlight the line number according to the cursor position in textarea
         highlightLineNumber();
+        
+        // update cursor position display
+        updateCursorPosition();
     });
-    
+
     // ====================================================================================================
-    function onTextareaResize() {
+    codeEditor_code.addEventListener("paste", function(event) {
+        // when paste inside the code editor
+        // prevent paste with style
+        // https://stackoverflow.com/questions/58980235/stop-pasting-html-style-in-a-contenteditable-div-only-paste-the-plain-text
+
+        // prevent default action
+        event.preventDefault();
+
+        // get clipboard text
+        var text = undefined;
+
+        if (event.clipboardData) {
+            text = (event.originalEvent || event).clipboardData.getData("text/plain");
+
+        } else if (window.clipboardData) {
+            // IE
+            text = window.clipboardData.getData("Text");
+
+        } else {
+            text = "";
+        }
+
+        // insert text at cursor position
+        insertTextAtCursor(text);
+
+        // highlight the line number according to the cursor position in textarea
+        highlightLineNumber();
+
+        // update cursor position display
+        updateCursorPosition();
+    });
+
+    // ====================================================================================================
+    // function onTextareaResize() {
         // when the textarea is being resized manually from client
         // https://stackoverflow.com/questions/5570390/resize-event-for-textarea
         
         // update the height of div containing line number for textarea when textarea resizes manually from client
-        lineNumberDisplay.style.height = textarea.offsetHeight + "px";
-    }
-    new MutationObserver(onTextareaResize).observe(textarea, { attributes: true });
+        // lineNumberDisplay.style.height = textarea.offsetHeight + "px";
+    // }
+    // new MutationObserver(onTextareaResize).observe(textarea, { attributes: true });
     
     // ====================================================================================================
     function resetTextareaContent() {
@@ -1870,20 +2952,19 @@ justify-items: center;
 <!-- HTML Page Body / Content -->
 <body>
     
-</body>
-
-
-<!-- Javascript -->
-<script>
     
-<\/script>
+    <!-- Javascript -->
+    <script>
+        
+    <\/script>
+</body>
 
 
 </html>
 `;
         
         if (confirm("Reset All HTML Content ?")) {
-            textarea.value = defaultText;
+            codeEditor_code.textContent = defaultText;
             updateIframe();
             updateLineNumber();
         }
@@ -1892,12 +2973,13 @@ justify-items: center;
     // ====================================================================================================
     var count = { };
     var index = { };
+
     function textareaGoto(_tag) {
         // go to the specified HTML tag in textarea
         // https://stackoverflow.com/questions/6825492/javascript-str-search-multiple-instances
         
         // make both the text and search text to lower case for easier manipulation
-        var _text = textarea.value.toLowerCase();
+        var _text = codeEditor_code.textContent.toLowerCase();
         _tag = _tag.toLowerCase() + ">";
         
         // getting the total number of matches
@@ -1929,11 +3011,12 @@ justify-items: center;
         */
         
         // force the mouse cursor to the index of matched result(s)
-        textarea.selectionStart = index[_tag];
-        textarea.selectionEnd = textarea.selectionStart + _tag.length - 1;
+        // textarea.selectionStart = index[_tag];
+        // textarea.selectionEnd = textarea.selectionStart + _tag.length;
+        setCursorPosition(index[_tag]);
         
         // focus the textarea to show visual feedback
-        textarea.focus();
+        // textarea.focus();
         
         // highligh the line number according to the cursor position in textarea
         highlightLineNumber();
@@ -1941,6 +3024,8 @@ justify-items: center;
     
     // ====================================================================================================
     const popupModal = document.getElementsByClassName("popupModal");
+    const popupModalCloseButton = document.getElementsByClassName("popupModalCloseButton");
+    
     for (var i = 0; i < popupModal.length; ++i) {
         popupModal[i].addEventListener("click", function(event) {
             
@@ -1953,9 +3038,21 @@ justify-items: center;
         });
     }
     
+    for (var i = 0; i < popupModalCloseButton.length; ++i) {
+        popupModalCloseButton[i].addEventListener("click", function(event) {
+            
+            if (this.parentNode.parentNode.className == "popupModal active") {
+                // click close button in popupModal ( in active state )
+                // --> hide popup modal
+                this.parentNode.parentNode.classList.toggle("active");
+            }
+        });
+    }
+    
     // ====================================================================================================
     // const settingsSidebar = document.getElementById("settingsSidebar");  // MIGRATED TO POPUP MODAL
     const settingsPopupModal = document.getElementById("settingsPopupModal");
+    
     function toggleSettingsMenu() {
         // toggle settings menu
         // settingsSidebar.classList.toggle("active");
@@ -1989,7 +3086,7 @@ justify-items: center;
     // ====================================================================================================
     function updateTextareaFontSize(_font_size) {
         // change the font size of the textarea according to the value of the number input field
-        textarea.style.fontSize = _font_size + "px";
+        codeEditor_code.style.fontSize = _font_size + "px";
         lineNumberDisplay.style.fontSize = _font_size + "px";
         
         updateLineNumber();
@@ -1998,16 +3095,22 @@ justify-items: center;
     // ====================================================================================================
     function updateTextareaFontFamily(_font_family) {
         // change the font family of the textarea according to the value of the dropdown list ( select tag )
-        textarea.style.fontFamily = _font_family;
+        codeEditor_code.style.fontFamily = _font_family;
         lineNumberDisplay.style.fontFamily = _font_family;
         
         updateLineNumber();
     }
-    
+
+    // ====================================================================================================
+    function updateCodeEditorTheme(_theme) {
+        // change the theme of code editor
+        document.getElementById("codeTheme").href = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.3/styles/" + _theme + ".min.css";
+    }
+
     // ====================================================================================================
     function updateTextareaLineHeight(_line_height) {
         // change the line height of the textarea according to the value of the number input field
-        textarea.style.lineHeight = _line_height;
+        codeEditor_code.style.lineHeight = _line_height;
         
         updateLineNumber();
     }
@@ -2018,11 +3121,11 @@ justify-items: center;
         
         if (textWrapSwitch.checked) {
             // need text wrap
-            textarea.style.whiteSpace = "none";  // normal
+            codeEditor_code.style.whiteSpace = "none";  // normal
             
         } else {
             // no need text wrap
-            textarea.style.whiteSpace = "pre";  // nowrap
+            codeEditor_code.style.whiteSpace = "pre";  // nowrap
         }
     }
     
@@ -2035,7 +3138,18 @@ justify-items: center;
     }
     
     // ====================================================================================================
+    // Create Keyboard Shortcut
+    /* Reference :
+        ...
+    */
+    /* Procedure / Approach :
+        1) detect and store keyboard key pressed
+        2) compare all pressed keys to predefined keyboard shortcut
+        3) perform shortcut if match
+        4) empty stored key pressed
+    */
     var keyPressed = [];
+
     window.onkeydown = function(event) {
         
         if (!keyPressed.includes(event.key)) {
@@ -2048,7 +3162,12 @@ justify-items: center;
     
     window.onkeyup = function(event) {
         // keyboard shortcut
-        if (keyPressed.includes("F9")) {
+        
+        if (keyPressed.includes("F9") & event.shiftKey) {
+            event.preventDefault();  // prevent default keyboard actions
+            document.getElementById("logContainer").classList.toggle("active");  // toggle the log container
+            
+        } else if (keyPressed.includes("F9")) {
             event.preventDefault();  // prevent default keyboard actions
             document.getElementById("outputIframePopupModal").classList.toggle("active");  // toggle the outputIframe in popupModal
         }
@@ -2062,12 +3181,36 @@ justify-items: center;
             }
         }
         
+        if (keyPressed.includes("s") & event.ctrlKey & event.altKey) {
+            event.preventDefault();  // prevent default keyboard actions
+            toggleSettingsMenu();  // toggle settings popupModal
+        }
+        
         keyPressed = [];  // empty the list
     }
+
+    // ====================================================================================================
+    // Ask When Reload Page
+    /* Reference :
+        https://stackoverflow.com/questions/45482836/confirm-user-on-page-refresh-while-form-is-open
+        https://stackoverflow.com/questions/60299598/how-to-perform-an-action-before-user-reload-page-or-exit-my-vuejs-application/60327849#60327849
+    */
+    window.onbeforeunload = function(event) {
+        return "Are you sure you want to leave ?\nChanges you made may not be saved.";
+    };
+
+    window.onunload = function(event) {
+        return undefined;
+    };
 </script>
 
 
+
+</body>
+
+
 </html>
+
 
 <!-- 
 Other Unused References :
@@ -2089,5 +3232,17 @@ https://stackoverflow.com/questions/34243850/is-there-a-way-to-print-the-console
 
 Stackoverflow Question : Showing console errors and alerts in a div inside the page
 https://stackoverflow.com/questions/6604192/showing-console-errors-and-alerts-in-a-div-inside-the-page
+
+Documentation : Range: insertNode() method
+https://developer.mozilla.org/en-US/docs/Web/API/Range/insertNode
+
+Documentation : Selection: addRange() method
+https://developer.mozilla.org/en-US/docs/Web/API/Selection/addRange
+
+Documentation : Range: setStart() method
+https://developer.mozilla.org/en-US/docs/Web/API/Range/setStart
+
+Documentation : Selection: collapse() method
+https://developer.mozilla.org/en-US/docs/Web/API/Selection/collapse
 
 -->
